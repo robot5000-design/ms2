@@ -23,15 +23,80 @@
     <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="./assets/js/main.js"></script>
   </head>
   <body>
-    <div class="container">
+    <div class="container question-options">
       <div class="row">
         <div class="column">
-          <div class="questions"></div>
+          <div class="list-group categories">
+            <div class="list-group-item">
+              Choose a Category:
+            </div>
+            <button type="button" class="list-group-item btn active" data-value="18">								
+              	Science: Computing
+            </button>
+            <button type="button" class="list-group-item btn" data-value="17">							
+              	Science & Nature
+            </button>
+            <button type="button" class="list-group-item btn" data-value="19">							
+			    Science: Mathematics
+            </button>
+          </div>
+        </div>
+          <div class="column">
+          <ul class="list-group difficulty-level">
+            <div class="list-group-item">
+                Choose difficulty level:						
+            </div>
+            <button type="button" class="list-group-item btn" data-value="easy">
+              Easy
+            </button>
+            <button type="button" class="list-group-item btn active" data-value="medium">					
+              Medium
+            </button>
+            <button type="button" class="list-group-item btn" data-value="hard">							
+              Hard
+            </button>
+          </ul>
+          </div>
+          <div class="column">
+          <div class="list-group question-quantity">
+            <div class="list-group-item">
+                Number of Questions:
+            </div>
+            <button type="button" class="list-group-item btn" data-value="5">
+              5
+            </button>
+            <button type="button" class="list-group-item btn active" data-value="10">
+              10
+            </button>
+            <button type="button" class="list-group-item btn" data-value="15">
+              15
+            </button>
+          </div>
+			<button type="button" class="btn btn-success load-questions">Load Questions</button>
         </div>
       </div>
     </div>
+    <div class="container question-container">
+    <div class="row">
+    <div class="column">
+          <div class="list-group">
+            <div class="list-group-item questions"></div>
+            <button type="button" class="list-group-item btn" data-number="1"></button>
+            <button type="button" class="list-group-item btn" data-number="2"></button>
+            <button type="button" class="list-group-item btn" data-number="3"></button>
+            <button type="button" class="list-group-item btn" data-number="4"></button>
+          </div>
+			<button type="button" class="btn btn-success load-questions">Load Questions</button>
+        </div>
+    </div>
+    </div>
   </body>
+  <script>
+  
+
+  
+  </script>
 </html>
