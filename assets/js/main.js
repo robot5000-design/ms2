@@ -4,52 +4,6 @@ $(document).ready(function() {
     let amount,
         category, 
         difficulty;
-/*
-    let categoryButtons = $(".categories").children("button");
-    let difficultyButtons = $(".difficulty-level").children("button");
-    let quantityButtons = $(".question-quantity").children("button");
-    
-    for (let singleButton of categoryButtons) {        
-        if ($(singleButton).hasClass("active")) {
-            category = singleButton.getAttribute("data-value");                        
-        };
-        console.log(category);
-    }
-    for (let singleButton of difficultyButtons) {        
-        if ($(singleButton).hasClass("active")) {
-            difficulty = singleButton.getAttribute("data-value");                        
-        };
-        console.log(difficulty);
-    }
-    for (let singleButton of quantityButtons) {        
-        if ($(singleButton).hasClass("active")) {
-            amount = singleButton.getAttribute("data-value");                        
-        };
-        console.log(amount);
-    }*/
-
-    // sets the url for downloading the chosen question options
-    //function makeUrl() {        
-    /* let quantityButtons = document.querySelectorAll(".question-quantity-button");
-        quantityButtons.forEach(function(quantityButton) {
-            quantityButton.addEventListener("click", function() {
-            amount = this.getAttribute("data-value");            
-            });
-        }); */
-      /*  quantityButtons.click(function () {
-        amount = this.getAttribute("data-value");
-        console.log(amount);
-        });
-
-        categoryButtons.click(function () {
-        category = this.getAttribute("data-value");
-        console.log(category);
-        });
-
-        difficultyButtons.click(function () {
-        difficulty = this.getAttribute("data-value");
-        console.log(difficulty);
-        }); */
 
     function makeUrl(amount, category, difficulty) {
         return `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}`;
@@ -84,43 +38,19 @@ $(document).ready(function() {
         }
         currentQuestion = setOfQuestions[i].question;
         //console.log(currentQuestion, i);
-        document.getElementsByClassName("questions")[0].innerHTML = `${i+1}. ${currentQuestion}`;
+        document.getElementsByClassName("questions")[0].innerHTML = `${i + 1}. ${currentQuestion}`;
         i++;
-        console.log(i);
-
-        // Loop 1
-        /*document.getElementsByClassName("next-question")[0].onclick = function() {
-            if (i < setOfQuestions.length) {
-                askQuestions(setOfQuestions, i);
-            } else {
-                toggleOptions();
-            }
-        }*/
-        // loop 2
+        console.log(i);        
+    
         $(".next-question").on("click", function() {
+            $(".next-question").off("click");
             if (i < setOfQuestions.length) {
                 askQuestions(setOfQuestions, i);
             } else {
                 toggleOptions();
             }      
         });
-        /* Loop 3
-        $(".next-question").click(function() {
-            if (i < setOfQuestions.length) {
-                askQuestions(setOfQuestions, i);
-            } else {
-                toggleOptions();
-            }      
-        }); */
-
     }
-
-
-    // populate the questions and answers in html elements and run quiz
-    /*function populateQuestions(setOfQuestions) {
-        toggleOptions();
-        askQuestions(setOfQuestions, 0);
-    }*/
 
     // get the quiz dataset from opentdb api
     function getData(apiUrl) {
@@ -135,11 +65,8 @@ $(document).ready(function() {
                 let questionsLoaded;
                 questionsLoaded = JSON.parse(this.responseText);
                 questionSet = questionsLoaded.results;
-                //populateQuestions(questionSet);
-                toggleOptions();
-                
+                toggleOptions();                
                 askQuestions(questionSet, 0);
-
             } else if (this.status != 200) {
                 console.log("we have an error!", this.status);
             }
@@ -187,3 +114,68 @@ $(document).ready(function() {
         $(this).siblings().removeClass("active");
     });
 });
+
+
+
+/*
+    let categoryButtons = $(".categories").children("button");
+    let difficultyButtons = $(".difficulty-level").children("button");
+    let quantityButtons = $(".question-quantity").children("button");
+    
+    for (let singleButton of categoryButtons) {        
+        if ($(singleButton).hasClass("active")) {
+            category = singleButton.getAttribute("data-value");                        
+        };
+        console.log(category);
+    }
+    for (let singleButton of difficultyButtons) {        
+        if ($(singleButton).hasClass("active")) {
+            difficulty = singleButton.getAttribute("data-value");                        
+        };
+        console.log(difficulty);
+    }
+    for (let singleButton of quantityButtons) {        
+        if ($(singleButton).hasClass("active")) {
+            amount = singleButton.getAttribute("data-value");                        
+        };
+        console.log(amount);
+    }*/
+
+    // sets the url for downloading the chosen question options
+    //function makeUrl() {        
+    /* let quantityButtons = document.querySelectorAll(".question-quantity-button");
+        quantityButtons.forEach(function(quantityButton) {
+            quantityButton.addEventListener("click", function() {
+            amount = this.getAttribute("data-value");            
+            });
+        }); */
+      /*  quantityButtons.click(function () {
+        amount = this.getAttribute("data-value");
+        console.log(amount);
+        });
+
+        categoryButtons.click(function () {
+        category = this.getAttribute("data-value");
+        console.log(category);
+        });
+
+        difficultyButtons.click(function () {
+        difficulty = this.getAttribute("data-value");
+        console.log(difficulty);
+        }); */
+
+         /*$(".next-question").click(function() {
+            if (i < setOfQuestions.length) {
+                askQuestions(setOfQuestions, i);
+            } else {
+                toggleOptions();
+            }      
+        }); */
+
+        /*document.getElementsByClassName("next-question")[0].onclick = function() {
+            if (i < setOfQuestions.length) {
+                askQuestions(setOfQuestions, i);
+            } else {
+                toggleOptions();
+            }
+        } */
