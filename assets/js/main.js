@@ -3,7 +3,8 @@ $(document).ready(function() {
     // declare variables  
     let amount,
         category, 
-        difficulty;
+        difficulty,
+        score = 0;
 
     function makeUrl(amount, category, difficulty) {
         return `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}`;
@@ -20,14 +21,33 @@ $(document).ready(function() {
         }
     }
 
-    function askQuestions(setOfQuestions, i) {
-        let currentQuestion,
-            correctAnswer,
-            wrongAnswers,
-            currentType;
-        //console.log(setOfQuestions[i]);
+    // Using The Fisher-Yates Method from here https://www.w3schools.com/js/js_array_sort.asp
+    function shuffleAnswers(answersArray, correctAnswer) {
+        answersArray.push(correctAnswer);
+        for (let i = answersArray.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * i);
+            k = answersArray[i];
+            answersArray[i] = answersArray[j];
+            answersArray[j] = k;
+        }
+        console.log(answersArray);
+    }
+
+    function askQuestions(setOfQuestions, questionIndex) {
+        let currentType;
+        let currentQuestion = setOfQuestions[questionIndex].question;
+        let correctAnswer = setOfQuestions[questionIndex].correct_answer;
+        let answersArray = setOfQuestions[questionIndex].incorrect_answers;
+        
+
+        console.log(typeof(answersArray), typeof(correctAnswer));
+        console.log(answersArray, (correctAnswer))
+        shuffleAnswers(answersArray, correctAnswer)
+        
+
+        
         // check if question is boolean and if yes, hide redundant answer buttons
-        if (setOfQuestions[i].type == "boolean") {
+        if (setOfQuestions[questionIndex].type == "boolean") {
             $("[data-number='3']").addClass("hide-element");
             $("[data-number='4']").addClass("hide-element");
             $("[data-number='1']").html("<p>True</p>");
@@ -35,17 +55,29 @@ $(document).ready(function() {
         } else {
             $("[data-number='3']").removeClass("hide-element");
             $("[data-number='4']").removeClass("hide-element");
+
         }
-        currentQuestion = setOfQuestions[i].question;
+        
+        
         //console.log(currentQuestion, i);
-        document.getElementsByClassName("questions")[0].innerHTML = `${i + 1}. ${currentQuestion}`;
-        i++;
-        console.log(i);        
+        document.getElementsByClassName("questions")[0].innerHTML = `${questionIndex + 1}. ${currentQuestion}`;
+        questionIndex++;
+        console.log(questionIndex);
     
         $(".next-question").on("click", function() {
+            let answerButtons = $(".question-answers").children("button");
+            console.log(correctAnswer)
+            for (let button of answerButtons) {     
+                if ($(button).hasClass("active") && (button.firstChild.innerText.toLowerCase() === correctAnswer.toLowerCase())) {
+                    console.log("perfect")
+                    $(".quiz-score").html(`Score is ${score + 1}`);
+                }
+            }
             $(".next-question").off("click");
-            if (i < setOfQuestions.length) {
-                askQuestions(setOfQuestions, i);
+            
+
+            if (questionIndex < setOfQuestions.length) {
+                askQuestions(setOfQuestions, questionIndex);
             } else {
                 toggleOptions();
             }      
@@ -73,39 +105,28 @@ $(document).ready(function() {
         };
     }
 
+    function activeButton(buttonGroup) {
+        for (let button of buttonGroup) {     
+            if ($(button).hasClass("active")) {
+                buttonValue = button.getAttribute("data-value");
+                console.log(buttonValue);
+                return buttonValue;                 
+            }
+        }
+    }
+
     $(".load-questions").click(function() {
         let categoryButtons = $(".categories").children("button");
         let difficultyButtons = $(".difficulty-level").children("button");
         let quantityButtons = $(".question-quantity").children("button");
 
-        for (let singleButton of categoryButtons) {        
-            if ($(singleButton).hasClass("active")) {
-                category = singleButton.getAttribute("data-value");
-                console.log(category);                     
-            }
-        }
-        for (let singleButton of difficultyButtons) {        
-            if ($(singleButton).hasClass("active")) {
-                difficulty = singleButton.getAttribute("data-value");
-                console.log(difficulty);                      
-            }
-            
-        }
-        for (let singleButton of quantityButtons) {        
-            if ($(singleButton).hasClass("active")) {
-                amount = singleButton.getAttribute("data-value");
-                console.log(amount);                   
-            }
-        }
+        amount = activeButton(quantityButtons);
+        category = activeButton(categoryButtons);
+        difficulty = activeButton(difficultyButtons);
+
         getData(makeUrl(amount, category, difficulty));
         console.log(makeUrl(amount, category, difficulty));
     });
-    /*getData(printDataToConsole);
-    function printDataToConsole(data) {
-        console.log(data);
-        console.log(data.response_code);
-        console.log(typeof(data));
-    }*/
 
     // with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
     // separates the multiple bootstrap list groups on the same page
@@ -116,6 +137,13 @@ $(document).ready(function() {
 });
 
 
+
+/*getData(printDataToConsole);
+    function printDataToConsole(data) {
+        console.log(data);
+        console.log(data.response_code);
+        console.log(typeof(data));
+    }*/
 
 /*
     let categoryButtons = $(".categories").children("button");
