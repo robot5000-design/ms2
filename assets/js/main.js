@@ -62,7 +62,11 @@ $(document).ready(function() {
         document.getElementsByClassName("questions")[0].innerHTML = `${questionIndex + 1}. ${currentQuestion}`;
         questionIndex++;
         console.log(questionIndex);
-    
+        $(".question-container button").on("click", function() {
+            $(".next-question").prop("disabled", false);
+            $(".next-question").attr("aria-disabled", "false");
+        });               
+       
         $(".next-question").on("click", function() {
             console.log(correctAnswer)
             for (let button of answerButtons) {     
@@ -72,6 +76,10 @@ $(document).ready(function() {
                     $(".quiz-score").html(`Score is ${score}`);
                 }
             }
+        
+            $(".next-question").prop("disabled", true);
+            $(".next-question").attr("aria-disabled", "true");
+        
             $(".next-question").off("click");
             for (let button of answerButtons) {
                 $(button).removeClass("active");
