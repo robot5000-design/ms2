@@ -30,7 +30,6 @@ $(document).ready(function() {
             answersArray[i] = answersArray[j];
             answersArray[j] = k;
         }
-        console.log(answersArray);
     }
 
     function askQuestions(setOfQuestions, questionIndex) {
@@ -38,14 +37,11 @@ $(document).ready(function() {
         let currentQuestion = setOfQuestions[questionIndex].question;
         let correctAnswer = setOfQuestions[questionIndex].correct_answer;
         let answersArray = setOfQuestions[questionIndex].incorrect_answers;
-        
+        let answerButtons = $(".question-answers").children("button");     
 
         console.log(typeof(answersArray), typeof(correctAnswer));
-        console.log(answersArray, (correctAnswer))
-        shuffleAnswers(answersArray, correctAnswer)
-        
-
-        
+        console.log(answersArray, (correctAnswer));
+        shuffleAnswers(answersArray, correctAnswer);
         // check if question is boolean and if yes, hide redundant answer buttons
         if (setOfQuestions[questionIndex].type == "boolean") {
             $("[data-number='3']").addClass("hide-element");
@@ -55,7 +51,10 @@ $(document).ready(function() {
         } else {
             $("[data-number='3']").removeClass("hide-element");
             $("[data-number='4']").removeClass("hide-element");
-
+            $("[data-number='1']").html(`<p>${answersArray[0]}</p>`);
+            $("[data-number='2']").html(`<p>${answersArray[1]}</p>`);
+            $("[data-number='3']").html(`<p>${answersArray[2]}</p>`);
+            $("[data-number='4']").html(`<p>${answersArray[3]}</p>`);
         }
         
         
@@ -65,17 +64,18 @@ $(document).ready(function() {
         console.log(questionIndex);
     
         $(".next-question").on("click", function() {
-            let answerButtons = $(".question-answers").children("button");
             console.log(correctAnswer)
             for (let button of answerButtons) {     
                 if ($(button).hasClass("active") && (button.firstChild.innerText.toLowerCase() === correctAnswer.toLowerCase())) {
-                    console.log("perfect")
-                    $(".quiz-score").html(`Score is ${score + 1}`);
+                    console.log("perfect");
+                    score++;
+                    $(".quiz-score").html(`Score is ${score}`);
                 }
             }
             $(".next-question").off("click");
-            
-
+            for (let button of answerButtons) {
+                $(button).removeClass("active");
+            }
             if (questionIndex < setOfQuestions.length) {
                 askQuestions(setOfQuestions, questionIndex);
             } else {
