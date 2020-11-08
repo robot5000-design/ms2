@@ -3,8 +3,7 @@ $(document).ready(function() {
     // declare variables  
     let amount,
         category, 
-        difficulty,
-        score = 0;
+        difficulty;
 
     function makeUrl(amount, category, difficulty) {
         return `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}`;
@@ -31,30 +30,40 @@ $(document).ready(function() {
             answersArray[j] = k;
         }
     }
-
-    function askQuestions(setOfQuestions, questionIndex) {
+    
+    function askQuestions(setOfQuestions, questionIndex, score) {
         let currentType;
         let currentQuestion = setOfQuestions[questionIndex].question;
         let correctAnswer = setOfQuestions[questionIndex].correct_answer;
         let answersArray = setOfQuestions[questionIndex].incorrect_answers;
         let answerButtons = $(".question-answers").children("button");     
 
-        console.log(typeof(answersArray), typeof(correctAnswer));
         console.log(answersArray, (correctAnswer));
         shuffleAnswers(answersArray, correctAnswer);
+        $(".quiz-score").html(`Score is ${score}`);
         // check if question is boolean and if yes, hide redundant answer buttons
         if (setOfQuestions[questionIndex].type == "boolean") {
             $("[data-number='3']").addClass("hide-element");
             $("[data-number='4']").addClass("hide-element");
             $("[data-number='1']").html("<p>True</p>");
+            $("[data-number='1']").attr("data-answer", "True");
             $("[data-number='2']").html("<p>False</p>");
+            $("[data-number='2']").attr("data-answer", "False");
         } else {
             $("[data-number='3']").removeClass("hide-element");
             $("[data-number='4']").removeClass("hide-element");
             $("[data-number='1']").html(`<p>${answersArray[0]}</p>`);
+            $("[data-number='1']").attr("data-answer", `${answersArray[0]}`);
             $("[data-number='2']").html(`<p>${answersArray[1]}</p>`);
+            $("[data-number='2']").attr("data-answer", `${answersArray[1]}`);
             $("[data-number='3']").html(`<p>${answersArray[2]}</p>`);
+            $("[data-number='3']").attr("data-answer", `${answersArray[2]}`);
             $("[data-number='4']").html(`<p>${answersArray[3]}</p>`);
+            $("[data-number='4']").attr("data-answer", `${answersArray[3]}`);
+        }
+        document.getElementsByClassName("reset-confirm")[0].onclick = function() {
+            toggleOptions();
+            $('#resetModal').modal('toggle');
         }
         
         
@@ -62,15 +71,17 @@ $(document).ready(function() {
         document.getElementsByClassName("questions")[0].innerHTML = `${questionIndex + 1}. ${currentQuestion}`;
         questionIndex++;
         console.log(questionIndex);
-        $(".question-container button").on("click", function() {
+        $(".question-answers button").on("click", function() {
             $(".next-question").prop("disabled", false);
             $(".next-question").attr("aria-disabled", "false");
         });               
        
         $(".next-question").on("click", function() {
             console.log(correctAnswer)
-            for (let button of answerButtons) {     
-                if ($(button).hasClass("active") && (button.firstChild.innerText.toLowerCase() === correctAnswer.toLowerCase())) {
+            for (let button of answerButtons) {    
+                //correctAnswer = correctAnswer 
+                console.log($(button).attr("data-answer"));
+                if ($(button).hasClass("active") && ($(button).attr("data-answer") == correctAnswer)) {
                     console.log("perfect");
                     score++;
                     $(".quiz-score").html(`Score is ${score}`);
@@ -85,7 +96,7 @@ $(document).ready(function() {
                 $(button).removeClass("active");
             }
             if (questionIndex < setOfQuestions.length) {
-                askQuestions(setOfQuestions, questionIndex);
+                askQuestions(setOfQuestions, questionIndex, score);
             } else {
                 toggleOptions();
             }      
@@ -94,19 +105,21 @@ $(document).ready(function() {
 
     // get the quiz dataset from opentdb api
     function getData(apiUrl) {
-        let questionSet;
+        let questionSet,
+            questionIndex = 0,
+            scoreTotal = 0;
         var xhr = new XMLHttpRequest();
         xhr.open("GET", apiUrl);
         xhr.send();
 
         xhr.onreadystatechange = function () {
-            console.log(this.readyState, this.status);
+            console.log(this.readyState, this.status, scoreTotal);
             if (this.readyState == 4 && this.status == 200) {
                 let questionsLoaded;
                 questionsLoaded = JSON.parse(this.responseText);
                 questionSet = questionsLoaded.results;
-                toggleOptions();                
-                askQuestions(questionSet, 0);
+                toggleOptions();            
+                askQuestions(questionSet, questionIndex, scoreTotal);
             } else if (this.status != 200) {
                 console.log("we have an error!", this.status);
             }
