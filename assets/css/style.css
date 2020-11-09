@@ -13,3 +13,26 @@
 .reinstate-element {
     display: block;
 }
+
+.correct-answer {
+    background-color: green;
+}
+
+.wrong-answer {
+    background-color: red;
+}
+
+@keyframes example {
+  0%   {background-color: green;}
+  25%  {background-color: orange;}
+  50%  {background-color: green;}
+  75%  {background-color: orange;}
+  100% {background-color: green;}
+}
+
+/* The element to apply the animation to */
+.flash-element {
+  /*background-color: red;*/
+  animation-name: example;
+  animation-duration: 2s;
+}

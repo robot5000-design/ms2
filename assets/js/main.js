@@ -3,11 +3,8 @@ $(document).ready(function() {
     // declare variables  
     let amount,
         category, 
-        difficulty;
-
-    function makeUrl(amount, category, difficulty) {
-        return `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}`;
-    }
+        difficulty,
+        token;
 
     // switch off quiz options and switch on questions
     function toggleOptions() {
@@ -15,6 +12,7 @@ $(document).ready(function() {
             $(".question-options").removeClass("reinstate-element").addClass("remove-element");
             $(".question-container").removeClass("remove-element").addClass("reinstate-element");
         } else {
+            $(".load-questions").html("Load Questions");
             $(".question-options").removeClass("remove-element").addClass("reinstate-element");
             $(".question-container").removeClass("reinstate-element").addClass("remove-element");
         }
@@ -66,8 +64,6 @@ $(document).ready(function() {
             $('#resetModal').modal('toggle');
         }
         
-        
-        //console.log(currentQuestion, i);
         document.getElementsByClassName("questions")[0].innerHTML = `${questionIndex + 1}. ${currentQuestion}`;
         questionIndex++;
         console.log(questionIndex);
@@ -75,57 +71,89 @@ $(document).ready(function() {
             $(".next-question").prop("disabled", false);
             $(".next-question").attr("aria-disabled", "false");
         });               
-       
+        // Move to next question
         $(".next-question").on("click", function() {
-            console.log(correctAnswer)
-            for (let button of answerButtons) {    
-                //correctAnswer = correctAnswer 
-                console.log($(button).attr("data-answer"));
+            for (let button of answerButtons) {
                 if ($(button).hasClass("active") && ($(button).attr("data-answer") == correctAnswer)) {
                     console.log("perfect");
+                    $(button).addClass("correct-answer");
                     score++;
                     $(".quiz-score").html(`Score is ${score}`);
                 }
             }
         
             $(".next-question").prop("disabled", true);
-            $(".next-question").attr("aria-disabled", "true");
-        
+            $(".next-question").attr("aria-disabled", "true");        
             $(".next-question").off("click");
-            for (let button of answerButtons) {
-                $(button).removeClass("active");
-            }
+            
             if (questionIndex < setOfQuestions.length) {
-                askQuestions(setOfQuestions, questionIndex, score);
+                setTimeout(() => { askQuestions(setOfQuestions, questionIndex, score); }, 1500);
+                for (let button of answerButtons) {
+                    $(button).removeClass("active");               
+                } 
             } else {
-                toggleOptions();
-            }      
+                    toggleOptions();
+            }
         });
     }
 
     // get the quiz dataset from opentdb api
-    function getData(apiUrl) {
+    function getData(myToken) {
         let questionSet,
             questionIndex = 0,
-            scoreTotal = 0;
+            scoreTotal = 0,
+            apiUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${myToken}`;
         var xhr = new XMLHttpRequest();
         xhr.open("GET", apiUrl);
         xhr.send();
-
+        console.log(apiUrl);
         xhr.onreadystatechange = function () {
             console.log(this.readyState, this.status, scoreTotal);
             if (this.readyState == 4 && this.status == 200) {
                 let questionsLoaded;
                 questionsLoaded = JSON.parse(this.responseText);
-                questionSet = questionsLoaded.results;
-                toggleOptions();            
-                askQuestions(questionSet, questionIndex, scoreTotal);
-            } else if (this.status != 200) {
-                console.log("we have an error!", this.status);
+                if (questionsLoaded.response_code === 0) {
+                    questionSet = questionsLoaded.results;
+                    toggleOptions();            
+                    askQuestions(questionSet, questionIndex, scoreTotal);
+                } else if (questionsLoaded.response_code === 3 || questionsLoaded.response_code === 4) {
+                    getToken().then(runGetData);
+                } else {
+                    alert("Cannot get results from the Quiz Database. Please try again later.");
+                }
+            } else if (this.readyState == 4 && this.status != 200) {
+                alert("Cannot communicate with the Quiz Database. Please try again later.");
             }
         };
     }
 
+    // Run function to get quiz data from API
+    function runGetData(resolvedValue) {
+      getData(resolvedValue);
+    }
+
+    // Get the quiz token from opentdb api
+    function getToken() {
+        return new Promise(function(myResolve, myReject) {
+            var xhr = new XMLHttpRequest();
+            let token;
+            xhr.open("GET", "https://opentdb.com/api_token.php?command=request");
+            xhr.send();
+
+            xhr.onreadystatechange = function() {
+                console.log(this.readyState, this.status);
+                if (this.readyState == 4 && this.status == 200) {
+                    token = (JSON.parse(this.responseText)).token;
+                    console.log(token);
+                    myResolve(token);
+                } else if (this.readyState == 4 && this.status != 200) {
+                    myReject(alert("Cannot obtain Token. Please try again later."));
+                }
+            }
+        });
+    }
+
+    // Check if a button is active & get its data attribute value
     function activeButton(buttonGroup) {
         for (let button of buttonGroup) {     
             if ($(button).hasClass("active")) {
@@ -135,18 +163,17 @@ $(document).ready(function() {
             }
         }
     }
-
+    // Set options & Load Questions
     $(".load-questions").click(function() {
         let categoryButtons = $(".categories").children("button");
         let difficultyButtons = $(".difficulty-level").children("button");
         let quantityButtons = $(".question-quantity").children("button");
 
+        $(".load-questions").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
         amount = activeButton(quantityButtons);
         category = activeButton(categoryButtons);
         difficulty = activeButton(difficultyButtons);
-
-        getData(makeUrl(amount, category, difficulty));
-        console.log(makeUrl(amount, category, difficulty));
+        getToken().then(runGetData);
     });
 
     // with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
@@ -159,72 +186,29 @@ $(document).ready(function() {
 
 
 
-/*getData(printDataToConsole);
-    function printDataToConsole(data) {
-        console.log(data);
-        console.log(data.response_code);
-        console.log(typeof(data));
-    }*/
-
 /*
-    let categoryButtons = $(".categories").children("button");
-    let difficultyButtons = $(".difficulty-level").children("button");
-    let quantityButtons = $(".question-quantity").children("button");
-    
-    for (let singleButton of categoryButtons) {        
-        if ($(singleButton).hasClass("active")) {
-            category = singleButton.getAttribute("data-value");                        
-        };
-        console.log(category);
-    }
-    for (let singleButton of difficultyButtons) {        
-        if ($(singleButton).hasClass("active")) {
-            difficulty = singleButton.getAttribute("data-value");                        
-        };
-        console.log(difficulty);
-    }
-    for (let singleButton of quantityButtons) {        
-        if ($(singleButton).hasClass("active")) {
-            amount = singleButton.getAttribute("data-value");                        
-        };
-        console.log(amount);
-    }*/
+    function getToken() {
+        var xhr = new XMLHttpRequest();
 
-    // sets the url for downloading the chosen question options
-    //function makeUrl() {        
-    /* let quantityButtons = document.querySelectorAll(".question-quantity-button");
-        quantityButtons.forEach(function(quantityButton) {
-            quantityButton.addEventListener("click", function() {
-            amount = this.getAttribute("data-value");            
-            });
-        }); */
-      /*  quantityButtons.click(function () {
-        amount = this.getAttribute("data-value");
-        console.log(amount);
-        });
-
-        categoryButtons.click(function () {
-        category = this.getAttribute("data-value");
-        console.log(category);
-        });
-
-        difficultyButtons.click(function () {
-        difficulty = this.getAttribute("data-value");
-        console.log(difficulty);
-        }); */
-
-         /*$(".next-question").click(function() {
-            if (i < setOfQuestions.length) {
-                askQuestions(setOfQuestions, i);
-            } else {
-                toggleOptions();
-            }      
-        }); */
-
-        /*document.getElementsByClassName("next-question")[0].onclick = function() {
-            if (i < setOfQuestions.length) {
-                askQuestions(setOfQuestions, i);
-            } else {
-                toggleOptions();
+        xhr.open("GET", "https://opentdb.com/api_token.php?command=request");
+        xhr.send();
+        xhr.onreadystatechange = function() {
+            console.log(this.readyState, this.status);
+            if (this.readyState == 4 && this.status == 200) {
+                token = (JSON.parse(this.responseText)).token;
+                console.log(token);
+                $(".load-questions").prop("disabled", false);
+                $(".load-questions").attr("aria-disabled", "false"); 
+                return token;  
+            } else if (this.status != 200) {
+                $(".load-questions").prop("disabled", false);
+                $(".load-questions").attr("aria-disabled", "false"); 
+                return token = "";
             }
-        } */
+        }  
+    }
+        */
+    // Make URL for calling API data
+    /*function makeUrl(amount, category, difficulty, myToken) {
+        return `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${myToken}`;
+    }*/
