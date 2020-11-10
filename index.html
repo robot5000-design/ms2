@@ -1,128 +1,132 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css"
-      type="text/css"
-    />
-
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./assets/js/main.js"></script>
-  </head>
-  <body>
-    <div class="container question-options">
-      <div class="row">
-        <div class="column">
-          <div class="list-group categories">
-            <div class="list-group-item">
-              Choose a Category:
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            type="text/css"
+            />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css"
+            type="text/css"
+            />
+        <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="./assets/js/main.js"></script>
+    </head>
+    <body>
+        <div class="container question-options">
+            <div class="row">
+                <div class="column">
+                    <div class="list-group categories">
+                        <div class="list-group-item">
+                            Choose a Category:
+                        </div>
+                        <button type="button" class="list-group-item btn active" data-value="18">								
+                        Science: Computing
+                        </button>
+                        <button type="button" class="list-group-item btn" data-value="17">							
+                        Science & Nature
+                        </button>
+                        <button type="button" class="list-group-item btn" data-value="19">							
+                        Science: Mathematics
+                        </button>
+                    </div>
+                </div>
+                <div class="column">
+                    <ul class="list-group difficulty-level">
+                        <div class="list-group-item">
+                            Choose difficulty level:						
+                        </div>
+                        <button type="button" class="list-group-item btn" data-value="easy">
+                        Easy
+                        </button>
+                        <button type="button" class="list-group-item btn active" data-value="medium">					
+                        Medium
+                        </button>
+                        <button type="button" class="list-group-item btn" data-value="hard">							
+                        Hard
+                        </button>
+                    </ul>
+                </div>
+                <div class="column">
+                    <div class="list-group question-quantity">
+                        <div class="list-group-item">
+                            Number of Questions:
+                        </div>
+                        <button type="button" class="list-group-item btn" data-value="5">
+                        5
+                        </button>
+                        <button type="button" class="list-group-item btn active" data-value="10">
+                        10
+                        </button>
+                        <button type="button" class="list-group-item btn" data-value="15">
+                        15
+                        </button>
+                    </div>
+                </div>
             </div>
-            <button type="button" class="list-group-item btn active" data-value="18">								
-              	Science: Computing
-            </button>
-            <button type="button" class="list-group-item btn" data-value="17">							
-              	Science & Nature
-            </button>
-            <button type="button" class="list-group-item btn" data-value="19">							
-			    Science: Mathematics
-            </button>
-          </div>
-        </div>
-          <div class="column">
-          <ul class="list-group difficulty-level">
-            <div class="list-group-item">
-                Choose difficulty level:						
+            <div class="row">
+                <div class="column">
+                    <button type="button" class="btn btn-success load-questions">Load Questions</button>
+                </div>
             </div>
-            <button type="button" class="list-group-item btn" data-value="easy">
-              Easy
-            </button>
-            <button type="button" class="list-group-item btn active" data-value="medium">					
-              Medium
-            </button>
-            <button type="button" class="list-group-item btn" data-value="hard">							
-              Hard
-            </button>
-          </ul>
-          </div>
-          <div class="column">
-          <div class="list-group question-quantity">
-            <div class="list-group-item">
-                Number of Questions:
+            <div class="row">
+                <div class="column">
+                    <p class="high-score-overall">Highest Score Achieved: 0</p>
+                </div>
             </div>
-            <button type="button" class="list-group-item btn" data-value="5">
-              5
-            </button>
-            <button type="button" class="list-group-item btn active" data-value="10">
-              10
-            </button>
-            <button type="button" class="list-group-item btn" data-value="15">
-              15
-            </button>
-          </div>
-			<button type="button" class="btn btn-success load-questions">Load Questions</button>
         </div>
-      </div>
-    </div>
-    <div class="container question-container">
-    <div class="row">
-    <div class="column">
-          <div class="list-group question-answers">
-            <div class="list-group-item questions"></div>
-            <button type="button" class="list-group-item btn" data-number="1" data-answer=""></button>
-            <button type="button" class="list-group-item btn" data-number="2" data-answer=""></button>
-            <button type="button" class="list-group-item btn" data-number="3" data-answer=""></button>
-            <button type="button" class="list-group-item btn" data-number="4" data-answer=""></button>
-          </div>
-			<button type="button" class="btn btn-success next-question" aria-disabled="true" disabled>Next Question</button>
-            <button type="button" class="btn btn-secondary reset-button" data-toggle="modal" data-target="#resetModal">Exit Quiz</button>
-            <p class="quiz-score">0</p>
+        <div class="container question-container">
+            <div class="row">
+                <div class="column">
+                    <div class="list-group question-answers">
+                        <div class="list-group-item questions"></div>
+                        <button type="button" class="list-group-item btn" data-number="1" data-answer=""></button>
+                        <button type="button" class="list-group-item btn" data-number="2" data-answer=""></button>
+                        <button type="button" class="list-group-item btn" data-number="3" data-answer=""></button>
+                        <button type="button" class="list-group-item btn" data-number="4" data-answer=""></button>
+                    </div>
+                    <button type="button" class="btn btn-success submit-answer" aria-disabled="true" disabled>Submit Answer</button>
+                    <button type="button" class="btn btn-primary next-question" aria-disabled="true" disabled>Next Question</button>
+                    <button type="button" class="btn btn-secondary reset-button" data-toggle="modal" data-target="#resetModal">Exit Quiz</button>
+                    <p class="quiz-score">0</p>
+                </div>
+            </div>
         </div>
-    </div>
-    </div>
-    <!-- Exit the Quiz Modal -->
-    <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="reset-modal" id="resetModalLabel">EXIT QUIZ</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
+        <!-- Exit the Quiz Modal -->
+        <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="reset-modal" id="resetModalLabel">EXIT QUIZ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Please confirm if you would like to exit the quiz...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary reset-confirm">Yes</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            Please confirm if you would like to exit the quiz...
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-            <button type="button" class="btn btn-primary reset-confirm">Yes</button>
-        </div>
-        </div>
-    </div>
-    </div>
-  </body>
+    </body>
     <!-- bootstrap JS links -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script>
-  
-
-  
-  </script>
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script></script>
 </html>

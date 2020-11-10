@@ -4,7 +4,13 @@ $(document).ready(function() {
     let amount,
         category, 
         difficulty,
-        token;
+        token,
+        correctAnswer,
+        score,
+        questionIndex,
+        setOfQuestions,
+        highScore;
+    let answerButtons = $(".question-answers").children("button");
 
     // switch off quiz options and switch on questions
     function toggleOptions() {
@@ -32,10 +38,9 @@ $(document).ready(function() {
     function askQuestions(setOfQuestions, questionIndex, score) {
         let currentType;
         let currentQuestion = setOfQuestions[questionIndex].question;
-        let correctAnswer = setOfQuestions[questionIndex].correct_answer;
         let answersArray = setOfQuestions[questionIndex].incorrect_answers;
-        let answerButtons = $(".question-answers").children("button");     
-
+        
+        correctAnswer = setOfQuestions[questionIndex].correct_answer;
         console.log(answersArray, (correctAnswer));
         shuffleAnswers(answersArray, correctAnswer);
         $(".quiz-score").html(`Score is ${score}`);
@@ -68,61 +73,106 @@ $(document).ready(function() {
         questionIndex++;
         console.log(questionIndex);
         $(".question-answers button").on("click", function() {
-            $(".next-question").prop("disabled", false);
-            $(".next-question").attr("aria-disabled", "false");
-        });               
+            enableElement(".submit-answer");
+        });
+        // Submit Answer
+        $(".submit-answer").on("click", submitAnswer);
         // Move to next question
-        $(".next-question").on("click", function() {
+        $(".next-question").on("click", nextQuestion);
+    }
+
+    function nextQuestion() {
+        questionIndex++;
+        if (questionIndex < setOfQuestions.length) {
+            setTimeout(() => {
+                askQuestions(setOfQuestions, questionIndex, score);
+                for (let button of answerButtons) {
+                    enableElement(button);
+                }
+            }, 500);
             for (let button of answerButtons) {
-                if ($(button).hasClass("active") && ($(button).attr("data-answer") == correctAnswer)) {
-                    console.log("perfect");
+                $(button).removeClass("active correct-answer");               
+            }
+        } else {
+            for (let button of answerButtons) {
+                $(button).removeClass("active");               
+            }
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem("highScore", `${highScore}`);
+                $(".high-score-overall").html(`Highest Score Achieved: ${highScore}`);
+            }
+            setTimeout(() => { toggleOptions(); }, 3000);
+        }
+        disableElement(".next-question");
+        disableElement(".submit-answer");
+        $(".next-question").off("click");
+    }
+
+    function submitAnswer() {
+        disableElement(".submit-answer")
+        for (let button of answerButtons) {
+            if ($(button).hasClass("active") && ($(button).attr("data-answer") == correctAnswer)) {
+                console.log("perfect");
+                $(button).addClass("correct-answer");
+                setTimeout(() => { $(button).removeClass("correct-answer"); }, 1600);
+                score++;
+                $(".quiz-score").html(`Score is ${score}`);
+            } else {
+                if ($(button).hasClass("active")) {
+                    $(button).addClass("wrong-answer");
+                    setTimeout(() => { $(button).removeClass("wrong-answer"); }, 1600);
+                }
+                if (($(button).attr("data-answer") == correctAnswer)) {
                     $(button).addClass("correct-answer");
-                    score++;
-                    $(".quiz-score").html(`Score is ${score}`);
+                    //setTimeout(() => { $(button).removeClass("correct-answer"); }, 1600);
                 }
             }
-        
-            $(".next-question").prop("disabled", true);
-            $(".next-question").attr("aria-disabled", "true");        
-            $(".next-question").off("click");
-            
-            if (questionIndex < setOfQuestions.length) {
-                setTimeout(() => { askQuestions(setOfQuestions, questionIndex, score); }, 1500);
-                for (let button of answerButtons) {
-                    $(button).removeClass("active");               
-                } 
-            } else {
-                    toggleOptions();
-            }
-        });
+            disableElement(button);
+        }    
+        enableElement(".next-question");    
+        $(".submit-answer").off("click");
+    }
+
+    function disableElement(buttonIdentifier) {
+        $(buttonIdentifier).prop("disabled", true);
+        $(buttonIdentifier).attr("aria-disabled", "true");
+    }
+
+    function enableElement(buttonIdentifier) {
+        $(buttonIdentifier).prop("disabled", false);
+        $(buttonIdentifier).attr("aria-disabled", "false");
     }
 
     // get the quiz dataset from opentdb api
     function getData(myToken) {
-        let questionSet,
-            questionIndex = 0,
-            scoreTotal = 0,
+        //let questionSet,
+            questionIndex = 0;
+            score = 0;
             apiUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${myToken}`;
         var xhr = new XMLHttpRequest();
         xhr.open("GET", apiUrl);
         xhr.send();
         console.log(apiUrl);
         xhr.onreadystatechange = function () {
-            console.log(this.readyState, this.status, scoreTotal);
+            console.log(this.readyState, this.status, score);
             if (this.readyState == 4 && this.status == 200) {
                 let questionsLoaded;
                 questionsLoaded = JSON.parse(this.responseText);
                 if (questionsLoaded.response_code === 0) {
-                    questionSet = questionsLoaded.results;
+                    setOfQuestions = questionsLoaded.results;
                     toggleOptions();            
-                    askQuestions(questionSet, questionIndex, scoreTotal);
+                    askQuestions(setOfQuestions, questionIndex, score);
                 } else if (questionsLoaded.response_code === 3 || questionsLoaded.response_code === 4) {
-                    getToken().then(runGetData);
+                    getToken().then(runGetData, handleFailure);
                 } else {
-                    alert("Cannot get results from the Quiz Database. Please try again later.");
+                    alert("Cannot get results from the Quiz Database. Please try again later by refreshing the page.");
+                    $(".load-questions").prop("disabled", true);
+                    $(".load-questions").attr("aria-disabled", "true");
+                    $(".load-questions").html("Error");
                 }
             } else if (this.readyState == 4 && this.status != 200) {
-                alert("Cannot communicate with the Quiz Database. Please try again later.");
+                alert("Cannot communicate with the Quiz Database. Please try again later by refreshing the page.");
             }
         };
     }
@@ -132,11 +182,17 @@ $(document).ready(function() {
       getData(resolvedValue);
     }
 
+    function handleFailure(resolvedValue) {
+        $(".load-questions").prop("disabled", true);
+        $(".load-questions").attr("aria-disabled", "true");
+        $(".load-questions").html("Error");
+        alert(resolvedValue);
+    }
+
     // Get the quiz token from opentdb api
     function getToken() {
         return new Promise(function(myResolve, myReject) {
             var xhr = new XMLHttpRequest();
-            let token;
             xhr.open("GET", "https://opentdb.com/api_token.php?command=request");
             xhr.send();
 
@@ -147,7 +203,7 @@ $(document).ready(function() {
                     console.log(token);
                     myResolve(token);
                 } else if (this.readyState == 4 && this.status != 200) {
-                    myReject(alert("Cannot obtain Token. Please try again later."));
+                    myReject("Cannot obtain Token. Please try again later by refreshing the page.");
                 }
             }
         });
@@ -173,7 +229,12 @@ $(document).ready(function() {
         amount = activeButton(quantityButtons);
         category = activeButton(categoryButtons);
         difficulty = activeButton(difficultyButtons);
-        getToken().then(runGetData);
+        console.log(token);
+        if (!!token === false) {
+            getToken().then(runGetData, handleFailure);
+        } else {
+            getData(token);
+        }
     });
 
     // with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
@@ -182,6 +243,16 @@ $(document).ready(function() {
         $(this).addClass("active");
         $(this).siblings().removeClass("active");
     });
+
+    if (localStorage.getItem("highScore")) {
+        console.log("highscore");
+        highScore = localStorage.getItem("highScore");
+        $(".high-score-overall").html(`Highest Score Achieved: ${highScore}`);
+    } else {
+        console.log("lowscore");
+        highScore = 0;
+    }
+
 });
 
 
