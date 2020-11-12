@@ -40,6 +40,14 @@ $(document).ready(function() {
         let currentQuestion = setOfQuestions[questionIndex].question;
         let answersArray = setOfQuestions[questionIndex].incorrect_answers;
         
+        // Prepare the various buttons
+        for (let button of answerButtons) {
+            $(button).removeClass("active correct-answer wrong-answer");
+            enableElement(button);               
+        }
+        disableElement(".next-question");
+        disableElement(".submit-answer");
+
         correctAnswer = setOfQuestions[questionIndex].correct_answer;
         console.log(answersArray, (correctAnswer));
         shuffleAnswers(answersArray, correctAnswer);
@@ -63,22 +71,11 @@ $(document).ready(function() {
             $("[data-number='3']").attr("data-answer", `${answersArray[2]}`);
             $("[data-number='4']").html(`<p>${answersArray[3]}</p>`);
             $("[data-number='4']").attr("data-answer", `${answersArray[3]}`);
-        }
-        document.getElementsByClassName("reset-confirm")[0].onclick = function() {
-            toggleOptions();
-            $('#resetModal').modal('toggle');
-        }
-        
+        }        
         document.getElementsByClassName("questions")[0].innerHTML = `${questionIndex + 1}. ${currentQuestion}`;
         questionIndex++;
         console.log(questionIndex);
-        $(".question-answers button").on("click", function() {
-            enableElement(".submit-answer");
-        });
-        // Submit Answer
-        $(".submit-answer").on("click", submitAnswer);
-        // Move to next question
-        $(".next-question").on("click", nextQuestion);
+        timer(7);
     }
 
     function nextQuestion() {
@@ -104,9 +101,6 @@ $(document).ready(function() {
             }
             setTimeout(() => { toggleOptions(); }, 3000);
         }
-        disableElement(".next-question");
-        disableElement(".submit-answer");
-        $(".next-question").off("click");
     }
 
     function submitAnswer() {
@@ -130,8 +124,7 @@ $(document).ready(function() {
             }
             disableElement(button);
         }    
-        enableElement(".next-question");    
-        $(".submit-answer").off("click");
+        enableElement(".next-question");
     }
 
     function disableElement(buttonIdentifier) {
@@ -146,7 +139,7 @@ $(document).ready(function() {
 
     // get the quiz dataset from opentdb api
     function getData(myToken) {
-        //let questionSet,
+            questionSet = [];
             questionIndex = 0;
             score = 0;
             apiUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${myToken}`;
@@ -182,11 +175,12 @@ $(document).ready(function() {
       getData(resolvedValue);
     }
 
-    function handleFailure(resolvedValue) {
+    function handleFailure(rejectionReason) {
         $(".load-questions").prop("disabled", true);
         $(".load-questions").attr("aria-disabled", "true");
         $(".load-questions").html("Error");
-        alert(resolvedValue);
+        alert(rejectionReason);
+        console.log(rejectionReason);
     }
 
     // Get the quiz token from opentdb api
@@ -219,6 +213,7 @@ $(document).ready(function() {
             }
         }
     }
+
     // Set options & Load Questions
     $(".load-questions").click(function() {
         let categoryButtons = $(".categories").children("button");
@@ -231,11 +226,30 @@ $(document).ready(function() {
         difficulty = activeButton(difficultyButtons);
         console.log(token);
         if (!!token === false) {
-            getToken().then(runGetData, handleFailure);
+            getToken().then(runGetData).catch(handleFailure);
         } else {
             getData(token);
         }
     });
+
+    // Enable submit answer button be pressed after selecting an answer
+    $(".question-answers button").on("click", function() {
+        enableElement(".submit-answer");
+    });
+    
+    // Submit Answer
+    $(".submit-answer").on("click", submitAnswer);
+    // Move to next question
+    $(".next-question").on("click", nextQuestion);
+
+    document.getElementsByClassName("reset-confirm")[0].onclick = function() {
+        toggleOptions();
+        $('#resetModal').modal('toggle');
+        score = 0;
+        setOfQuestions = [];
+        questionIndex = 0;
+        //$(".reset-confirm").off("click");
+    }
 
     // with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
     // separates the multiple bootstrap list groups on the same page
@@ -253,33 +267,43 @@ $(document).ready(function() {
         highScore = 0;
     }
 
-});
 
+    // Timer inspired by Wes Bos version here:- https://github.com/wesbos/JavaScript30/blob/master/29%20-%20Countdown%20Timer/scripts-FINISHED.js
+    let countdown;
+    const timerDisplay = document.querySelector('.display__time-left');
+    function timer(seconds) {
+        const now = Date.now();
+        const then = now + seconds * 1000;
 
+        // clear any existing timers
+        clearInterval(countdown);
 
-/*
-    function getToken() {
-        var xhr = new XMLHttpRequest();
-
-        xhr.open("GET", "https://opentdb.com/api_token.php?command=request");
-        xhr.send();
-        xhr.onreadystatechange = function() {
-            console.log(this.readyState, this.status);
-            if (this.readyState == 4 && this.status == 200) {
-                token = (JSON.parse(this.responseText)).token;
-                console.log(token);
-                $(".load-questions").prop("disabled", false);
-                $(".load-questions").attr("aria-disabled", "false"); 
-                return token;  
-            } else if (this.status != 200) {
-                $(".load-questions").prop("disabled", false);
-                $(".load-questions").attr("aria-disabled", "false"); 
-                return token = "";
+        displayTimeLeft(seconds);
+        countdown = setInterval(() => {
+            const secondsLeft = Math.round((then - Date.now()) / 1000);
+            // check if we should stop it!
+            if(secondsLeft < 0) {
+            clearInterval(countdown);
+            return;
             }
-        }  
+            // display it
+            displayTimeLeft(secondsLeft);
+            if (secondsLeft === 0) {
+                for (let button of answerButtons) {
+                    if (($(button).attr("data-answer") === correctAnswer)) {
+                        $(button).addClass("correct-answer");
+                        enableElement(".next-question");
+                    }
+                }
+            }
+        }, 1000);
     }
-        */
-    // Make URL for calling API data
-    /*function makeUrl(amount, category, difficulty, myToken) {
-        return `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${myToken}`;
-    }*/
+
+    function displayTimeLeft(seconds) {
+        const remainderSeconds = seconds % 60;
+        const display = `You have ${remainderSeconds} seconds left to submit answer.`;
+        document.title = display;
+        timerDisplay.textContent = display;
+    }
+
+});
