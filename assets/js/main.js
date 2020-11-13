@@ -21,20 +21,6 @@ class Sound {
     }
 }
 
-$(".mute-sound").on("click", function() {
-    if ($(".mute-sound").attr("data-sound") === "off") {
-        $(".mute-sound").html(soundOn);
-        $(".mute-sound").attr("data-sound", "on");
-        correctAnswerSound.sound.volume = 1;
-        wrongAnswerSound.sound.volume = 1;
-    } else {
-        $(".mute-sound").html(soundOff);
-        $(".mute-sound").attr("data-sound", "off");
-        correctAnswerSound.sound.volume = 0;
-        wrongAnswerSound.sound.volume = 0;
-    }
-});
-
 // declare variables  
 let amount = 0;
 let category = 18; 
@@ -50,6 +36,20 @@ let soundOn = "<i class='fas fa-volume-up'></i>";
 let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
 let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
 let answerButtons = $(".question-answers").children("button");
+
+$(".mute-sound").on("click", function() {
+    if ($(".mute-sound").attr("data-sound") === "off") {
+        $(".mute-sound").html(soundOn);
+        $(".mute-sound").attr("data-sound", "on");
+        correctAnswerSound.sound.volume = 1;
+        wrongAnswerSound.sound.volume = 1;
+    } else {
+        $(".mute-sound").html(soundOff);
+        $(".mute-sound").attr("data-sound", "off");
+        correctAnswerSound.sound.volume = 0;
+        wrongAnswerSound.sound.volume = 0;
+    }
+});
 
 // switch off quiz options and switch on questions
 function toggleOptions() {
@@ -287,6 +287,7 @@ $(".submit-answer").on("click", submitAnswer);
 $(".next-question").on("click", nextQuestion);
 
 $(".reset-confirm").on("click", function() {
+    clearInterval(countdown);
     toggleOptions();
     $("#resetModal").modal("toggle");
 });
