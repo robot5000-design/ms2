@@ -1,5 +1,40 @@
 //document.addEventListener("DOMContentLoaded", function () {
-//$(document).ready(function() {
+$(document).ready(function() {
+
+});
+
+class Sound {
+    constructor(src) {
+        this.sound = document.createElement("audio");
+        this.sound.src = src;
+        this.sound.setAttribute("preload", "auto");
+        this.sound.setAttribute("controls", "none");
+        this.sound.style.display = "none";
+        this.sound.volume = 0;
+        document.body.appendChild(this.sound);
+        this.play = function () {
+            this.sound.play();
+        };
+        this.stop = function () {
+            this.sound.pause();
+        };
+    }
+}
+
+$(".mute-sound").on("click", function() {
+    if ($(".mute-sound").attr("data-sound") === "off") {
+        $(".mute-sound").html(soundOn);
+        $(".mute-sound").attr("data-sound", "on");
+        correctAnswerSound.sound.volume = 1;
+        wrongAnswerSound.sound.volume = 1;
+    } else {
+        $(".mute-sound").html(soundOff);
+        $(".mute-sound").attr("data-sound", "off");
+        correctAnswerSound.sound.volume = 0;
+        wrongAnswerSound.sound.volume = 0;
+    }
+});
+
 // declare variables  
 let amount = 0;
 let category = 18; 
@@ -10,8 +45,10 @@ let score = 0;
 let questionIndex = 0;
 let setOfQuestions = {};
 let highScore = 0;
-let correctAnswerSound = new sound("assets/sounds/correct-answer.wav");
-let wrongAnswerSound = new sound("assets/sounds/wrong-answer.wav");
+let soundOff = "<i class='fas fa-volume-mute'></i>";
+let soundOn = "<i class='fas fa-volume-up'></i>";
+let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
+let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
 let answerButtons = $(".question-answers").children("button");
 
 // switch off quiz options and switch on questions
@@ -267,23 +304,6 @@ if (localStorage.getItem("highScore")) {
 } else {
     highScore = 0;
 }
-
-function sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    this.sound.volume = 0;
-    document.body.appendChild(this.sound);
-    this.play = function(){
-        this.sound.play();
-    }
-    this.stop = function(){
-        this.sound.pause();
-    }    
-}
-wrongAnswerSound.stop();
 
 // Timer inspired by Wes Bos version here:- https://github.com/wesbos/JavaScript30/blob/master/29%20-%20Countdown%20Timer/scripts-FINISHED.js
 let countdown = 0;
