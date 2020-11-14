@@ -23,6 +23,10 @@
     background-color: red;
 }
 
+.time-critical {
+    background-color: red;
+}
+
 @keyframes example {
   0%   {background-color: green;}
   25%  {background-color: blue;}

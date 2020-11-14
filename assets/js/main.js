@@ -38,15 +38,15 @@ let buttonPress = new Sound("assets/sounds/button-press.wav");
 let answerButtons = $(".question-answers").children("button");
 let countdown = 0;
 let remainderSeconds = 0;
-let timerDisplay = document.querySelector(".display__time-left");
 
 $(".mute-sound").on("click", function() {
+    buttonPress.play();
     if ($(".mute-sound").attr("data-sound") === "off") {
         $(".mute-sound").html(soundOn);
         $(".mute-sound").attr("data-sound", "on");
         correctAnswerSound.sound.volume = 1;
         wrongAnswerSound.sound.volume = 1;
-        buttonPress.sound.volume = 1;
+        buttonPress.sound.volume = .5;
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
@@ -92,6 +92,7 @@ function askQuestions(setOfQuestions, questionIndex, score) {
     }
     disableElement(".next-question");
     disableElement(".submit-answer");
+    $(".reset-button").show();
 
     correctAnswer = setOfQuestions[questionIndex].correct_answer;
     console.log(answersArray, (correctAnswer));
@@ -126,6 +127,7 @@ function askQuestions(setOfQuestions, questionIndex, score) {
 function nextQuestion() {
     buttonPress.play();
     disableElement(".next-question");
+    $(".display__time-left").removeClass("time-critical");
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
         setTimeout(() => {
@@ -143,19 +145,28 @@ function nextQuestion() {
         }
         $(".questions").html("");
     } else {
+        $("#resetModal").attr("data-backdrop", "static");
+        $(".modal-cancel").hide();
+        $(".reset-confirm").html("Exit");
+        $("#resetModal").modal("toggle");
+        if (score === 0) {
+            $(".reset-modal").html("Better Luck Next Time!");
+        } else {
+            $(".reset-modal").html("Well Done!");
+        }
+        $(".modal-body").html(`You scored ${score} out of ${questionIndex} questons.`);
         if (score > highScore) {
             highScore = score;
             localStorage.setItem("highScore", `${highScore}`);
             $(".high-score-overall").html(`Highest Score Achieved: ${highScore}`);
         }
-        setTimeout(() => { toggleOptions(); }, 2000);
     }
 }
 
 function submitAnswer() {
     disableElement(".submit-answer");
     clearInterval(countdown);
-    $(".display__time-left").html(`You answered with ${remainderSeconds} seconds to spare.`);
+    $(".display__time-left").html(`You answered with ${remainderSeconds} seconds to spare.`).removeClass("time-critical");
     for (let button of answerButtons) {
         if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer)) {
             correctAnswerSound.play();
@@ -172,8 +183,11 @@ function submitAnswer() {
             }
         }
         disableElement(button);
-    }    
+    }   
     enableElement(".next-question");
+    if (questionIndex === (setOfQuestions.length - 1)) {
+            $(".reset-button").hide();
+    }
 }
 
 function disableElement(buttonIdentifier) {
@@ -293,6 +307,16 @@ $(".submit-answer").on("click", submitAnswer);
 // Move to next question
 $(".next-question").on("click", nextQuestion);
 
+$(".reset-button").on("click", function() {
+    buttonPress.play();
+    $("#resetModal").removeAttr("data-backdrop");
+    $(".modal-cancel").show();
+    $(".reset-confirm").html("Yes");
+    $("#resetModal").modal("toggle");
+    $(".reset-modal").html("EXIT QUIZ");
+    $(".modal-body").html("Please confirm if you would like to exit the quiz...");
+});
+
 $(".reset-confirm").on("click", function() {
     buttonPress.play();
     clearInterval(countdown);
@@ -300,9 +324,14 @@ $(".reset-confirm").on("click", function() {
     $("#resetModal").modal("toggle");
 });
 
+$(".modal-cancel").on("click", function() {
+    buttonPress.play();
+});
+
 // with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
 // separates the multiple bootstrap list groups on the same page
 $("body").on("click", ".list-group .btn", function () {
+    buttonPress.play();
     $(this).addClass("active");
     $(this).siblings().removeClass("active");
 });
@@ -335,7 +364,7 @@ function timer(seconds) {
         displayTimeLeft(secondsLeft);
         if (secondsLeft === 0) {
             wrongAnswerSound.play();
-            $(".display__time-left").html("You ran out of time.");
+            $(".display__time-left").html("Oops you ran out of time!");
             for (let button of answerButtons) {
                 if (($(button).attr("data-answer") === correctAnswer)) {
                     $(button).addClass("correct-answer");
@@ -349,9 +378,12 @@ function timer(seconds) {
 
 function displayTimeLeft(seconds) {
     remainderSeconds = seconds % 60;
-    let display = `You have ${remainderSeconds} seconds left to submit answer.`;
-    document.title = display;
-    timerDisplay.textContent = display;
+    $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
+    if (remainderSeconds <= 5) {
+        $(".display__time-left").addClass("time-critical");
+    } else {
+        $(".display__time-left").removeClass("time-critical");
+    }
 }
 
 //});
