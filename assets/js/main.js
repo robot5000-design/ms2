@@ -145,7 +145,6 @@ function nextQuestion() {
         }
         $(".questions").html("");
     } else {
-        $("#resetModal").attr("data-backdrop", "static");
         $(".modal-cancel").hide();
         $(".reset-confirm").html("Exit");
         $("#resetModal").modal("toggle");
@@ -309,7 +308,6 @@ $(".next-question").on("click", nextQuestion);
 
 $(".reset-button").on("click", function() {
     buttonPress.play();
-    $("#resetModal").removeAttr("data-backdrop");
     $(".modal-cancel").show();
     $(".reset-confirm").html("Yes");
     $("#resetModal").modal("toggle");
