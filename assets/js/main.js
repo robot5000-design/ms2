@@ -1,4 +1,3 @@
-//document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function() {
 
 });
@@ -35,7 +34,11 @@ let soundOff = "<i class='fas fa-volume-mute'></i>";
 let soundOn = "<i class='fas fa-volume-up'></i>";
 let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
 let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
+let buttonPress = new Sound("assets/sounds/button-press.wav");
 let answerButtons = $(".question-answers").children("button");
+let countdown = 0;
+let remainderSeconds = 0;
+let timerDisplay = document.querySelector(".display__time-left");
 
 $(".mute-sound").on("click", function() {
     if ($(".mute-sound").attr("data-sound") === "off") {
@@ -43,11 +46,13 @@ $(".mute-sound").on("click", function() {
         $(".mute-sound").attr("data-sound", "on");
         correctAnswerSound.sound.volume = 1;
         wrongAnswerSound.sound.volume = 1;
+        buttonPress.sound.volume = 1;
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
         correctAnswerSound.sound.volume = 0;
         wrongAnswerSound.sound.volume = 0;
+        buttonPress.sound.volume = 0;
     }
 });
 
@@ -119,6 +124,7 @@ function askQuestions(setOfQuestions, questionIndex, score) {
 }
 
 function nextQuestion() {
+    buttonPress.play();
     disableElement(".next-question");
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
@@ -264,6 +270,7 @@ $(".load-questions").click(function() {
     let difficultyButtons = $(".difficulty-level").children("button");
     let quantityButtons = $(".question-quantity").children("button");
 
+    buttonPress.play();
     $(".load-questions").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
     amount = activeButton(quantityButtons);
     category = activeButton(categoryButtons);
@@ -287,6 +294,7 @@ $(".submit-answer").on("click", submitAnswer);
 $(".next-question").on("click", nextQuestion);
 
 $(".reset-confirm").on("click", function() {
+    buttonPress.play();
     clearInterval(countdown);
     toggleOptions();
     $("#resetModal").modal("toggle");
@@ -299,17 +307,15 @@ $("body").on("click", ".list-group .btn", function () {
     $(this).siblings().removeClass("active");
 });
 
+// Save and retrieve high score to local storage
 if (localStorage.getItem("highScore")) {
     highScore = localStorage.getItem("highScore");
-    $(".high-score-overall").html(`Highest Score Achieved: ${highScore}`);
+    $(".high-score-overall").html(`Your highest score is ${highScore}`);
 } else {
     highScore = 0;
 }
 
 // Timer inspired by Wes Bos version here:- https://github.com/wesbos/JavaScript30/blob/master/29%20-%20Countdown%20Timer/scripts-FINISHED.js
-let countdown = 0;
-let remainderSeconds = 0;
-let timerDisplay = document.querySelector(".display__time-left");
 function timer(seconds) {
     let now = Date.now();
     let then = now + seconds * 1000;
