@@ -93,12 +93,19 @@ function askQuestions(setOfQuestions, questionIndex, score) {
     disableElement(".next-question");
     disableElement(".submit-answer");
     $(".reset-button").show();
-
     correctAnswer = setOfQuestions[questionIndex].correct_answer;
     console.log(answersArray, (correctAnswer));
     shuffleAnswers(answersArray, correctAnswer);
     $(".quiz-score").html(`Score is ${score}`);
     // check if question is boolean and if yes, hide redundant answer buttons
+    checkBoolean(setOfQuestions,questionIndex, answersArray);    
+    $(".questions").html(`${questionIndex + 1}. ${currentQuestion}`);
+    questionIndex++;
+    console.log(questionIndex);
+    timer(10);
+}
+
+function checkBoolean(setOfQuestions, questionIndex, answersArray) {
     if (setOfQuestions[questionIndex].type === "boolean") {
         $("[data-number='3']").addClass("hide-element");
         $("[data-number='4']").addClass("hide-element");
@@ -118,10 +125,6 @@ function askQuestions(setOfQuestions, questionIndex, score) {
         $("[data-number='4']").html(`<p>${answersArray[3]}</p>`);
         $("[data-number='4']").attr("data-answer", `${answersArray[3]}`);
     }        
-    $(".questions").html(`${questionIndex + 1}. ${currentQuestion}`);
-    questionIndex++;
-    console.log(questionIndex);
-    timer(10);
 }
 
 function nextQuestion() {
@@ -145,22 +148,26 @@ function nextQuestion() {
         }
         $(".questions").html("");
     } else {
-        $(".modal-cancel").hide();
-        $(".reset-confirm").html("Exit");
-        $("#resetModal").modal("toggle");
-        if (score === 0) {
-            $(".reset-modal").html("Better Luck Next Time!");
-        } else if (score > highScore) {
-            $(".reset-modal").html("A New High Score. Well Done!");
-        } else {
-            $(".reset-modal").html("Well Done!");
-        }
-        $(".modal-body").html(`You scored ${score} out of ${questionIndex} questons.`);
-        if (score > highScore) {
-            highScore = score;
-            localStorage.setItem("highScore", `${highScore}`);
-            $(".high-score-overall").html(`Your highest score is ${highScore}.`);
-        }
+        finishQuiz(questionIndex);
+    }
+}
+
+function finishQuiz(questionIndex) {
+    $(".modal-cancel").hide();
+    $(".reset-confirm").html("Exit");
+    $("#resetModal").modal("toggle");
+    if (score === 0) {
+        $(".reset-modal").html("Better Luck Next Time!");
+    } else if (score > highScore) {
+        $(".reset-modal").html("A New High Score. Well Done!");
+    } else {
+        $(".reset-modal").html("Well Done!");
+    }
+    $(".modal-body").html(`You scored ${score} out of ${questionIndex} questons.`);
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", `${highScore}`);
+        $(".high-score-overall").html(`Your highest score is ${highScore}.`);
     }
 }
 
@@ -168,6 +175,15 @@ function submitAnswer() {
     disableElement(".submit-answer");
     clearInterval(countdown);
     $(".display__time-left").html(`You answered with ${remainderSeconds} seconds to spare.`).removeClass("time-critical");
+    // Check if answer is correct
+    checkAnswer();
+    enableElement(".next-question");
+    if (questionIndex === (setOfQuestions.length - 1)) {
+            $(".reset-button").hide();
+    }
+}
+
+function checkAnswer() {
     for (let button of answerButtons) {
         if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer)) {
             correctAnswerSound.play();
@@ -184,10 +200,6 @@ function submitAnswer() {
             }
         }
         disableElement(button);
-    }   
-    enableElement(".next-question");
-    if (questionIndex === (setOfQuestions.length - 1)) {
-            $(".reset-button").hide();
     }
 }
 
@@ -201,36 +213,41 @@ function enableElement(buttonIdentifier) {
     $(buttonIdentifier).attr("aria-disabled", "false");
 }
 
-// get the quiz dataset from opentdb api
+// Get the quiz dataset from opentdb api
 function getQuizData(myToken) {
     let apiUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${myToken}`;
     let xhr = new XMLHttpRequest();
-    score = 0;
-    setOfQuestions = {};
-    questionIndex = 0;
     xhr.open("GET", apiUrl);
     xhr.send();
     console.log(apiUrl);
     xhr.onreadystatechange = function () {
         console.log(this.readyState, this.status, score);
         if (this.readyState === 4 && this.status === 200) {
-            let questionsLoaded;
+            let questionsLoaded = {};
             questionsLoaded = JSON.parse(this.responseText);
-            if (questionsLoaded.response_code === 0) {
-                setOfQuestions = questionsLoaded.results;
-                toggleOptions();            
-                askQuestions(setOfQuestions, questionIndex, score);
-            } else if (questionsLoaded.response_code === 3 || questionsLoaded.response_code === 4) {
-                getToken().then(handleSuccess, handleFailure);
-            } else {
-                alert("Cannot get results from the Quiz Database. Please try again later by refreshing the page.");
-                $(".load-questions").prop("disabled", true);
-                $(".load-questions").attr("aria-disabled", "true");
-                $(".load-questions").html("Error");
-            }
+            // Check the token and start the Quiz
+            checkToken(questionsLoaded);
         } else if (this.readyState === 4 && this.status != 200) {
             alert("Cannot communicate with the Quiz Database. Please try again later by refreshing the page.");
         }
+    }
+}
+
+function checkToken(questionsLoaded) {
+    score = 0;
+    questionIndex = 0;
+    if (questionsLoaded.response_code === 0) {
+        setOfQuestions = questionsLoaded.results;
+        toggleOptions();
+        // Start Quiz
+        askQuestions(setOfQuestions, questionIndex, score);
+    } else if (questionsLoaded.response_code === 3 || questionsLoaded.response_code === 4) {
+        getToken().then(handleSuccess, handleFailure);
+    } else {
+        alert("Cannot get results from the Quiz Database. Please try again later by refreshing the page.");
+        $(".load-questions").prop("disabled", true);
+        $(".load-questions").attr("aria-disabled", "true");
+        $(".load-questions").html("Error");
     }
 }
 
