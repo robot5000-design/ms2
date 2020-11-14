@@ -150,6 +150,8 @@ function nextQuestion() {
         $("#resetModal").modal("toggle");
         if (score === 0) {
             $(".reset-modal").html("Better Luck Next Time!");
+        } else if (score > highScore) {
+            $(".reset-modal").html("A New High Score. Well Done!");
         } else {
             $(".reset-modal").html("Well Done!");
         }
@@ -157,7 +159,7 @@ function nextQuestion() {
         if (score > highScore) {
             highScore = score;
             localStorage.setItem("highScore", `${highScore}`);
-            $(".high-score-overall").html(`Highest Score Achieved: ${highScore}`);
+            $(".high-score-overall").html(`Your highest score is ${highScore}.`);
         }
     }
 }
@@ -337,7 +339,7 @@ $("body").on("click", ".list-group .btn", function () {
 // Save and retrieve high score to local storage
 if (localStorage.getItem("highScore")) {
     highScore = localStorage.getItem("highScore");
-    $(".high-score-overall").html(`Your highest score is ${highScore}`);
+    $(".high-score-overall").html(`Your highest score is ${highScore}.`);
 } else {
     highScore = 0;
 }
