@@ -2,6 +2,10 @@ $(document).ready(function() {
 
 });
 
+/**
+ * @class - Represents all page sound effects
+ * @param { string } src - path to sound file
+ */
 class Sound {
     constructor(src) {
         this.sound = document.createElement("audio");
@@ -11,6 +15,7 @@ class Sound {
         this.sound.style.display = "none";
         this.sound.volume = 0;
         document.body.appendChild(this.sound);
+        /** @function  - plays a sound file */
         this.play = function () {
             this.sound.play();
         };
@@ -20,32 +25,51 @@ class Sound {
     }
 }
 
-// declare variables  
+// Declare variables
+/** @type { number } quantity of questions selected */
 let amount = 0;
-let category = 18; 
+/** @type { number } category of questions selected */
+let category = 18;
+/** @type { string } difficulty level of questions selected */
 let difficulty = "easy";
+/** @type { string } token to access API */
 let token = "";
+/** @type { string } correct answer to current question */
 let correctAnswer = "";
+/** @type { number } number of correct answers current quiz */
 let score = 0;
+/** @type { number } array index number of current question */
 let questionIndex = 0;
+/** @type { Object } current set of questions & answers */
 let setOfQuestions = {};
+/** @type { number } highest score achieved by user */
 let highScore = 0;
-let soundOff = "<i class='fas fa-volume-mute'></i>";
-let soundOn = "<i class='fas fa-volume-up'></i>";
-let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
-let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
-let buttonPress = new Sound("assets/sounds/button-press.wav");
-let answerButtons = $(".question-answers").children("button");
+/** @type { number } the id of the setInterval timer function */
 let countdown = 0;
+/** @type { number } number of seconds remaining on the timer */
 let remainderSeconds = 0;
+/** @type { Object } new instance of the sound class representing a correct answer */
+let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
+/** @type { Object } new instance of the sound class representing a wrong answer */
+let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
+/** @type { Object } new instance of the sound class representing a button press */
+let buttonPress = new Sound("assets/sounds/button-press.wav");
+/** @type { Object } contains all answer buttons */
+let answerButtons = $(".question-answers").children("button");
 
+/**
+ * @function - When clicked sound on/off is toggled
+ * @returns { void } nothing
+ */
 $(".mute-sound").on("click", function() {
+    let soundOff = "<i class='fas fa-volume-mute'></i>";
+    let soundOn = "<i class='fas fa-volume-up'></i>";
     buttonPress.play();
     if ($(".mute-sound").attr("data-sound") === "off") {
         $(".mute-sound").html(soundOn);
         $(".mute-sound").attr("data-sound", "on");
-        correctAnswerSound.sound.volume = 1;
-        wrongAnswerSound.sound.volume = 1;
+        correctAnswerSound.sound.volume = .8;
+        wrongAnswerSound.sound.volume = .8;
         buttonPress.sound.volume = .5;
     } else {
         $(".mute-sound").html(soundOff);
@@ -56,11 +80,18 @@ $(".mute-sound").on("click", function() {
     }
 });
 
-// switch off quiz options and switch on questions
+/**
+ * @function - switches between quiz options and quiz questions
+ * @returns { void } nothing
+ */
 function toggleOptions() {
     if ($(".question-options").css("display") != "none") {
         $(".question-options").removeClass("reinstate-element").addClass("remove-element");
         $(".question-container").removeClass("remove-element").addClass("reinstate-element");
+        /*() => {
+        $(".question-options").slideUp("slow");
+        $(".question-container").fadeIn("slow");
+        }*/
     } else {
         $(".next-question").html("Next Question");
         $(".load-questions").html("Load Questions");
@@ -69,7 +100,12 @@ function toggleOptions() {
     }
 }
 
-// Using The Fisher-Yates Method from here https://www.w3schools.com/js/js_array_sort.asp
+/**
+ * @function - Shuffles questions using The Fisher-Yates Shuffle Method
+ * @param { Array } answersArray - the array to be shuffled
+ * @param { string } correctAnswer - to be pushed into the array before shuffling
+ * @returns { void } nothing
+ */
 function shuffleAnswers(answersArray, correctAnswer) {
     answersArray.push(correctAnswer);
     for (let i = answersArray.length - 1; i > 0; i--) {
@@ -80,9 +116,17 @@ function shuffleAnswers(answersArray, correctAnswer) {
     }
 }
 
+/**
+ * @function - Prepares and presents the quiz questions to the screen
+ * @param { Object } setOfQuestions - current set of questions & answers
+ * @param { number } questionIndex - array index number of current question
+ * @param { number } score - number of correct answers current quiz
+ * @returns { void } nothing
+ */
 function askQuestions(setOfQuestions, questionIndex, score) {
-    let currentType;
+    /** @type { string } current question */
     let currentQuestion = setOfQuestions[questionIndex].question;
+    /** @type { Array } array of incorrect answers to current question */
     let answersArray = setOfQuestions[questionIndex].incorrect_answers;
     
     // Prepare the various buttons
@@ -105,6 +149,14 @@ function askQuestions(setOfQuestions, questionIndex, score) {
     timer(10);
 }
 
+/**
+ * @function - Removes surplus answer buttons if the current question
+ * is boolean rather than multiple choice
+ * @param { Object } setOfQuestions - current set of questions & answers
+ * @param { number } questionIndex - array index number of current question
+ * @param { Array } answersArray - array of answers to the current question
+ * @returns { void } nothing
+ */
 function checkBoolean(setOfQuestions, questionIndex, answersArray) {
     if (setOfQuestions[questionIndex].type === "boolean") {
         $("[data-number='3']").addClass("hide-element");
@@ -127,6 +179,10 @@ function checkBoolean(setOfQuestions, questionIndex, answersArray) {
     }        
 }
 
+/**
+ * @function - Moves the quiz to the next question
+ * @returns { void } nothing
+ */
 function nextQuestion() {
     buttonPress.play();
     disableElement(".next-question");
@@ -152,6 +208,12 @@ function nextQuestion() {
     }
 }
 
+/**
+ * @function - Finishes the quiz by presenting a results model to the screen
+ * and updating the high score in local storage if required
+ * @param { number } questionIndex - array index number of current question
+ * @returns { void } nothing
+ */
 function finishQuiz(questionIndex) {
     $(".modal-cancel").hide();
     $(".reset-confirm").html("Exit");
@@ -171,6 +233,10 @@ function finishQuiz(questionIndex) {
     }
 }
 
+/**
+ * @function - Submits an answer to be checked and resets the timer
+ * @returns { void } nothing
+ */
 function submitAnswer() {
     disableElement(".submit-answer");
     clearInterval(countdown);
@@ -183,6 +249,10 @@ function submitAnswer() {
     }
 }
 
+/**
+ * @function - Checks if an answer is correct and provides visual feedback
+ * @returns { void } nothing
+ */
 function checkAnswer() {
     for (let button of answerButtons) {
         if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer)) {
@@ -203,23 +273,44 @@ function checkAnswer() {
     }
 }
 
+/**
+ * @function - Used to disable an element on screen
+ * @param { Object | string } buttonIdentifier - a button element
+ * @returns { void } nothing
+ */
 function disableElement(buttonIdentifier) {
     $(buttonIdentifier).prop("disabled", true);
     $(buttonIdentifier).attr("aria-disabled", "true");
 }
 
+/**
+ * @function - Used to enable an element on screen
+ * @param { Object | string } buttonIdentifier - a button element
+ * @returns { void } nothing
+ */
 function enableElement(buttonIdentifier) {
     $(buttonIdentifier).prop("disabled", false);
     $(buttonIdentifier).attr("aria-disabled", "false");
 }
 
-// Get the quiz dataset from opentdb api
+/**
+ * @function - Gets quiz data object containing questions and answers from the opentdb API
+ * @param { string } myToken - token used to access the quiz API
+ * @returns { void } nothing
+ */
 function getQuizData(myToken) {
+    /** @type { string } opentdb API url address */
     let apiUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${myToken}`;
+    /** @type { Object } new instance of the object XMLHttpRequest */
     let xhr = new XMLHttpRequest();
     xhr.open("GET", apiUrl);
     xhr.send();
     console.log(apiUrl);
+    /**
+     * @function - Checks the status of the response from the quiz API and when ready and if ok calls to check the 
+     * status of the token used otherwise alerts the user to an error obtaining quiz data
+     * @returns { void } nothing
+     */
     xhr.onreadystatechange = function () {
         console.log(this.readyState, this.status, score);
         if (this.readyState === 4 && this.status === 200) {
@@ -233,6 +324,11 @@ function getQuizData(myToken) {
     }
 }
 
+/**
+ * @function - Checks the token status and if ok begins the quiz, otherwise calls for a new token
+ * @param { string } myToken - token used to access the quiz API
+ * @returns { void } nothing
+ */
 function checkToken(questionsLoaded) {
     score = 0;
     questionIndex = 0;
@@ -251,55 +347,16 @@ function checkToken(questionsLoaded) {
     }
 }
 
-// Run function to get quiz data from API
-function handleSuccess(resolvedValue) {
-    getQuizData(resolvedValue);
-}
-
-// Handle failure to get a token
-function handleFailure(rejectionReason) {
-    $(".load-questions").prop("disabled", true);
-    $(".load-questions").attr("aria-disabled", "true");
-    $(".load-questions").html("Error");
-    alert(rejectionReason);
-    console.log(rejectionReason);
-}
-
-// Get the quiz token from opentdb api
-function getToken() {
-    return new Promise(function(myResolve, myReject) {
-        let tokenUrl = "https://opentdb.com/api_token.php?command=request"
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", tokenUrl);
-        xhr.send();
-        xhr.onreadystatechange = function() {
-            console.log(this.readyState, this.status);
-            if (this.readyState === 4 && this.status === 200) {
-                token = (JSON.parse(this.responseText)).token;
-                console.log(token);
-                myResolve(token);
-            } else if (this.readyState === 4 && this.status != 200) {
-                myReject("Cannot obtain Token. Please try again later by refreshing the page.");
-            }
-        }
-    });
-}
-
-// Check if a button is active & get its data attribute value
-function activeButton(buttonGroup) {
-    for (let button of buttonGroup) {     
-        if ($(button).hasClass("active")) {
-            buttonValue = button.getAttribute("data-value");
-            console.log(buttonValue);
-            return buttonValue;                 
-        }
-    }
-}
-
-// Set options & Load Questions
+/**
+ * @function - When button is clicked sets the pre quiz options and checks if a token already exists
+ * @returns { void } nothing
+ */
 $(".load-questions").click(function() {
+    /** @type { Object } contains buttons representing quiz category options */
     let categoryButtons = $(".categories").children("button");
+    /** @type { Object } contains buttons representing quiz difficulty options */
     let difficultyButtons = $(".difficulty-level").children("button");
+    /** @type { Object } contains buttons representing quiz quantity of questions options */
     let quantityButtons = $(".question-quantity").children("button");
 
     buttonPress.play();
@@ -315,16 +372,94 @@ $(".load-questions").click(function() {
     }
 });
 
-// Enable submit answer button be pressed after selecting an answer
+/**
+ * @function - Handles a successful rsponse from the getToken function
+ * @returns { void } nothing
+ */
+function handleSuccess(resolvedValue) {
+    getQuizData(resolvedValue);
+}
+
+/**
+ * @function - Handles an unsuccesful response from the getToken function
+ * @returns { void } nothing
+ */
+function handleFailure(rejectionReason) {
+    $(".load-questions").prop("disabled", true);
+    $(".load-questions").attr("aria-disabled", "true");
+    $(".load-questions").html("Error");
+    alert(rejectionReason);
+}
+
+/**
+ * @function - Requests a token from the opentdb API
+ * @returns { Promise } returns a Promise Object which resolves to contain a token on success
+ * or alerts the user to a problem if unsuccessful
+ */
+function getToken() {
+    return new Promise(function(myResolve, myReject) {
+        /** @type { string } opentdb API url address */
+        let tokenUrl = "https://opentdb.com/api_token.php?command=request"
+        /** @type { Object } new instance of the object XMLHttpRequest */
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", tokenUrl);
+        xhr.send();
+        /**
+         * @function - Checks the status of the response from the quiz API and when ready and if ok 
+         * resolves to a token otherwise alerts the user to a problem
+         */
+        xhr.onreadystatechange = function() {
+            console.log(this.readyState, this.status);
+            if (this.readyState === 4 && this.status === 200) {
+                token = (JSON.parse(this.responseText)).token;
+                console.log(token);
+                myResolve(token);
+            } else if (this.readyState === 4 && this.status != 200) {
+                myReject("Cannot obtain Token. Please try again later by refreshing the page.");
+            }
+        }
+    });
+}
+
+/**
+ * @function - Check if a button is active & gets its data attribute value
+ * @param { Object } buttonGroup - represents a group of button elements
+ * @returns { void } nothing
+ */
+function activeButton(buttonGroup) {
+    for (let button of buttonGroup) {
+        if ($(button).hasClass("active")) {
+            buttonValue = button.getAttribute("data-value");
+            console.log(buttonValue);
+            return buttonValue;                 
+        }
+    }
+}
+
+/**
+ * @function - When answer button clicked enables submit answer button be pressed after selecting an answer
+ * @returns { void } nothing
+ */
 $(".question-answers button").on("click", function() {
     enableElement(".submit-answer");
 });
 
-// Submit Answer
+/**
+ * @function - When the submit answer button is clicked calls the submitAnswer function
+ * @returns { void } nothing
+ */
 $(".submit-answer").on("click", submitAnswer);
-// Move to next question
+
+/**
+ * @function - When the next question button is clicked calls the nextQuestion function
+ * @returns { void } nothing
+ */
 $(".next-question").on("click", nextQuestion);
 
+/**
+ * @function - When the Exit Quiz button is clicked displays a modal for the user to confirm
+ * @returns { void } nothing
+ */
 $(".reset-button").on("click", function() {
     buttonPress.play();
     $(".modal-cancel").show();
@@ -334,6 +469,10 @@ $(".reset-button").on("click", function() {
     $(".modal-body").html("Please confirm if you would like to exit the quiz...");
 });
 
+/**
+ * @function - When the modal Ok button is clicked, stops the timer and returns to quiz options
+ * @returns { void } nothing
+ */
 $(".reset-confirm").on("click", function() {
     buttonPress.play();
     clearInterval(countdown);
@@ -341,19 +480,29 @@ $(".reset-confirm").on("click", function() {
     $("#resetModal").modal("toggle");
 });
 
+/**
+ * @function - Plays a sound when the modal cancel button is clicked
+ * @returns { void } nothing
+ */
 $(".modal-cancel").on("click", function() {
     buttonPress.play();
 });
 
 // with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
-// separates the multiple bootstrap list groups on the same page
-$("body").on("click", ".list-group .btn", function () {
+/**
+ * @function - Separates the multiple options bootstrap list groups on the same page
+ * @returns { void } nothing
+ */
+$("body").on("click", ".list-group .btn", function() {
     buttonPress.play();
     $(this).addClass("active");
     $(this).siblings().removeClass("active");
 });
 
-// Save and retrieve high score to local storage
+/**
+ * @function - Save and retrieve high score to local storage
+ * @returns { void } nothing
+ */
 if (localStorage.getItem("highScore")) {
     highScore = localStorage.getItem("highScore");
     $(".high-score-overall").html(`Your highest score is ${highScore}.`);
@@ -362,24 +511,30 @@ if (localStorage.getItem("highScore")) {
 }
 
 // Timer inspired by Wes Bos version here:- https://github.com/wesbos/JavaScript30/blob/master/29%20-%20Countdown%20Timer/scripts-FINISHED.js
+/**
+ * @function - Countdown Timer
+ * @param { number } seconds - Countdown timer starting number of seconds
+ * @returns { void } nothing
+ */
 function timer(seconds) {
+    /** @type { number } represents current time */
     let now = Date.now();
+    /** @type { number } represents current time + timer value converted to milliseconds */
     let then = now + seconds * 1000;
-
     // clear any existing timers
     clearInterval(countdown);
-
     displayTimeLeft(seconds);
+    /**
+     * @function - Interval timer which calculated and sets the secondsLeft every 1000ms
+     */
     countdown = setInterval(() => {
         let secondsLeft = Math.round((then - Date.now()) / 1000);
-        // check if we should stop it!
+        // check if timer should be stopped
         if (secondsLeft < 0) {
-        clearInterval(countdown);
-        return;
-        }
-        // display it
-        displayTimeLeft(secondsLeft);
-        if (secondsLeft === 0) {
+            clearInterval(countdown);
+            return;
+        // when timer reaches zero play sound and alert user
+        } else if (secondsLeft === 0) {
             wrongAnswerSound.play();
             $(".display__time-left").html("Oops you ran out of time!");
             for (let button of answerButtons) {
@@ -390,11 +545,18 @@ function timer(seconds) {
                 disableElement(button);
             }
         }
+        // display it
+        displayTimeLeft(secondsLeft);
     }, 1000);
 }
 
-function displayTimeLeft(seconds) {
-    remainderSeconds = seconds % 60;
+/**
+ * @function - Displays timer current value on screen
+ * @param { number } secondsLeft - Countdown timer remaining number of seconds
+ * @returns { void } nothing
+ */
+function displayTimeLeft(secondsLeft) {
+    remainderSeconds = secondsLeft % 60;
     $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
     if (remainderSeconds <= 5) {
         $(".display__time-left").addClass("time-critical");
@@ -402,5 +564,3 @@ function displayTimeLeft(seconds) {
         $(".display__time-left").removeClass("time-critical");
     }
 }
-
-//});
