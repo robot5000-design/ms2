@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 });
-
+// Declare Classes
 /**
  * @class - Represents all page sound effects
  * @param { string } src - path to sound file
@@ -47,7 +47,7 @@ let highScore = 0;
 /** @type { number } the id of the setInterval timer function */
 let countdown = 0;
 /** @type { number } number of seconds remaining on the timer */
-let remainderSeconds = 0;
+let secondsLeft = 0;
 /** @type { Object } new instance of the sound class representing a correct answer */
 let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
 /** @type { Object } new instance of the sound class representing a wrong answer */
@@ -56,6 +56,8 @@ let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
 let buttonPress = new Sound("assets/sounds/button-press.wav");
 /** @type { Object } contains all answer buttons */
 let answerButtons = $(".question-answers").children("button");
+/** @type { string } opentdb API url address to obtain token */
+let tokenUrl = "https://opentdb.com/api_token.php?command=request"
 
 /**
  * @function - When clicked sound on/off is toggled
@@ -102,33 +104,32 @@ function toggleOptions() {
 
 /**
  * @function - Shuffles questions using The Fisher-Yates Shuffle Method
- * @param { Array } answersArray - the array to be shuffled
- * @param { string } correctAnswer - to be pushed into the array before shuffling
+ * @param { Array } arrayOfAnswers - the array to be shuffled
+ * @param { string } currentCorrectAnswer - to be pushed into the array before shuffling
  * @returns { void } nothing
  */
-function shuffleAnswers(answersArray, correctAnswer) {
-    answersArray.push(correctAnswer);
-    for (let i = answersArray.length - 1; i > 0; i--) {
+function shuffleAnswers(arrayOfAnswers, currentCorrectAnswer) {
+    arrayOfAnswers.push(currentCorrectAnswer);
+    for (let i = arrayOfAnswers.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * i);
-        k = answersArray[i];
-        answersArray[i] = answersArray[j];
-        answersArray[j] = k;
+        k = arrayOfAnswers[i];
+        arrayOfAnswers[i] = arrayOfAnswers[j];
+        arrayOfAnswers[j] = k;
     }
 }
 
 /**
  * @function - Prepares and presents the quiz questions to the screen
- * @param { Object } setOfQuestions - current set of questions & answers
- * @param { number } questionIndex - array index number of current question
- * @param { number } score - number of correct answers current quiz
+ * @param { Object } arrayOfQuestions - current set of questions & answers
+ * @param { number } arrayIndex - array index number of current question
+ * @param { number } currentScore - number of correct answers current quiz
  * @returns { void } nothing
  */
-function askQuestions(setOfQuestions, questionIndex, score) {
+function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     /** @type { string } current question */
-    let currentQuestion = setOfQuestions[questionIndex].question;
+    let currentQuestion = arrayOfQuestions[arrayIndex].question;
     /** @type { Array } array of incorrect answers to current question */
-    let answersArray = setOfQuestions[questionIndex].incorrect_answers;
-    
+    let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers;    
     // Prepare the various buttons
     for (let button of answerButtons) {
         $(button).removeClass("active correct-answer wrong-answer");
@@ -137,28 +138,29 @@ function askQuestions(setOfQuestions, questionIndex, score) {
     disableElement(".next-question");
     disableElement(".submit-answer");
     $(".reset-button").show();
-    correctAnswer = setOfQuestions[questionIndex].correct_answer;
-    console.log(answersArray, (correctAnswer));
+    // Assign the correct answer
+    correctAnswer = arrayOfQuestions[arrayIndex].correct_answer;
     shuffleAnswers(answersArray, correctAnswer);
-    $(".quiz-score").html(`Score is ${score}`);
+    $(".quiz-score").html(`Score is ${currentScore}`);
     // check if question is boolean and if yes, hide redundant answer buttons
-    checkBoolean(setOfQuestions,questionIndex, answersArray);    
-    $(".questions").html(`${questionIndex + 1}. ${currentQuestion}`);
-    questionIndex++;
-    console.log(questionIndex);
+    checkBoolean(arrayOfQuestions, arrayIndex, answersArray);    
+    $(".questions").html(`${arrayIndex + 1}. ${currentQuestion}`);
+    arrayIndex++;
     timer(10);
+    console.log(answersArray, (correctAnswer));
+    console.log(arrayIndex);
 }
 
 /**
  * @function - Removes surplus answer buttons if the current question
  * is boolean rather than multiple choice
- * @param { Object } setOfQuestions - current set of questions & answers
- * @param { number } questionIndex - array index number of current question
- * @param { Array } answersArray - array of answers to the current question
+ * @param { Object } arrayOfQuestions - current set of questions & answers
+ * @param { number } arrayIndex - array index number of current question
+ * @param { Array } arrayOfAnswers - array of answers to the current question
  * @returns { void } nothing
  */
-function checkBoolean(setOfQuestions, questionIndex, answersArray) {
-    if (setOfQuestions[questionIndex].type === "boolean") {
+function checkBoolean(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
+    if (arrayOfQuestions[arrayIndex].type === "boolean") {
         $("[data-number='3']").addClass("hide-element");
         $("[data-number='4']").addClass("hide-element");
         $("[data-number='1']").html("<p>True</p>");
@@ -168,14 +170,14 @@ function checkBoolean(setOfQuestions, questionIndex, answersArray) {
     } else {
         $("[data-number='3']").removeClass("hide-element");
         $("[data-number='4']").removeClass("hide-element");
-        $("[data-number='1']").html(`<p>${answersArray[0]}</p>`);
-        $("[data-number='1']").attr("data-answer", `${answersArray[0]}`);
-        $("[data-number='2']").html(`<p>${answersArray[1]}</p>`);
-        $("[data-number='2']").attr("data-answer", `${answersArray[1]}`);
-        $("[data-number='3']").html(`<p>${answersArray[2]}</p>`);
-        $("[data-number='3']").attr("data-answer", `${answersArray[2]}`);
-        $("[data-number='4']").html(`<p>${answersArray[3]}</p>`);
-        $("[data-number='4']").attr("data-answer", `${answersArray[3]}`);
+        $("[data-number='1']").html(`<p>${arrayOfAnswers[0]}</p>`);
+        $("[data-number='1']").attr("data-answer", `${arrayOfAnswers[0]}`);
+        $("[data-number='2']").html(`<p>${arrayOfAnswers[1]}</p>`);
+        $("[data-number='2']").attr("data-answer", `${arrayOfAnswers[1]}`);
+        $("[data-number='3']").html(`<p>${arrayOfAnswers[2]}</p>`);
+        $("[data-number='3']").attr("data-answer", `${arrayOfAnswers[2]}`);
+        $("[data-number='4']").html(`<p>${arrayOfAnswers[3]}</p>`);
+        $("[data-number='4']").attr("data-answer", `${arrayOfAnswers[3]}`);
     }        
 }
 
@@ -211,10 +213,10 @@ function nextQuestion() {
 /**
  * @function - Finishes the quiz by presenting a results model to the screen
  * and updating the high score in local storage if required
- * @param { number } questionIndex - array index number of current question
+ * @param { number } arrayIndex - array index number of current question
  * @returns { void } nothing
  */
-function finishQuiz(questionIndex) {
+function finishQuiz(arrayIndex) {
     $(".modal-cancel").hide();
     $(".reset-confirm").html("Exit");
     $("#resetModal").modal("toggle");
@@ -225,7 +227,7 @@ function finishQuiz(questionIndex) {
     } else {
         $(".reset-modal").html("Well Done!");
     }
-    $(".modal-body").html(`You scored ${score} out of ${questionIndex} questons.`);
+    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questons.`);
     if (score > highScore) {
         highScore = score;
         localStorage.setItem("highScore", `${highScore}`);
@@ -240,7 +242,7 @@ function finishQuiz(questionIndex) {
 function submitAnswer() {
     disableElement(".submit-answer");
     clearInterval(countdown);
-    $(".display__time-left").html(`You answered with ${remainderSeconds} seconds to spare.`).removeClass("time-critical");
+    $(".display__time-left").html(`You answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
     // Check if answer is correct
     checkAnswer();
     enableElement(".next-question");
@@ -314,6 +316,7 @@ function getQuizData(myToken) {
     xhr.onreadystatechange = function () {
         console.log(this.readyState, this.status, score);
         if (this.readyState === 4 && this.status === 200) {
+            /** @type { Object } Will represent quiz data returned from opentdb API */
             let questionsLoaded = {};
             questionsLoaded = JSON.parse(this.responseText);
             // Check the token and start the Quiz
@@ -326,19 +329,24 @@ function getQuizData(myToken) {
 
 /**
  * @function - Checks the token status and if ok begins the quiz, otherwise calls for a new token
- * @param { string } myToken - token used to access the quiz API
+ * @param { Object } questionsLoadedObject - quiz data object returned from opentdb API
  * @returns { void } nothing
  */
-function checkToken(questionsLoaded) {
+function checkToken(questionsLoadedObject) {
     score = 0;
     questionIndex = 0;
-    if (questionsLoaded.response_code === 0) {
-        setOfQuestions = questionsLoaded.results;
+    console.log("token response", questionsLoadedObject.response_code);
+    if (questionsLoadedObject.response_code === 0) {
+        setOfQuestions = questionsLoadedObject.results;
         toggleOptions();
         // Start Quiz
         askQuestions(setOfQuestions, questionIndex, score);
-    } else if (questionsLoaded.response_code === 3 || questionsLoaded.response_code === 4) {
-        getToken().then(handleSuccess, handleFailure);
+    } else if (questionsLoadedObject.response_code === 3) {
+        getToken(tokenUrl).then(handleSuccess, handleFailure);
+    } else if (questionsLoadedObject.response_code === 4) {
+        /** @type { string } opentdb API url address to reset token */
+        let resetTokenUrl = `https://opentdb.com/api_token.php?command=reset&token=${token}`;
+        getToken(resetTokenUrl).then(handleSuccess, handleFailure);
     } else {
         alert("Cannot get results from the Quiz Database. Please try again later by refreshing the page.");
         $(".load-questions").prop("disabled", true);
@@ -366,7 +374,7 @@ $(".load-questions").click(function() {
     difficulty = activeButton(difficultyButtons);
     console.log(token);
     if (!!token === false) {
-        getToken().then(handleSuccess).catch(handleFailure);
+        getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
     } else {
         getQuizData(token);
     }
@@ -393,16 +401,15 @@ function handleFailure(rejectionReason) {
 
 /**
  * @function - Requests a token from the opentdb API
+ * @param { string } url - url for obtaining token to access the quiz API
  * @returns { Promise } returns a Promise Object which resolves to contain a token on success
  * or alerts the user to a problem if unsuccessful
  */
-function getToken() {
-    return new Promise(function(myResolve, myReject) {
-        /** @type { string } opentdb API url address */
-        let tokenUrl = "https://opentdb.com/api_token.php?command=request"
+function getToken(url) {
+    return new Promise(function(myResolve, myReject) {        
         /** @type { Object } new instance of the object XMLHttpRequest */
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", tokenUrl);
+        xhr.open("GET", url);
         xhr.send();
         /**
          * @function - Checks the status of the response from the quiz API and when ready and if ok 
@@ -412,6 +419,7 @@ function getToken() {
             console.log(this.readyState, this.status);
             if (this.readyState === 4 && this.status === 200) {
                 token = (JSON.parse(this.responseText)).token;
+                sessionStorage.setItem("sessionToken", `${token}`);
                 console.log(token);
                 myResolve(token);
             } else if (this.readyState === 4 && this.status != 200) {
@@ -510,6 +518,15 @@ if (localStorage.getItem("highScore")) {
     highScore = 0;
 }
 
+/**
+ * @function - Save and retrieve current token to session storage
+ * @returns { void } nothing
+ */
+if (sessionStorage.getItem("sessionToken")) {
+    token = sessionStorage.getItem("sessionToken");
+    console.log("sessionToken", token);
+}
+
 // Timer inspired by Wes Bos version here:- https://github.com/wesbos/JavaScript30/blob/master/29%20-%20Countdown%20Timer/scripts-FINISHED.js
 /**
  * @function - Countdown Timer
@@ -528,7 +545,7 @@ function timer(seconds) {
      * @function - Interval timer which calculated and sets the secondsLeft every 1000ms
      */
     countdown = setInterval(() => {
-        let secondsLeft = Math.round((then - Date.now()) / 1000);
+        secondsLeft = Math.round((then - Date.now()) / 1000);
         // check if timer should be stopped
         if (secondsLeft < 0) {
             clearInterval(countdown);
@@ -552,11 +569,10 @@ function timer(seconds) {
 
 /**
  * @function - Displays timer current value on screen
- * @param { number } secondsLeft - Countdown timer remaining number of seconds
+ * @param { number } remainderSeconds - Countdown timer remaining number of seconds
  * @returns { void } nothing
  */
-function displayTimeLeft(secondsLeft) {
-    remainderSeconds = secondsLeft % 60;
+function displayTimeLeft(remainderSeconds) {
     $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
     if (remainderSeconds <= 5) {
         $(".display__time-left").addClass("time-critical");
