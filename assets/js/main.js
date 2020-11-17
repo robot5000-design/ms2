@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 });
-// Declare Classes
+// Declare Classes  ######################################################################
 /**
  * @class - Represents all page sound effects
  * @param { string } src - path to sound file
@@ -25,7 +25,7 @@ class Sound {
     }
 }
 
-// Declare variables
+// Declare variables  ######################################################################
 /** @type { number } quantity of questions selected */
 let amount = 0;
 /** @type { number } category of questions selected */
@@ -59,29 +59,7 @@ let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
 let tokenUrl = "https://opentdb.com/api_token.php?command=request"
 
-/**
- * @function - When clicked sound on/off is toggled
- * @returns { void } nothing
- */
-$(".mute-sound").on("click", function() {
-    let soundOff = "<i class='fas fa-volume-mute'></i>";
-    let soundOn = "<i class='fas fa-volume-up'></i>";
-    buttonPress.play();
-    if ($(".mute-sound").attr("data-sound") === "off") {
-        $(".mute-sound").html(soundOn);
-        $(".mute-sound").attr("data-sound", "on");
-        correctAnswerSound.sound.volume = .8;
-        wrongAnswerSound.sound.volume = .8;
-        buttonPress.sound.volume = .5;
-    } else {
-        $(".mute-sound").html(soundOff);
-        $(".mute-sound").attr("data-sound", "off");
-        correctAnswerSound.sound.volume = 0;
-        wrongAnswerSound.sound.volume = 0;
-        buttonPress.sound.volume = 0;
-    }
-});
-
+// Normal Functions  ######################################################################
 /**
  * @function - switches between quiz options and quiz questions
  * @returns { void } nothing
@@ -217,19 +195,27 @@ function nextQuestion() {
  * @returns { void } nothing
  */
 function finishQuiz(arrayIndex) {
+    let weightedScore = 0;
     $(".modal-cancel").hide();
     $(".reset-confirm").html("Exit");
     $("#resetModal").modal("toggle");
+    if (difficulty === "medium") {
+        weightedScore = Math.round(score * 1.2);
+    } else if (difficulty === "hard") {
+        weightedScore = Math.round(score * 1.5);
+    } else {
+        weightedScore = score;
+    }
     if (score === 0) {
         $(".reset-modal").html("Better Luck Next Time!");
-    } else if (score > highScore) {
+    } else if (weightedScore > highScore) {
         $(".reset-modal").html("A New High Score. Well Done!");
     } else {
         $(".reset-modal").html("Well Done!");
     }
-    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questons.`);
-    if (score > highScore) {
-        highScore = score;
+    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questons. Weighted score for ${difficulty} difficulty is ${weightedScore}.`);
+    if (weightedScore > highScore) {
+        highScore = weightedScore;
         localStorage.setItem("highScore", `${highScore}`);
         $(".high-score-overall").html(`Your highest score is ${highScore}.`);
     }
@@ -356,31 +342,6 @@ function checkToken(questionsLoadedObject) {
 }
 
 /**
- * @function - When button is clicked sets the pre quiz options and checks if a token already exists
- * @returns { void } nothing
- */
-$(".load-questions").click(function() {
-    /** @type { Object } contains buttons representing quiz category options */
-    let categoryButtons = $(".categories").children("button");
-    /** @type { Object } contains buttons representing quiz difficulty options */
-    let difficultyButtons = $(".difficulty-level").children("button");
-    /** @type { Object } contains buttons representing quiz quantity of questions options */
-    let quantityButtons = $(".question-quantity").children("button");
-
-    buttonPress.play();
-    $(".load-questions").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
-    amount = activeButton(quantityButtons);
-    category = activeButton(categoryButtons);
-    difficulty = activeButton(difficultyButtons);
-    console.log(token);
-    if (!!token === false) {
-        getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
-    } else {
-        getQuizData(token);
-    }
-});
-
-/**
  * @function - Handles a successful rsponse from the getToken function
  * @returns { void } nothing
  */
@@ -444,6 +405,95 @@ function activeButton(buttonGroup) {
     }
 }
 
+// Timer inspired by Wes Bos version here:- https://github.com/wesbos/JavaScript30/blob/master/29%20-%20Countdown%20Timer/scripts-FINISHED.js
+/**
+ * @function - Countdown Timer
+ * @param { number } seconds - Countdown timer starting number of seconds
+ * @returns { void } nothing
+ */
+function timer(seconds) {
+    /** @type { number } represents current time */
+    let now = Date.now();
+    /** @type { number } represents current time + timer value converted to milliseconds */
+    let then = now + seconds * 1000;
+    // clear any existing timers
+    clearInterval(countdown);
+    displayTimeLeft(seconds);
+    /**
+     * @function - Interval timer which calculated and sets the secondsLeft every 1000ms
+     */
+    countdown = setInterval(() => {
+        secondsLeft = Math.round((then - Date.now()) / 1000);
+        // check if timer should be stopped
+        if (secondsLeft < 0) {
+            clearInterval(countdown);
+            return;
+        // when timer reaches zero play sound and alert user
+        } else if (secondsLeft === 0) {
+            wrongAnswerSound.play();
+            $(".display__time-left").html("Oops you ran out of time!");
+            for (let button of answerButtons) {
+                if (($(button).attr("data-answer") === correctAnswer)) {
+                    $(button).addClass("correct-answer");
+                    enableElement(".next-question");
+                }
+                disableElement(button);
+            }
+        }
+        // display it
+        displayTimeLeft(secondsLeft);
+    }, 1000);
+}
+
+// Click Event Functions  ######################################################################
+/**
+ * @function - When clicked sound on/off is toggled
+ * @returns { void } nothing
+ */
+$(".mute-sound").on("click", function() {
+    let soundOff = "<i class='fas fa-volume-mute'></i>";
+    let soundOn = "<i class='fas fa-volume-up'></i>";
+    buttonPress.play();
+    if ($(".mute-sound").attr("data-sound") === "off") {
+        $(".mute-sound").html(soundOn);
+        $(".mute-sound").attr("data-sound", "on");
+        correctAnswerSound.sound.volume = .8;
+        wrongAnswerSound.sound.volume = .8;
+        buttonPress.sound.volume = .5;
+    } else {
+        $(".mute-sound").html(soundOff);
+        $(".mute-sound").attr("data-sound", "off");
+        correctAnswerSound.sound.volume = 0;
+        wrongAnswerSound.sound.volume = 0;
+        buttonPress.sound.volume = 0;
+    }
+});
+
+/**
+ * @function - When button is clicked sets the pre quiz options and checks if a token already exists
+ * @returns { void } nothing
+ */
+$(".load-questions").click(function() {
+    /** @type { Object } contains buttons representing quiz category options */
+    let categoryButtons = $(".categories").children("button");
+    /** @type { Object } contains buttons representing quiz difficulty options */
+    let difficultyButtons = $(".difficulty-level").children("button");
+    /** @type { Object } contains buttons representing quiz quantity of questions options */
+    let quantityButtons = $(".question-quantity").children("button");
+
+    buttonPress.play();
+    $(".load-questions").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
+    amount = activeButton(quantityButtons);
+    category = activeButton(categoryButtons);
+    difficulty = activeButton(difficultyButtons);
+    console.log(token);
+    if (!!token === false) {
+        getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
+    } else {
+        getQuizData(token);
+    }
+});
+
 /**
  * @function - When answer button clicked enables submit answer button be pressed after selecting an answer
  * @returns { void } nothing
@@ -489,6 +539,20 @@ $(".reset-confirm").on("click", function() {
 });
 
 /**
+ * @function - Displays timer current value on screen
+ * @param { number } remainderSeconds - Countdown timer remaining number of seconds
+ * @returns { void } nothing
+ */
+function displayTimeLeft(remainderSeconds) {
+    $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
+    if (remainderSeconds <= 5) {
+        $(".display__time-left").addClass("time-critical");
+    } else {
+        $(".display__time-left").removeClass("time-critical");
+    }
+}
+
+/**
  * @function - Plays a sound when the modal cancel button is clicked
  * @returns { void } nothing
  */
@@ -507,6 +571,7 @@ $("body").on("click", ".list-group .btn", function() {
     $(this).siblings().removeClass("active");
 });
 
+// Check and retrieve Local and Session Storage Values  ######################################################################
 /**
  * @function - Save and retrieve high score to local storage
  * @returns { void } nothing
@@ -525,58 +590,4 @@ if (localStorage.getItem("highScore")) {
 if (sessionStorage.getItem("sessionToken")) {
     token = sessionStorage.getItem("sessionToken");
     console.log("sessionToken", token);
-}
-
-// Timer inspired by Wes Bos version here:- https://github.com/wesbos/JavaScript30/blob/master/29%20-%20Countdown%20Timer/scripts-FINISHED.js
-/**
- * @function - Countdown Timer
- * @param { number } seconds - Countdown timer starting number of seconds
- * @returns { void } nothing
- */
-function timer(seconds) {
-    /** @type { number } represents current time */
-    let now = Date.now();
-    /** @type { number } represents current time + timer value converted to milliseconds */
-    let then = now + seconds * 1000;
-    // clear any existing timers
-    clearInterval(countdown);
-    displayTimeLeft(seconds);
-    /**
-     * @function - Interval timer which calculated and sets the secondsLeft every 1000ms
-     */
-    countdown = setInterval(() => {
-        secondsLeft = Math.round((then - Date.now()) / 1000);
-        // check if timer should be stopped
-        if (secondsLeft < 0) {
-            clearInterval(countdown);
-            return;
-        // when timer reaches zero play sound and alert user
-        } else if (secondsLeft === 0) {
-            wrongAnswerSound.play();
-            $(".display__time-left").html("Oops you ran out of time!");
-            for (let button of answerButtons) {
-                if (($(button).attr("data-answer") === correctAnswer)) {
-                    $(button).addClass("correct-answer");
-                    enableElement(".next-question");
-                }
-                disableElement(button);
-            }
-        }
-        // display it
-        displayTimeLeft(secondsLeft);
-    }, 1000);
-}
-
-/**
- * @function - Displays timer current value on screen
- * @param { number } remainderSeconds - Countdown timer remaining number of seconds
- * @returns { void } nothing
- */
-function displayTimeLeft(remainderSeconds) {
-    $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
-    if (remainderSeconds <= 5) {
-        $(".display__time-left").addClass("time-critical");
-    } else {
-        $(".display__time-left").removeClass("time-critical");
-    }
 }
