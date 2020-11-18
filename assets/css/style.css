@@ -1,3 +1,29 @@
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+    font-family: "Pangolin";
+}
+
+header {
+    color: #fafafa;
+    padding: 70px 70px 50px;
+}
+
+button {
+    background-color: #fafafa1a;
+}
+
 .question-container {
     display: none;
 }
@@ -40,4 +66,19 @@
   /*background-color: red;*/
   animation-name: example;
   animation-duration: 2s;
+}
+
+.backing-image {
+  background: url(../images/back-image.png) no-repeat top center scroll #000;
+  background-size: 100% 100%;
+  min-height: 100vh;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
 }
