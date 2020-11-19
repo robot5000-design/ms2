@@ -16,7 +16,7 @@ body {
 }
 
 header {
-    color: #fafafa;
+    color: #f6f4f0;
     padding: 0px 15px 30px 15px;
     text-align: center;
 }
@@ -29,8 +29,21 @@ h2 {
     font-size: 1.5rem;
 }
 
-button {
-    background-color: #fafafa1a;
+.quiz-options .list-group button {
+    background-color: #f6f4f0;
+    margin-bottom: 5px;
+    border: 2px solid #000;
+}
+
+.quiz-options .list-group button.active {
+    background-color: #ffd23f;
+    border-color: #000;
+    color: #353535;
+    margin-bottom: 5px;
+}
+
+.quiz-options .list-group button:focus {
+    box-shadow: none;
 }
 
 .owl-image {
@@ -49,6 +62,32 @@ button {
 .group-heading {
     background-color: #353535;
     color: #fafafa;
+    margin-bottom: 5px;
+}
+
+.icon-left {
+    float: left;
+    padding-right: 5px;
+}
+
+.icon-right {
+    float: right;
+    padding-left: 5px;
+}
+
+.load-questions {
+    background-color: #d31363;
+    border: 3px solid #f6f4f0;
+    color: #f6f4f0;
+    border-radius: 10px;
+    width: 50%;
+    height: 70px;
+}
+
+.load-questions:hover {
+    background-color: #f6f4f0;
+    border: 3px solid #d31363;
+    color: #d31363;
 }
 
 .question-container {

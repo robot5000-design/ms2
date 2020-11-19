@@ -459,7 +459,7 @@ $(".mute-sound").on("click", function() {
         $(".mute-sound").attr("data-sound", "on");
         correctAnswerSound.sound.volume = .8;
         wrongAnswerSound.sound.volume = .8;
-        buttonPress.sound.volume = .5;
+        buttonPress.sound.volume = .7;
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
