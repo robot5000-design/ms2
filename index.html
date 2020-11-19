@@ -22,46 +22,49 @@
     </head>
     <body>
         <div class="overall-container container-fluid">
+        <div class="row">
+        <div class="col top-image">
+        </div>
+        </div>
             <div class="row">
                 <div class="col backing-image p-0">
-                    <div class="container">
-                        <header class="row">
+                    <div class="controls-container container-fluid">                        
+                        <div class="row">
                             <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <button type="button" class="mute-sound" data-sound="off"><i class="fas fa-volume-mute"></i></button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <h1>Test your knowledge!</h1>
-                                        <h2>Science Quiz with Computing, Science & Nature and Mathematics</h2>
-                                    </div>
-                                </div>
+                                <button type="button" class="mute-sound" data-sound="off"><i class="fas fa-volume-mute"></i></button>
                             </div>
-                        </header>
-                        <div class="row question-options">
+                        </div>
+                        <header class="row">
+                            <div class="icon-image col-12 col-sm-2">
+                                <img src="./assets/images/icon.png" alt="bookworm-owl" class="owl-image">
+                            </div>
+                            <div class="heading-text col-12 col-sm-10">
+                                <h1>Test your knowledge!</h1>
+                                <h2>Science Quiz with Computing, Nature or Mathematics</h2>
+                            </div>
+                        </header>                    
+                        <div class="row quiz-options">
                             <div class="col">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="list-group categories">
-                                            <div class="list-group-item">
+                                            <div class="list-group-item group-heading">
                                                 Choose a Category:
                                             </div>
                                             <button type="button" class="list-group-item btn active" data-value="18">								
-                                            Science: Computing
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="17">							
-                                            Science & Nature
+                                                Science: Computing
                                             </button>
                                             <button type="button" class="list-group-item btn" data-value="19">							
-                                            Science: Mathematics
+                                                Science: Mathematics
+                                            </button>
+                                            <button type="button" class="list-group-item btn" data-value="17">							
+                                                Science & Nature
                                             </button>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <ul class="list-group difficulty-level">
-                                            <div class="list-group-item">
+                                            <div class="list-group-item group-heading">
                                                 Choose difficulty level:						
                                             </div>
                                             <button type="button" class="list-group-item btn active" data-value="easy">
@@ -77,7 +80,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="list-group question-quantity">
-                                            <div class="list-group-item">
+                                            <div class="list-group-item group-heading">
                                                 Number of Questions:
                                             </div>
                                             <button type="button" class="list-group-item btn active" data-value="5">
@@ -127,12 +130,15 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+            <div class="col bottom-image"></div>
+            </div>
         </div>
         <!-- Exit the Quiz Modal -->
         <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" data-backdrop="static" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-div">
                         <h5 class="reset-modal" id="resetModalLabel">EXIT QUIZ</h5>
                     </div>
                     <div class="modal-body">

@@ -65,17 +65,17 @@ let tokenUrl = "https://opentdb.com/api_token.php?command=request"
  * @returns { void } nothing
  */
 function toggleOptions() {
-    if ($(".question-options").css("display") != "none") {
-        $(".question-options").removeClass("reinstate-element").addClass("remove-element");
+    if ($(".quiz-options").css("display") != "none") {
+        $(".quiz-options").removeClass("reinstate-element").addClass("remove-element");
         $(".question-container").removeClass("remove-element").addClass("reinstate-element");
         /*() => {
-        $(".question-options").slideUp("slow");
+        $(".quiz-options").slideUp("slow");
         $(".question-container").fadeIn("slow");
         }*/
     } else {
         $(".next-question").html("Next Question");
         $(".load-questions").html("Load Questions");
-        $(".question-options").removeClass("remove-element").addClass("reinstate-element");
+        $(".quiz-options").removeClass("remove-element").addClass("reinstate-element");
         $(".question-container").removeClass("reinstate-element").addClass("remove-element");
     }
 }
