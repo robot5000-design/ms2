@@ -80,14 +80,23 @@ h2 {
     border: 3px solid #f6f4f0;
     color: #f6f4f0;
     border-radius: 10px;
+    font-size: 2em;
     width: 50%;
     height: 70px;
+}
+
+.load-questions-wrapper {
+    padding-bottom: 40px;
 }
 
 .load-questions:hover {
     background-color: #f6f4f0;
     border: 3px solid #d31363;
     color: #d31363;
+}
+
+button:focus {
+    outline: none;
 }
 
 .question-container {

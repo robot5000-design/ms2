@@ -74,7 +74,7 @@ function toggleOptions() {
         }*/
     } else {
         $(".next-question").html("Next Question");
-        $(".load-questions").html("Load Questions");
+        $(".load-questions").html("Start!");
         $(".quiz-options").removeClass("remove-element").addClass("reinstate-element");
         $(".question-container").removeClass("reinstate-element").addClass("remove-element");
     }
