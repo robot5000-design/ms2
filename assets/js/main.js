@@ -119,7 +119,7 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     // Assign the correct answer
     correctAnswer = arrayOfQuestions[arrayIndex].correct_answer;
     shuffleAnswers(answersArray, correctAnswer);
-    $(".quiz-score").html(`Score is ${currentScore}`);
+    $(".quiz-score").html(`Score is ${currentScore} / ${setOfQuestions.length}`);
     // check if question is boolean and if yes, hide redundant answer buttons
     checkBoolean(arrayOfQuestions, arrayIndex, answersArray);    
     $(".questions").html(`${arrayIndex + 1}. ${currentQuestion}`);
@@ -167,6 +167,7 @@ function nextQuestion() {
     buttonPress.play();
     disableElement(".next-question");
     $(".display__time-left").removeClass("time-critical");
+    $(".answer-feedback").html("");
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
         setTimeout(() => {
@@ -245,13 +246,15 @@ function checkAnswer() {
     for (let button of answerButtons) {
         if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer)) {
             correctAnswerSound.play();
+            $(".answer-feedback").html("Well Done. Correct Answer!");
             $(button).addClass("correct-answer");
             score++;
-            $(".quiz-score").html(`Score is ${score}`);
+            $(".quiz-score").html(`Score is ${score} / ${setOfQuestions.length}`);
         } else {
             if ($(button).hasClass("active")) {
                 $(button).addClass("wrong-answer");
                 wrongAnswerSound.play();
+                $(".answer-feedback").html("Bad Luck. Wrong Answer!");
             }
             if (($(button).attr("data-answer") === correctAnswer)) {
                 $(button).addClass("correct-answer");
@@ -327,6 +330,7 @@ function checkToken(questionsLoadedObject) {
         toggleOptions();
         // Start Quiz
         askQuestions(setOfQuestions, questionIndex, score);
+        window.scroll(0, 300);
     } else if (questionsLoadedObject.response_code === 3) {
         getToken(tokenUrl).then(handleSuccess, handleFailure);
     } else if (questionsLoadedObject.response_code === 4) {
@@ -431,7 +435,6 @@ function timer(seconds) {
         // when timer reaches zero play sound and alert user
         } else if (secondsLeft === 0) {
             wrongAnswerSound.play();
-            $(".display__time-left").html("Oops you ran out of time!");
             for (let button of answerButtons) {
                 if (($(button).attr("data-answer") === correctAnswer)) {
                     $(button).addClass("correct-answer");
@@ -482,7 +485,7 @@ $(".load-questions").click(function() {
     let quantityButtons = $(".question-quantity").children("button");
 
     buttonPress.play();
-    $(".load-questions").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
+    $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
     amount = activeButton(quantityButtons);
     category = activeButton(categoryButtons);
     difficulty = activeButton(difficultyButtons);
@@ -544,7 +547,11 @@ $(".reset-confirm").on("click", function() {
  * @returns { void } nothing
  */
 function displayTimeLeft(remainderSeconds) {
-    $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
+    if (remainderSeconds === 0) {
+        $(".display__time-left").html("Oops you ran out of time!");
+    } else {
+        $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
+    }
     if (remainderSeconds <= 5) {
         $(".display__time-left").addClass("time-critical");
     } else {
