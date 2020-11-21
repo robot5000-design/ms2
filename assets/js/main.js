@@ -115,7 +115,6 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     }
     disableElement(".next-question");
     disableElement(".submit-answer");
-    $(".reset-button").show();
     // Assign the correct answer
     correctAnswer = arrayOfQuestions[arrayIndex].correct_answer;
     shuffleAnswers(answersArray, correctAnswer);
@@ -139,15 +138,15 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
  */
 function checkBoolean(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
     if (arrayOfQuestions[arrayIndex].type === "boolean") {
-        $("[data-number='3']").addClass("hide-element");
-        $("[data-number='4']").addClass("hide-element");
+        $("[data-number='3']").css("display", "none");
+        $("[data-number='4']").css("display", "none");
         $("[data-number='1']").html("<p>True</p>");
         $("[data-number='1']").attr("data-answer", "True");
         $("[data-number='2']").html("<p>False</p>");
         $("[data-number='2']").attr("data-answer", "False");
     } else {
-        $("[data-number='3']").removeClass("hide-element");
-        $("[data-number='4']").removeClass("hide-element");
+        $("[data-number='3']").css("display", "block");
+        $("[data-number='4']").css("display", "block");
         $("[data-number='1']").html(`<p>${arrayOfAnswers[0]}</p>`);
         $("[data-number='1']").attr("data-answer", `${arrayOfAnswers[0]}`);
         $("[data-number='2']").html(`<p>${arrayOfAnswers[1]}</p>`);
@@ -178,6 +177,7 @@ function nextQuestion() {
         }, 500);
         if (questionIndex === (setOfQuestions.length - 1)) {
             $(".next-question").html("Press to Finish");
+            $(".reset-button").hide();
         }
         for (let button of answerButtons) {
             $(button).removeClass("active correct-answer wrong-answer");
@@ -233,9 +233,6 @@ function submitAnswer() {
     // Check if answer is correct
     checkAnswer();
     enableElement(".next-question");
-    if (questionIndex === (setOfQuestions.length - 1)) {
-            $(".reset-button").hide();
-    }
 }
 
 /**
@@ -244,7 +241,7 @@ function submitAnswer() {
  */
 function checkAnswer() {
     for (let button of answerButtons) {
-        if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer)) {
+        if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer) && (secondsLeft > 0)) {
             correctAnswerSound.play();
             $(".answer-feedback").html("Well Done. Correct Answer!");
             $(button).addClass("correct-answer");
@@ -539,6 +536,7 @@ $(".reset-confirm").on("click", function() {
     clearInterval(countdown);
     toggleOptions();
     $("#resetModal").modal("toggle");
+    $(".reset-button").show();
 });
 
 /**
@@ -549,6 +547,7 @@ $(".reset-confirm").on("click", function() {
 function displayTimeLeft(remainderSeconds) {
     if (remainderSeconds === 0) {
         $(".display__time-left").html("Oops you ran out of time!");
+        disableElement(".submit-answer");
     } else {
         $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
     }

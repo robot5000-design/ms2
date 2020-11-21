@@ -248,7 +248,7 @@ button:focus {
 }
 
 .btn.disabled, .btn:disabled {
-    opacity: .75;
+    opacity: .85;
 }
 
 .question-container .list-group .correct-answer,
@@ -264,6 +264,30 @@ button:focus {
 
 .time-critical {
     background-color: red;
+}
+
+.submit-answer,
+.next-question,
+.reset-button {
+    border: 3px solid #f6f4f0;
+    color: #f6f4f0;
+    font-size: 1em;
+    width: 100%;
+    height: 80px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.next-question {
+
+}
+
+.action-button {
+    text-align: center;
+}
+
+.status-info {
+    color: #f6f4f0;
 }
 
 /*--------------------------------------------------------Media Queries */
