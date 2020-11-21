@@ -73,7 +73,7 @@ function toggleOptions() {
         $(".question-container").fadeIn("slow");
         }*/
     } else {
-        $(".next-question").html("Next Question");
+        $(".next-question").html(`Next Question <i class="fas fa-caret-right"></i>`);
         $(".load-questions").html("Start!");
         $(".quiz-options").removeClass("remove-element").addClass("reinstate-element");
         $(".question-container").removeClass("reinstate-element").addClass("remove-element");
@@ -177,7 +177,7 @@ function nextQuestion() {
             }
         }, 500);
         if (questionIndex === (setOfQuestions.length - 1)) {
-            $(".next-question").html("Press to Finish");
+            $(".next-question").html(`Press to Finish <i class="fas fa-caret-right"></i>`);
             $(".reset-button").hide();
         }
         for (let button of answerButtons) {
@@ -456,7 +456,7 @@ function displayTimeLeft(remainderSeconds) {
         $(".display__time-left").html("Oops you ran out of time!");
         disableElement(".submit-answer");
     } else {
-        $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
+        $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds remaining.`);
     }
     if (remainderSeconds <= 5) {
         $(".display__time-left").addClass("time-critical");
