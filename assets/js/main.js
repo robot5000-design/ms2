@@ -166,8 +166,8 @@ function nextQuestion() {
     buttonPress.play();
     disableElement(".next-question");
     $(".display__time-left").removeClass("time-critical");
-    $(".answer-feedback").html("");
-    window.scroll(0, 350);
+    $(".answer-feedback").html(" ");
+    window.scroll(0, 300);
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
         setTimeout(() => {
@@ -328,7 +328,7 @@ function checkToken(questionsLoadedObject) {
         toggleOptions();
         // Start Quiz
         askQuestions(setOfQuestions, questionIndex, score);
-        window.scroll(0, 350);
+        window.scroll(0, 300);
     } else if (questionsLoadedObject.response_code === 3) {
         getToken(tokenUrl).then(handleSuccess, handleFailure);
     } else if (questionsLoadedObject.response_code === 4) {
