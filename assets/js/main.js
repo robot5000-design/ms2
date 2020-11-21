@@ -445,6 +445,25 @@ function timer(seconds) {
     }, 1000);
 }
 
+/**
+ * @function - Displays timer current value on screen
+ * @param { number } remainderSeconds - Countdown timer remaining number of seconds
+ * @returns { void } nothing
+ */
+function displayTimeLeft(remainderSeconds) {
+    if (remainderSeconds === 0) {
+        $(".display__time-left").html("Oops you ran out of time!");
+        disableElement(".submit-answer");
+    } else {
+        $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
+    }
+    if (remainderSeconds <= 5) {
+        $(".display__time-left").addClass("time-critical");
+    } else {
+        $(".display__time-left").removeClass("time-critical");
+    }
+}
+
 // Click Event Functions  ######################################################################
 /**
  * @function - When clicked sound on/off is toggled
@@ -538,25 +557,6 @@ $(".reset-confirm").on("click", function() {
     $("#resetModal").modal("toggle");
     $(".reset-button").show();
 });
-
-/**
- * @function - Displays timer current value on screen
- * @param { number } remainderSeconds - Countdown timer remaining number of seconds
- * @returns { void } nothing
- */
-function displayTimeLeft(remainderSeconds) {
-    if (remainderSeconds === 0) {
-        $(".display__time-left").html("Oops you ran out of time!");
-        disableElement(".submit-answer");
-    } else {
-        $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds left to submit an answer.`);
-    }
-    if (remainderSeconds <= 5) {
-        $(".display__time-left").addClass("time-critical");
-    } else {
-        $(".display__time-left").removeClass("time-critical");
-    }
-}
 
 /**
  * @function - Plays a sound when the modal cancel button is clicked

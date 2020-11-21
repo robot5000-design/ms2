@@ -310,13 +310,15 @@ button:focus {
     }
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 768px) {
     .mute-sound {
-    font-size: 30px;
-    padding-right: 50px;
-    padding-top: 0px;
+        font-size: 30px;
+        padding-right: 40px;
+        padding-top: 0px;
     }
+}
 
+@media screen and (min-width: 992px) {
     .quiz-options {
         max-width: 90%;
     }
