@@ -212,6 +212,7 @@ button:focus {
 .question-container {
     margin: 0 auto;
     max-width: 100%;
+    text-align: center;
 }
 
 .question-container .list-group button:hover {
@@ -264,51 +265,36 @@ button:focus {
     background-color: red;
 }
 
-.submit-answer,
 .next-question {
     border: 3px solid #f6f4f0;
     border-radius: 10px;
     color: #f6f4f0;
-    font-size: 1.2em;
+    font-size: 1.6em;
     width: 100%;
     min-height: 98px;
-    padding-left: 0;
-    padding-right: 0;
     margin-top: 30px;
     margin-bottom: 30px;
-}
-
-.submit-answer {
-    background-color: #fb6107;
-}
-
-.submit-answer:hover,
-.submit-answer:disabled {
-    background-color: #e15605;
+    padding-left: 4px;
+    padding-right: 4px;
+    line-height: 1.7em;
 }
 
 .next-question:disabled {
     background-color: #0069d9;
 }
 
-.submit-answer:hover,
 .next-question:hover {
     border: 3px solid #353535;
 }
 
-.submit-answer:disabled,
 .next-question:disabled,
 .reset-button:disabled {
     border: none;
 }
 
-.next-question {
-    padding-left: 4px;
-    padding-right: 4px;
-}
-
 .action-button {
-    text-align: center;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .action-button i {
@@ -321,7 +307,6 @@ button:focus {
 
 .status-info {
     color: #f6f4f0;
-    text-align: center;
     padding-top: 10px;
 }
 
@@ -336,13 +321,14 @@ button:focus {
     margin: 30px 0 10px;
 }
 
-.reset-button-wrapper {
-    text-align: center;
-}
-
 .display__time-left {
     border-radius: 5px;
     margin-top: 10px;
+}
+
+.quiz-score {
+    line-height: 2em;
+    font-size: .8em;
 }
 
 
@@ -351,6 +337,10 @@ button:focus {
 @media screen and (min-width: 400px) {
     .question-container {
         max-width: 90%;
+    }
+
+    .action-button {
+        max-width: 70%;
     }
 }
 
@@ -371,6 +361,10 @@ button:focus {
         font-size: 30px;
         padding-right: 40px;
         padding-top: 0px;
+    }
+
+    .action-button {
+        max-width: 50%;
     }
 }
 

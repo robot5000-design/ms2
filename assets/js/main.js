@@ -58,8 +58,6 @@ let buttonPress = new Sound("assets/sounds/button-press.wav");
 let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
 let tokenUrl = "https://opentdb.com/api_token.php?command=request"
-let ah = screen.availHeight;
-let h = screen.height;
 
 // Normal Functions  ######################################################################
 /**
@@ -70,9 +68,7 @@ function toggleOptions() {
     if ($(".quiz-options").css("display") != "none") {
         $(".quiz-options").removeClass("reinstate-element").addClass("remove-element");
         $(".question-container").removeClass("remove-element").addClass("reinstate-element");
-        $(".ah").html(`avail height, ${ah}`);
-        $(".h").html(`height, ${h}`);
-        if (screen.availHeight < 900) {
+        if (screen.availHeight < 1000) {
             $(".controls-container header").hide();
         }
         /*() => {
@@ -175,7 +171,7 @@ function nextQuestion() {
     disableElement(".next-question");
     $(".display__time-left").removeClass("time-critical");
     $(".answer-feedback").html(" ");
-    window.scroll(0, 50);
+    window.scroll(0, 60);
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
         setTimeout(function() {
@@ -333,7 +329,7 @@ function checkToken(questionsLoadedObject) {
         toggleOptions();
         // Start Quiz
         askQuestions(setOfQuestions, questionIndex, score);
-        window.scroll(0, 50);
+        window.scroll(0, 60);
     } else if (questionsLoadedObject.response_code === 3) {
         getToken(tokenUrl).then(handleSuccess, handleFailure);
     } else if (questionsLoadedObject.response_code === 4) {
