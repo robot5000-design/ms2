@@ -176,10 +176,7 @@ function nextQuestion() {
     if (questionIndex < setOfQuestions.length) {
         setTimeout(() => {
             askQuestions(setOfQuestions, questionIndex, score);
-            for (let button of answerButtons) {
-                enableElement(button);
-            }
-        }, 500);
+        }, 30);
         if (questionIndex === (setOfQuestions.length - 1)) {
             $(".next-question").html(`Press to Finish <i class="fas fa-caret-right"></i>`);
             $(".reset-button").hide();
