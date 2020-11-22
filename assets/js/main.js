@@ -243,7 +243,7 @@ function submitAnswer() {
  */
 function checkAnswer() {
     for (let button of answerButtons) {
-        if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer) && (secondsLeft > 0)) {
+        if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer) && (secondsLeft >= 0)) {
             correctAnswerSound.play();
             $(".answer-feedback").html("Well Done. Correct Answer!");
             $(button).addClass("correct-answer");
@@ -430,10 +430,10 @@ function timer(seconds) {
         // check if timer should be stopped
         if (secondsLeft < 0) {
             clearInterval(countdown);
+            wrongAnswerSound.play();
             return;
         // when timer reaches zero play sound and alert user
         } else if (secondsLeft === 0) {
-            wrongAnswerSound.play();
             for (let button of answerButtons) {
                 if (($(button).attr("data-answer") === correctAnswer)) {
                     $(button).addClass("correct-answer");
@@ -529,13 +529,13 @@ $(".question-answers button").on("click", function() {
  */
 //$(".submit-answer").on("click", submitAnswer);
 for (let button of answerButtons) {
-    $(button).on("click", test);
+    $(button).on("click", selectSubmit);
 }
 
-function test() {
+function selectSubmit() {
     setTimeout(function() {
         submitAnswer();
-}, 500);
+    }, 500);
 }
 
 /**
