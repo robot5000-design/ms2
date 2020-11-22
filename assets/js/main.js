@@ -58,6 +58,8 @@ let buttonPress = new Sound("assets/sounds/button-press.wav");
 let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
 let tokenUrl = "https://opentdb.com/api_token.php?command=request"
+let ah = screen.availHeight;
+let h = screen.height;
 
 // Normal Functions  ######################################################################
 /**
@@ -66,11 +68,13 @@ let tokenUrl = "https://opentdb.com/api_token.php?command=request"
  */
 function toggleOptions() {
     if ($(".quiz-options").css("display") != "none") {
+        $(".quiz-options").removeClass("reinstate-element").addClass("remove-element");
+        $(".question-container").removeClass("remove-element").addClass("reinstate-element");
+        $(".ah").html(`avail height, ${ah}`);
+        $(".h").html(`height, ${h}`);
         if (screen.availHeight < 900) {
             $(".controls-container header").hide();
         }
-        $(".quiz-options").removeClass("reinstate-element").addClass("remove-element");
-        $(".question-container").removeClass("remove-element").addClass("reinstate-element");
         /*() => {
         $(".quiz-options").slideUp("slow");
         $(".question-container").fadeIn("slow");
