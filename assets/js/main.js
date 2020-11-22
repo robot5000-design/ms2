@@ -174,7 +174,7 @@ function nextQuestion() {
     window.scroll(0, 50);
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
-        setTimeout(() => {
+        setTimeout(function() {
             askQuestions(setOfQuestions, questionIndex, score);
         }, 30);
         if (questionIndex === (setOfQuestions.length - 1)) {
@@ -527,7 +527,16 @@ $(".question-answers button").on("click", function() {
  * @function - When the submit answer button is clicked calls the submitAnswer function
  * @returns { void } nothing
  */
-$(".submit-answer").on("click", submitAnswer);
+//$(".submit-answer").on("click", submitAnswer);
+for (let button of answerButtons) {
+    $(button).on("click", test);
+}
+
+function test() {
+    setTimeout(function() {
+        submitAnswer();
+}, 500);
+}
 
 /**
  * @function - When the next question button is clicked calls the nextQuestion function
