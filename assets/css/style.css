@@ -248,6 +248,8 @@ button:focus {
 
 .btn.disabled, .btn:disabled {
     opacity: .85;
+    cursor: not-allowed;
+    pointer-events: auto;
 }
 
 .question-container .list-group .correct-answer,

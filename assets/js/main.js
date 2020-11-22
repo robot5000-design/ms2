@@ -118,7 +118,6 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
         enableElement(button);               
     }
     disableElement(".next-question");
-    disableElement(".submit-answer");
     // Assign the correct answer
     correctAnswer = arrayOfQuestions[arrayIndex].correct_answer;
     shuffleAnswers(answersArray, correctAnswer);
@@ -225,11 +224,20 @@ function finishQuiz(arrayIndex) {
 }
 
 /**
+ * @function - Calls the submitAnswer function after a time delay
+ * @returns { void } nothing
+ */
+function selectSubmit() {
+    setTimeout(function() {
+        submitAnswer();
+    }, 500);
+}
+
+/**
  * @function - Submits an answer to be checked and resets the timer
  * @returns { void } nothing
  */
 function submitAnswer() {
-    disableElement(".submit-answer");
     clearInterval(countdown);
     $(".display__time-left").html(`You answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
     // Check if answer is correct
@@ -455,7 +463,6 @@ function timer(seconds) {
 function displayTimeLeft(remainderSeconds) {
     if (remainderSeconds === 0) {
         $(".display__time-left").html("Oops you ran out of time!");
-        disableElement(".submit-answer");
     } else {
         $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds remaining.`);
     }
@@ -468,7 +475,7 @@ function displayTimeLeft(remainderSeconds) {
 
 // Click Event Functions  ######################################################################
 /**
- * @function - When clicked sound on/off is toggled
+ * @fires - When clicked sound on/off is toggled
  * @returns { void } nothing
  */
 $(".mute-sound").on("click", function() {
@@ -491,7 +498,7 @@ $(".mute-sound").on("click", function() {
 });
 
 /**
- * @function - When button is clicked sets the pre quiz options and checks if a token already exists
+ * @fires - When button is clicked sets the pre quiz options and checks if a token already exists
  * @returns { void } nothing
  */
 $(".load-questions").click(function() {
@@ -516,36 +523,24 @@ $(".load-questions").click(function() {
 });
 
 /**
- * @function - When answer button clicked enables submit answer button be pressed after selecting an answer
- * @returns { void } nothing
+ * When an answer button is clicked calls the selectSubmit function
  */
-$(".question-answers button").on("click", function() {
-    enableElement(".submit-answer");
-});
-
-/**
- * @function - When the submit answer button is clicked calls the submitAnswer function
- * @returns { void } nothing
- */
-//$(".submit-answer").on("click", submitAnswer);
 for (let button of answerButtons) {
+    /**
+     * @fires - When the next question button is clicked calls the nextQuestion function
+     * @returns { void } nothing
+     */
     $(button).on("click", selectSubmit);
 }
 
-function selectSubmit() {
-    setTimeout(function() {
-        submitAnswer();
-    }, 500);
-}
-
 /**
- * @function - When the next question button is clicked calls the nextQuestion function
+ * @fires - When the next question button is clicked calls the nextQuestion function
  * @returns { void } nothing
  */
 $(".next-question").on("click", nextQuestion);
 
 /**
- * @function - When the Exit Quiz button is clicked displays a modal for the user to confirm
+ * @fires - When the Exit Quiz button is clicked displays a modal for the user to confirm
  * @returns { void } nothing
  */
 $(".reset-button").on("click", function() {
@@ -558,7 +553,7 @@ $(".reset-button").on("click", function() {
 });
 
 /**
- * @function - When the modal Ok button is clicked, stops the timer and returns to quiz options
+ * @fires - When the modal Ok button is clicked, stops the timer and returns to quiz options
  * @returns { void } nothing
  */
 $(".reset-confirm").on("click", function() {
@@ -570,7 +565,7 @@ $(".reset-confirm").on("click", function() {
 });
 
 /**
- * @function - Plays a sound when the modal cancel button is clicked
+ * @fires - Plays a sound when the modal cancel button is clicked
  * @returns { void } nothing
  */
 $(".modal-cancel").on("click", function() {
@@ -579,7 +574,7 @@ $(".modal-cancel").on("click", function() {
 
 // with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
 /**
- * @function - Separates the multiple options bootstrap list groups on the same page
+ * @fires - Separates the multiple options bootstrap list groups on the same page
  * @returns { void } nothing
  */
 $("body").on("click", ".list-group .btn", function() {
@@ -590,8 +585,7 @@ $("body").on("click", ".list-group .btn", function() {
 
 // Check and retrieve Local and Session Storage Values  ######################################################################
 /**
- * @function - Save and retrieve high score to local storage
- * @returns { void } nothing
+ * Checks local storage for a high score
  */
 if (localStorage.getItem("highScore")) {
     highScore = localStorage.getItem("highScore");
@@ -601,8 +595,7 @@ if (localStorage.getItem("highScore")) {
 }
 
 /**
- * @function - Save and retrieve current token to session storage
- * @returns { void } nothing
+ * Checks session storage if a token already exists
  */
 if (sessionStorage.getItem("sessionToken")) {
     token = sessionStorage.getItem("sessionToken");
