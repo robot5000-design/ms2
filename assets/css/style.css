@@ -13,6 +13,9 @@
 
 body {
     font-family: "Pangolin", cursive;
+    background-color: #353535;
+    color: #f6f4f0;
+    text-align: center;
 }
 
 p {
@@ -26,11 +29,14 @@ p {
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 2em;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 h2 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
+    line-height: 1.7em;
 }
 
 .quiz-options .list-group button {
@@ -79,6 +85,39 @@ h2 {
     flex-direction: column;
     justify-content: center;
     padding: 0 5px 0 5px;
+}
+
+.intro {
+    background-color: #353535;
+    max-width: 90%;
+    margin: 0 auto 50px;
+    padding: 6%;
+    border-radius: 10px;
+    font-size: 1.1em;
+    line-height: 1.7em;
+}
+
+.begin-wrapper {
+    text-align: center;
+}
+
+.begin,
+.begin:active {
+    background-color: #d31363;
+    border: 3px solid #f6f4f0;
+    color: #f6f4f0;
+    border-radius: 10px;
+    font-size: 2em;
+    max-width: 100%;
+    height: 70px;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.begin:hover {
+    background-color: #b31154;
+    color: #f6f4f0;
+    border: none;
 }
 
 .load-questions {

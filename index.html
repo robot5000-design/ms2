@@ -44,144 +44,29 @@
                                     <h2>Science Quiz with Computing, Nature or Mathematics</h2>
                                 </div>
                             </div>
-                        </header>                    
-                        <div class="row quiz-options">
-                            <div class="col">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-4 p-0">
-                                        <div class="list-group categories">
-                                            <div class="container list-group-item group-heading">
-                                                <div class="row">
-                                                    <div class="col-2 icon-left"><i class="fas fa-angle-double-down"></i></div>                                                
-                                                    <div class="col-8 p-0 heading-text">Choose a Category:</div>
-                                                    <div class="col-2 icon-right"><i class="fas fa-angle-double-down"></i></div>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="list-group-item btn active" data-value="18">								
-                                                Science: Computing
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="19">							
-                                                Science: Mathematics
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="17">							
-                                                Science: Nature
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 p-0">
-                                        <ul class="list-group difficulty-level">
-                                            <div class="container list-group-item group-heading">
-                                                <div class="row">
-                                                    <div class="col-2 icon-left"><i class="fas fa-angle-double-down"></i></div>                                                
-                                                    <div class="col-8 p-0 heading-text">Choose Difficulty Level:</div>
-                                                    <div class="col-2 icon-right"><i class="fas fa-angle-double-down"></i></div>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="list-group-item btn active" data-value="easy">
-                                            Easy
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="medium">					
-                                            Medium
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="hard">							
-                                            Hard
-                                            </button>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-4 p-0">
-                                        <div class="list-group question-quantity">
-                                            <div class="container list-group-item group-heading">
-                                                <div class="row">
-                                                    <div class="col-2 icon-left"><i class="fas fa-angle-double-down"></i></div>                                                
-                                                    <div class="col-8 p-0 heading-text">Number of Questions:</div>
-                                                    <div class="col-2 icon-right"><i class="fas fa-angle-double-down"></i></div>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="list-group-item btn active" data-value="5">
-                                            5
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="10">
-                                            10
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="15">
-                                            15
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col load-questions-wrapper">
-                                        <button type="button" class="btn btn-success load-questions">Start!</button>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <p class="high-score-overall">Highest Score Achieved: 0</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container question-container">
+                        </header>
+                        <main class="container">
                             <div class="row">
-                                <div class="col">
-                                    <div class="list-group question-answers">
-                                        <div class="list-group-item questions"></div>
-                                        <button type="button" class="list-group-item btn answer" data-number="1" data-answer=""></button>
-                                        <button type="button" class="list-group-item btn answer" data-number="2" data-answer=""></button>
-                                        <button type="button" class="list-group-item btn answer" data-number="3" data-answer=""></button>
-                                        <button type="button" class="list-group-item btn answer" data-number="4" data-answer=""></button>
-                                    </div>                                       
+                                <div class="col intro">
+                                    <p class="intro-text">
+                                        A fun quiz for students, academics or anybody who wants to test themselves against the clock.
+                                        3 levels with weighted scores for higher levels.
+                                    </p>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col status-info">
-                                    <p class="answer-feedback"></p>
-                                    <div class="display">
-                                        <p class="display__time-left"></p>
-                                    </div>                                                                
+                                <div class="col begin-wrapper">
+                                    <a href="./start.html"
+                                        class="btn begin">Go! <i class="fas fa-caret-right"></i>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col action-button">
-                                    <button type="button" class="btn btn-primary next-question" aria-disabled="true" disabled>
-                                        <p class="quiz-score">0</p>
-                                        Next Question 
-                                        <i class="fas fa-caret-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col reset-button-wrapper">
-                                    <button type="button" class="btn btn-secondary reset-button" data-toggle="modal" data-target="#resetModal">
-                                        Exit Quiz
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        </main>                        
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col bottom-image"></div>
-            </div>
-        </div>
-        <!-- Exit the Quiz Modal -->
-        <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" data-backdrop="static" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-div">
-                        <h5 class="reset-modal" id="resetModalLabel">EXIT QUIZ</h5>
-                    </div>
-                    <div class="modal-body">
-                        Please confirm if you would like to exit the quiz...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">No</button>
-                        <button type="button" class="btn btn-primary reset-confirm">Yes</button>
-                    </div>
-                </div>
             </div>
         </div>
     </body>

@@ -215,7 +215,7 @@ function finishQuiz(arrayIndex) {
     } else {
         $(".reset-modal").html("Well Done!");
     }
-    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questons. Weighted score for ${difficulty} difficulty is ${weightedScore}.`);
+    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questions. Weighted score for ${difficulty} difficulty is ${weightedScore}.`);
     if (weightedScore > highScore) {
         highScore = weightedScore;
         localStorage.setItem("highScore", `${highScore}`);
