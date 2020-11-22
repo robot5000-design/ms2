@@ -66,7 +66,9 @@ let tokenUrl = "https://opentdb.com/api_token.php?command=request"
  */
 function toggleOptions() {
     if ($(".quiz-options").css("display") != "none") {
-        $(".controls-container header").hide();
+        if (screen.availHeight < 900) {
+            $(".controls-container header").hide();
+        }
         $(".quiz-options").removeClass("reinstate-element").addClass("remove-element");
         $(".question-container").removeClass("remove-element").addClass("reinstate-element");
         /*() => {

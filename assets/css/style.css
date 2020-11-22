@@ -19,7 +19,7 @@ p {
     margin: 0;
 }
 
-header {
+.controls-container header {
     color: #f6f4f0;
     padding: 0px 15px 30px 15px;
     text-align: center;
@@ -322,6 +322,7 @@ button:focus {
 .status-info {
     color: #f6f4f0;
     text-align: center;
+    padding-top: 10px;
 }
 
 .reset-button {
@@ -341,7 +342,9 @@ button:focus {
 
 .display__time-left {
     border-radius: 5px;
+    margin-top: 10px;
 }
+
 
 /*--------------------------------------------------------Media Queries */
 
