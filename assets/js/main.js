@@ -66,6 +66,7 @@ let tokenUrl = "https://opentdb.com/api_token.php?command=request"
  */
 function toggleOptions() {
     if ($(".quiz-options").css("display") != "none") {
+        $(".controls-container header").hide();
         $(".quiz-options").removeClass("reinstate-element").addClass("remove-element");
         $(".question-container").removeClass("remove-element").addClass("reinstate-element");
         /*() => {
@@ -73,6 +74,7 @@ function toggleOptions() {
         $(".question-container").fadeIn("slow");
         }*/
     } else {
+        $(".controls-container header").show();
         $(".next-question").html(`Next Question <i class="fas fa-caret-right"></i>`);
         $(".load-questions").html("Start!");
         $(".quiz-options").removeClass("remove-element").addClass("reinstate-element");
@@ -167,7 +169,7 @@ function nextQuestion() {
     disableElement(".next-question");
     $(".display__time-left").removeClass("time-critical");
     $(".answer-feedback").html(" ");
-    window.scroll(0, 300);
+    window.scroll(0, 50);
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
         setTimeout(() => {
@@ -328,7 +330,7 @@ function checkToken(questionsLoadedObject) {
         toggleOptions();
         // Start Quiz
         askQuestions(setOfQuestions, questionIndex, score);
-        window.scroll(0, 300);
+        window.scroll(0, 50);
     } else if (questionsLoadedObject.response_code === 3) {
         getToken(tokenUrl).then(handleSuccess, handleFailure);
     } else if (questionsLoadedObject.response_code === 4) {
