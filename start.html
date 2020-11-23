@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>The Science Quiz Intro</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
             integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
         <link 
@@ -28,13 +28,14 @@
     </head>
     <body>
         <div class="overall-container container-fluid">
+            <!-- Background Image Top -->
             <div class="row">
                 <div class="col top-image">
                 </div>
             </div>
             <div class="row">
                 <div class="col backing-image p-0">
-                    <div class="controls-container container-fluid">                        
+                    <div class="controls-container container-fluid">
                         <div class="row">
                             <div class="col">
                                 <button type="button" class="mute-sound" data-sound="off"><i class="fas fa-volume-mute"></i></button>
@@ -42,86 +43,95 @@
                         </div>
                         <header class="row">
                             <div class="col">
+                                <!-- Owl Icon Image -->
                                 <div class="icon-image">
+                                    <a href="./index.html">
                                     <img src="./assets/images/icon.png" alt="bookworm-owl" class="owl-image">
+                                    </a>
                                 </div>
                                 <div class="heading-text">
-                                    <h1>Test your knowledge!</h1>
-                                    <h2>Science Quiz with Computing, Nature or Mathematics</h2>
+                                    <h1>Choose from the options below:</h1>
+                                    <h2>Click Start! to begin</h2>
                                 </div>
                             </div>
-                        </header>                    
+                        </header>
+                        <!-- Options Menu Buttons -->
                         <div class="row quiz-options">
                             <div class="col">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-4 p-0">
-                                        <div class="list-group categories">
-                                            <div class="container list-group-item group-heading">
-                                                <div class="row">
-                                                    <div class="col-2 icon-left"><i class="fas fa-angle-double-down"></i></div>                                                
-                                                    <div class="col-8 p-0 heading-text">Choose a Category:</div>
-                                                    <div class="col-2 icon-right"><i class="fas fa-angle-double-down"></i></div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-4 p-0">
+                                            <div class="list-group categories">
+                                                <div class="container list-group-item group-heading">
+                                                    <div class="row">
+                                                        <div class="col-2 icon-left"><i class="fas fa-angle-double-down"></i></div>
+                                                        <div class="col-8 p-0 heading-text">Choose a Category:</div>
+                                                        <div class="col-2 icon-right"><i class="fas fa-angle-double-down"></i></div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <button type="button" class="list-group-item btn active" data-value="18">								
+                                                <!-- Categories -->
+                                                <button type="button" class="list-group-item btn active" data-value="18">								
                                                 Science: Computing
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="19">							
+                                                </button>
+                                                <button type="button" class="list-group-item btn" data-value="19">							
                                                 Science: Mathematics
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="17">							
+                                                </button>
+                                                <button type="button" class="list-group-item btn" data-value="17">							
                                                 Science: Nature
-                                            </button>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 p-0">
+                                            <ul class="list-group difficulty-level">
+                                                <div class="container list-group-item group-heading">
+                                                    <div class="row">
+                                                        <div class="col-2 icon-left"><i class="fas fa-angle-double-down"></i></div>
+                                                        <div class="col-8 p-0 heading-text">Choose Difficulty Level:</div>
+                                                        <div class="col-2 icon-right"><i class="fas fa-angle-double-down"></i></div>
+                                                    </div>
+                                                </div>
+                                                <!-- Difficulty Level -->
+                                                <button type="button" class="list-group-item btn active" data-value="easy">
+                                                Easy
+                                                </button>
+                                                <button type="button" class="list-group-item btn" data-value="medium">					
+                                                Medium
+                                                </button>
+                                                <button type="button" class="list-group-item btn" data-value="hard">							
+                                                Hard
+                                                </button>
+                                            </ul>
+                                        </div>
+                                        <div class="col-lg-4 p-0">
+                                            <div class="list-group question-quantity">
+                                                <div class="container list-group-item group-heading">
+                                                    <div class="row">
+                                                        <div class="col-2 icon-left"><i class="fas fa-angle-double-down"></i></div>
+                                                        <div class="col-8 p-0 heading-text">Number of Questions:</div>
+                                                        <div class="col-2 icon-right"><i class="fas fa-angle-double-down"></i></div>
+                                                    </div>
+                                                </div>
+                                                <!-- Quantity of Questions -->
+                                                <button type="button" class="list-group-item btn active" data-value="5">
+                                                5
+                                                </button>
+                                                <button type="button" class="list-group-item btn" data-value="10">
+                                                10
+                                                </button>
+                                                <button type="button" class="list-group-item btn" data-value="15">
+                                                15
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 p-0">
-                                        <ul class="list-group difficulty-level">
-                                            <div class="container list-group-item group-heading">
-                                                <div class="row">
-                                                    <div class="col-2 icon-left"><i class="fas fa-angle-double-down"></i></div>                                                
-                                                    <div class="col-8 p-0 heading-text">Choose Difficulty Level:</div>
-                                                    <div class="col-2 icon-right"><i class="fas fa-angle-double-down"></i></div>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="list-group-item btn active" data-value="easy">
-                                            Easy
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="medium">					
-                                            Medium
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="hard">							
-                                            Hard
-                                            </button>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-4 p-0">
-                                        <div class="list-group question-quantity">
-                                            <div class="container list-group-item group-heading">
-                                                <div class="row">
-                                                    <div class="col-2 icon-left"><i class="fas fa-angle-double-down"></i></div>                                                
-                                                    <div class="col-8 p-0 heading-text">Number of Questions:</div>
-                                                    <div class="col-2 icon-right"><i class="fas fa-angle-double-down"></i></div>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="list-group-item btn active" data-value="5">
-                                            5
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="10">
-                                            10
-                                            </button>
-                                            <button type="button" class="list-group-item btn" data-value="15">
-                                            15
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
                                 </div>
                                 <div class="row">
+                                    <!-- Start the Quiz Button -->
                                     <div class="col load-questions-wrapper">
                                         <button type="button" class="btn btn-success load-questions">Start!</button>
                                     </div>
                                 </div>
+                                <!-- Display Highest Score Achieved -->
                                 <div class="row">
                                     <div class="col">
                                         <p class="high-score-overall">Highest Score Achieved: 0</p>
@@ -130,6 +140,7 @@
                             </div>
                         </div>
                         <div class="container question-container">
+                            <!-- Question and Answers -->
                             <div class="row">
                                 <div class="col">
                                     <div class="list-group question-answers">
@@ -138,17 +149,19 @@
                                         <button type="button" class="list-group-item btn answer" data-number="2" data-answer=""></button>
                                         <button type="button" class="list-group-item btn answer" data-number="3" data-answer=""></button>
                                         <button type="button" class="list-group-item btn answer" data-number="4" data-answer=""></button>
-                                    </div>                                       
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Answer Feedback and Timer Countdown -->
                             <div class="row">
                                 <div class="col status-info">
                                     <p class="answer-feedback"></p>
                                     <div class="display">
                                         <p class="display__time-left"></p>
-                                    </div>                                                                
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Next Question or Finish Quiz Button -->
                             <div class="row">
                                 <div class="col action-button">
                                     <button type="button" class="btn btn-primary next-question" aria-disabled="true" disabled>
@@ -158,10 +171,11 @@
                                     </button>
                                 </div>
                             </div>
+                            <!-- Exit Quiz Button -->
                             <div class="row">
                                 <div class="col reset-button-wrapper">
                                     <button type="button" class="btn btn-secondary reset-button" data-toggle="modal" data-target="#resetModal">
-                                        Exit Quiz
+                                    Exit Quiz
                                     </button>
                                 </div>
                             </div>
@@ -169,57 +183,49 @@
                     </div>
                 </div>
             </div>
+            <!-- Background Image Bottom -->
             <div class="row">
                 <div class="col bottom-image"></div>
             </div>
         </div>
+        <!-- Footer with Social Links and Feedback Form -->
         <footer>
-      <div class="container-fluid footer-container">
-        <div class="row">
-          <div class="col-12">
-            <ul class="list-inline social-links pt-4 pb-1">
-              <li class="list-inline-item p-2">
-                <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">
-                  <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                  <span class="sr-only">Facebook link</span>
-                </a>
-              </li>
-              <li class="list-inline-item p-2">
-                <a href="https://twitter.com/" target="_blank" rel="noreferrer">
-                  <i class="fab fa-twitter" aria-hidden="true"></i>
-                  <span class="sr-only">twitter link</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="row footer-terms">
-          <div class="col-sm-4 order-sm-1 footer-terms-item">
-            <a class="feedback-form" href="#" data-toggle="modal" data-target="#resetModal">Feedback Form</a>
-          </div>
-          <div class="col-sm-4 order-sm-3 footer-terms-item">
-            <a href="#">Privacy Policy</a>
-          </div>
-          <div class="col-sm-4 order-sm-2 footer-terms-item">
-            <p>For Educational Purposes Only</p>
-          </div>
-        </div>
-      </div>
-    </footer>
+            <div class="container-fluid footer-container">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="list-inline social-links pt-4 pb-1">
+                            <li class="list-inline-item p-2">
+                                <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">
+                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                <span class="sr-only">Facebook link</span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item p-2">
+                                <a href="https://twitter.com/" target="_blank" rel="noreferrer">
+                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                                <span class="sr-only">twitter link</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row footer-terms">
+                    <div class="col-sm-4 order-sm-1 footer-terms-item">
+                        <a class="feedback-form" href="#" data-toggle="modal" data-target="#resetModal">Feedback Form</a>
+                    </div>
+                    <div class="col-sm-4 order-sm-3 footer-terms-item">
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                    <div class="col-sm-4 order-sm-2 footer-terms-item">
+                        <p>For Educational Purposes Only</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
         <!-- Modal -->
         <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" data-backdrop="static" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-div">
-                        <h5 class="reset-modal" id="resetModalLabel">EXIT QUIZ</h5>
-                    </div>
-                    <div class="modal-body">
-                        Please confirm if you would like to exit the quiz...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">No</button>
-                        <button type="button" class="btn btn-primary reset-confirm">Yes</button>
-                    </div>
                 </div>
             </div>
         </div>

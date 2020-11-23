@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>The Science Quiz Main Page</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
             integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
         <link 
@@ -28,6 +28,7 @@
     </head>
     <body>
         <div class="overall-container container-fluid">
+            <!-- Background Image Top -->
             <div class="row">
                 <div class="col top-image">
                 </div>
@@ -37,8 +38,11 @@
                     <div class="controls-container container-fluid">
                         <header class="row">
                             <div class="col">
-                                <div class="icon-image pt-5">
+                                <!-- Owl Icon Image -->
+                                <div class="icon-image pt-4">
+                                    <a href="./index.html">
                                     <img src="./assets/images/icon.png" alt="bookworm-owl" class="owl-image">
+                                    </a>
                                 </div>
                                 <div class="heading-text">
                                     <h1>Test your knowledge!</h1>
@@ -56,55 +60,57 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <!-- Button to enter the main page -->
                                 <div class="col begin-wrapper">
                                     <a href="./start.html"
                                         class="btn begin">Go!<i class="fas fa-forward"></i>
                                     </a>
                                 </div>
                             </div>
-                        </main>                        
+                        </main>
                     </div>
                 </div>
             </div>
+            <!-- Background Image Bottom -->
             <div class="row">
                 <div class="col bottom-image"></div>
             </div>
         </div>
-        <!-- Footer with Social Links -->
-    <footer>
-      <div class="container-fluid footer-container">
-        <div class="row">
-          <div class="col-12">
-            <ul class="list-inline social-links pt-4 pb-1">
-              <li class="list-inline-item p-2">
-                <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">
-                  <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                  <span class="sr-only">Facebook link</span>
-                </a>
-              </li>
-              <li class="list-inline-item p-2">
-                <a href="https://twitter.com/" target="_blank" rel="noreferrer">
-                  <i class="fab fa-twitter" aria-hidden="true"></i>
-                  <span class="sr-only">twitter link</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="row footer-terms">
-          <div class="col-sm-4 order-sm-1 footer-terms-item">
-            <a class="feedback-form" href="#" data-toggle="modal" data-target="#resetModal">Feedback Form</a>
-          </div>
-          <div class="col-sm-4 order-sm-3 footer-terms-item">
-            <a href="#">Privacy Policy</a>
-          </div>
-          <div class="col-sm-4 order-sm-2 footer-terms-item">
-            <p>For Educational Purposes Only</p>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- Modal -->
+        <!-- Footer with Social Links and Feedback Form -->
+        <footer>
+            <div class="container-fluid footer-container">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="list-inline social-links pt-4 pb-1">
+                            <li class="list-inline-item p-2">
+                                <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">
+                                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                <span class="sr-only">Facebook link</span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item p-2">
+                                <a href="https://twitter.com/" target="_blank" rel="noreferrer">
+                                <i class="fab fa-twitter" aria-hidden="true"></i>
+                                <span class="sr-only">twitter link</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row footer-terms">
+                    <div class="col-sm-4 order-sm-1 footer-terms-item">
+                        <a class="feedback-form" href="#" data-toggle="modal" data-target="#resetModal">Feedback Form</a>
+                    </div>
+                    <div class="col-sm-4 order-sm-3 footer-terms-item">
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                    <div class="col-sm-4 order-sm-2 footer-terms-item">
+                        <p>For Educational Purposes Only</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Modal -->
         <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" data-backdrop="static" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

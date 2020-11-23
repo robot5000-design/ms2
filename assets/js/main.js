@@ -71,10 +71,6 @@ function toggleOptions() {
         if (screen.availHeight < 1000) {
             $(".controls-container header").hide();
         }
-        /*() => {
-        $(".quiz-options").slideUp("slow");
-        $(".question-container").fadeIn("slow");
-        }*/
     } else {
         $(".controls-container header").show();
         $(".next-question").html(
@@ -187,7 +183,7 @@ function nextQuestion() {
             $(".reset-button").hide();
         }
         for (let button of answerButtons) {
-            $(button).removeClass("active correct-answer wrong-answer");
+            $(button).removeClass("disable correct-answer wrong-answer");
             $(button).html("");              
         }
         $(".questions").html("");
@@ -243,7 +239,7 @@ function finishQuiz(arrayIndex) {
 function selectSubmit() {
     setTimeout(function() {
         submitAnswer();
-    }, 400);
+    }, 1000);
 }
 
 /**
@@ -255,7 +251,9 @@ function submitAnswer() {
     $(".display__time-left").html(`You answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
     // Check if answer is correct
     checkAnswer();
-    enableElement(".next-question");
+    setTimeout(() => {
+        enableElement(".next-question");
+    }, 1000);
 }
 
 /**
@@ -267,12 +265,12 @@ function checkAnswer() {
         if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer) && (secondsLeft >= 0)) {
             correctAnswerSound.play();
             $(".answer-feedback").html("Well Done. Correct Answer!");
-            $(button).addClass("correct-answer");
+            $(button).removeClass("active").addClass("correct-answer");
             score++;
             $(".quiz-score").html(`Score is ${score} / ${setOfQuestions.length}`);
         } else {
             if ($(button).hasClass("active")) {
-                $(button).addClass("wrong-answer");
+                $(button).removeClass("active").addClass("wrong-answer");
                 wrongAnswerSound.play();
                 $(".answer-feedback").html("Bad Luck. Wrong Answer!");
             }
@@ -280,7 +278,6 @@ function checkAnswer() {
                 $(button).addClass("correct-answer");
             }
         }
-        disableElement(button);
     }
 }
 
@@ -417,7 +414,7 @@ function getToken(url) {
 /**
  * @function - Check if a button is active & gets its data attribute value
  * @param { Object } buttonGroup - represents a group of button elements
- * @returns { void } nothing
+ * @returns { string } represents the answer text of that particular button
  */
 function activeButton(buttonGroup) {
     for (let button of buttonGroup) {
@@ -554,8 +551,13 @@ for (let button of answerButtons) {
     /**
      * @fires - When the next question button is clicked calls the nextQuestion function
      * @returns { void } nothing
-     */
-    $(button).on("click", selectSubmit);
+     */    
+    $(button).on("click", function() {
+        selectSubmit()
+        for (let button of answerButtons) {
+            $(button).addClass("disable");
+        }
+    });
 }
 
 /**
