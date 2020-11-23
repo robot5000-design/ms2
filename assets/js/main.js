@@ -59,6 +59,10 @@ let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
 let tokenUrl = "https://opentdb.com/api_token.php?command=request"
 
+//let categoryString =""
+
+
+
 // Normal Functions  ######################################################################
 /**
  * @function - switches between quiz options and quiz questions
@@ -186,6 +190,31 @@ function nextQuestion() {
     }
 }
 
+
+if (category === 18) {
+    categoryString = "computing";
+} else if (category === 19) {
+    categoryString = "mathematics";
+} else {
+    categoryString = "nature";
+}
+
+if (localStorage.getItem("highScore")) {
+    highScores = JSON.parse(localStorage.getItem("highScore"));
+    $(".computing-score").html(`${highScores["computing"]}`);
+    $(".maths-score").html(`${highScores["mathematics"]}`);
+    $(".nature-score").html(`${highScores["nature"]}`);
+} else {
+    highScores = {
+    computing: 0,
+    mathematics: 0,
+    nature: 0 
+}}
+console.log(highScores);
+console.log(highScores[categoryString], categoryString);
+
+
+
 /**
  * @function - Finishes the quiz by presenting a results model to the screen
  * and updating the high score in local storage if required
@@ -212,6 +241,21 @@ function finishQuiz(arrayIndex) {
     }
     if (score === 0) {
         $(".reset-modal").html("Better Luck Next Time!");
+    } else if (weightedScore > highScores[categoryString]) {
+        $(".reset-modal").html("A New High Score for this category. Well Done!");
+        
+    } else {
+        $(".reset-modal").html("Well Done!");
+    }
+    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questions. Weighted score for ${difficulty} difficulty is ${weightedScore}.`);
+    if (weightedScore > highScores[categoryString]) {
+        highScores[categoryString] = weightedScore;
+        localStorage.setItem("highScore", JSON.stringify(highScores));
+        $(".high-score-overall").html(`Your highest score is ${highScores}.`);
+    }
+    /*
+    if (score === 0) {
+        $(".reset-modal").html("Better Luck Next Time!");
     } else if (weightedScore > highScore) {
         $(".reset-modal").html("A New High Score. Well Done!");
     } else {
@@ -222,7 +266,7 @@ function finishQuiz(arrayIndex) {
         highScore = weightedScore;
         localStorage.setItem("highScore", `${highScore}`);
         $(".high-score-overall").html(`Your highest score is ${highScore}.`);
-    }
+    }*/
     $("#resetModal").modal("toggle");
 }
 
@@ -603,12 +647,17 @@ $("body").on("click", ".list-group .btn", function() {
 /**
  * Checks local storage for a high score
  */
+
+
+
+/*
 if (localStorage.getItem("highScore")) {
     highScore = localStorage.getItem("highScore");
     $(".high-score-overall").html(`Your highest score is ${highScore}.`);
 } else {
     highScore = 0;
 }
+*/
 
 /**
  * Checks session storage if a token already exists

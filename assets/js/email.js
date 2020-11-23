@@ -3,7 +3,7 @@
  * @param { object } contactForm - feedback form values
  */
 function sendMail(contactForm) {
-    emailjs.send("servi ce_ceipqpk", "template_heeya0m", {
+    emailjs.send("service_ceipqpk", "template_heeya0m", {
         "from_name": contactForm.name.value,
         "from_email": contactForm.emailaddress.value,
         "feed_back": contactForm.feedback.value

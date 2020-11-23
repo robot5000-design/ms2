@@ -410,6 +410,11 @@ button:focus {
   color: #353535;
 }
 
+.table {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
 /*--------------------------------------------------------Modal */
 
 .modal-content {
