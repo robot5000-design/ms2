@@ -73,7 +73,7 @@ h2 {
 
 .quiz-options .group-heading {
     background-color: #353535;
-    color: #fafafa;
+    color: #f6f4f0;
     margin-bottom: 7px;
     padding: 15px 5% 15px 5%;
     border-radius: 10px;
@@ -99,6 +99,10 @@ h2 {
 
 .begin-wrapper {
     text-align: center;
+}
+
+.begin-wrapper  i {
+    padding-left: 13px;
 }
 
 .begin,
@@ -372,6 +376,47 @@ button:focus {
     font-size: .8em;
 }
 
+/*--------------------------------------------------------Footer */
+
+.footer-container {
+  background-color: #353535;
+  min-height: 140px;
+  text-align: center;
+  position: relative;
+}
+
+.footer-container li a i {
+  color: #f6f4f0;
+  font-size: 28px;
+}
+
+.footer-terms a,
+.footer-terms {
+  font-family: "Roboto Mono", monospace;
+  font-weight: 500;
+  color: #f6f4f0;
+  margin: 0 auto;
+  text-decoration: none;
+}
+
+/* Color change on hover */
+.footer-container li a i,
+.footer-terms a {
+  transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+}
+
+.footer-terms a:hover,
+.footer-container li a i:hover {
+  color: #d31363;
+}
+
+.footer-terms .footer-terms-item {
+  padding-bottom: 20px;
+}
+
 
 /*--------------------------------------------------------Media Queries */
 
@@ -406,6 +451,10 @@ button:focus {
 
     .action-button {
         max-width: 50%;
+    }
+
+    .intro {
+        max-width: 60%
     }
 }
 
