@@ -3,7 +3,7 @@
  * @param { object } contactForm - feedback form values
  */
 function sendMail(contactForm) {
-    emailjs.send("service_ceipqpk", "template_heeya0m", {
+    emailjs.send("servi ce_ceipqpk", "template_heeya0m", {
         "from_name": contactForm.name.value,
         "from_email": contactForm.emailaddress.value,
         "feed_back": contactForm.feedback.value
@@ -37,8 +37,8 @@ $(".feedback-form").on("click", function() {
                     <textarea rows="5" name="feedback" class="form-control" id="feedback" placeholder="We appreciate your feedback" required></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">Dismiss</button>
-                    <button type="submit" class="btn btn-secondary center-block">Send Feedback</button>
+                    <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()";>Dismiss</button>
+                    <button type="submit" class="btn btn-primary center-block" onclick="buttonPress.play()";>Send Feedback</button>
                 </div>
             </form>
         </div>`

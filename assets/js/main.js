@@ -112,10 +112,7 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     /** @type { Array } array of incorrect answers to current question */
     let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers;    
     // Prepare the various buttons
-    for (let button of answerButtons) {
-        $(button).removeClass("active correct-answer wrong-answer");
-        enableElement(button);               
-    }
+    $(".answer").removeClass("correct-answer wrong-answer");
     disableElement(".next-question");
     // Assign the correct answer
     correctAnswer = arrayOfQuestions[arrayIndex].correct_answer;
@@ -182,10 +179,7 @@ function nextQuestion() {
                 <i class="fas fa-caret-right"></i>`);
             $(".reset-button").hide();
         }
-        for (let button of answerButtons) {
-            $(button).removeClass("disable correct-answer wrong-answer");
-            $(button).html("");              
-        }
+        $(".answer").removeClass("disable").html("");
         $(".questions").html("");
     } else {
         finishQuiz(questionIndex);
@@ -253,7 +247,7 @@ function submitAnswer() {
     checkAnswer();
     setTimeout(() => {
         enableElement(".next-question");
-    }, 1000);
+    }, 50);
 }
 
 /**
@@ -493,7 +487,16 @@ function resetConfirm() {
     toggleOptions();
     $("#resetModal").modal("toggle");
     $(".reset-button").show();
+    $(".answer").removeClass("disable");
 }
+
+/**
+ * @function - Plays a sound when any button is clicked
+ * @returns { void } nothing
+ */
+$("button").on("click", function() {
+    buttonPress.play();
+});
 
 // Click Event Functions  ######################################################################
 /**
@@ -554,9 +557,7 @@ for (let button of answerButtons) {
      */    
     $(button).on("click", function() {
         selectSubmit()
-        for (let button of answerButtons) {
-            $(button).addClass("disable");
-        }
+        $(".answer").addClass("disable");
     });
 }
 
@@ -586,14 +587,6 @@ $(".reset-button").on("click", function() {
             <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">No</button>
             <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()";>Yes</button>
         </div>`);
-});
-
-/**
- * @fires - Plays a sound when the modal cancel button is clicked
- * @returns { void } nothing
- */
-$(".modal-cancel").on("click", function() {
-    buttonPress.play();
 });
 
 // with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
