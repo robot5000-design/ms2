@@ -18,6 +18,12 @@
             />
         <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+        <script type="text/javascript">
+            (function() {
+                emailjs.init("user_oV8YdlKemUPQdjcjpZQbo");
+            })();
+        </script>
         <link rel="shortcut icon" type="image/png" href="./assets/images/favicon.png" />
     </head>
     <body>
@@ -189,7 +195,7 @@
         </div>
         <div class="row footer-terms">
           <div class="col-sm-4 order-sm-1 footer-terms-item">
-            <a href="#">Feedback Contact</a>
+            <a class="feedback-form" href="#" data-toggle="modal" data-target="#resetModal">Feedback Form</a>
           </div>
           <div class="col-sm-4 order-sm-3 footer-terms-item">
             <a href="#">Privacy Policy</a>
@@ -200,7 +206,7 @@
         </div>
       </div>
     </footer>
-        <!-- Exit the Quiz Modal -->
+        <!-- Modal -->
         <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" data-backdrop="static" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -226,4 +232,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/email.js"></script>
 </html>

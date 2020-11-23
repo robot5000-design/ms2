@@ -77,7 +77,10 @@ function toggleOptions() {
         }*/
     } else {
         $(".controls-container header").show();
-        $(".next-question").html(`Next Question <i class="fas fa-caret-right"></i>`);
+        $(".next-question").html(
+            `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
+            Next Question 
+            <i class="fas fa-caret-right"></i>`);
         $(".load-questions").html("Start!");
         $(".quiz-options").removeClass("remove-element").addClass("reinstate-element");
         $(".question-container").removeClass("reinstate-element").addClass("remove-element");
@@ -177,7 +180,10 @@ function nextQuestion() {
             askQuestions(setOfQuestions, questionIndex, score);
         }, 30);
         if (questionIndex === (setOfQuestions.length - 1)) {
-            $(".next-question").html(`Press to Finish <i class="fas fa-caret-right"></i>`);
+            $(".next-question").html(
+                `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
+                Press To Finish 
+                <i class="fas fa-caret-right"></i>`);
             $(".reset-button").hide();
         }
         for (let button of answerButtons) {
@@ -198,9 +204,15 @@ function nextQuestion() {
  */
 function finishQuiz(arrayIndex) {
     let weightedScore = 0;
-    $(".modal-cancel").hide();
-    $(".reset-confirm").html("Exit");
-    $("#resetModal").modal("toggle");
+    $(".modal-content").html(
+        `<div class="modal-div">
+            <h5 class="reset-modal" id="resetModalLabel">Well Done!</h5>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()";>Exit</button>
+        </div>`);
     if (difficulty === "medium") {
         weightedScore = Math.round(score * 1.2);
     } else if (difficulty === "hard") {
@@ -221,6 +233,7 @@ function finishQuiz(arrayIndex) {
         localStorage.setItem("highScore", `${highScore}`);
         $(".high-score-overall").html(`Your highest score is ${highScore}.`);
     }
+    $("#resetModal").modal("toggle");
 }
 
 /**
@@ -230,7 +243,7 @@ function finishQuiz(arrayIndex) {
 function selectSubmit() {
     setTimeout(function() {
         submitAnswer();
-    }, 500);
+    }, 400);
 }
 
 /**
@@ -473,6 +486,18 @@ function displayTimeLeft(remainderSeconds) {
     }
 }
 
+/**
+ * @function - When the modal confirm button is clicked, stops the timer and returns to quiz options
+ * @returns { void } nothing
+ */
+function resetConfirm() {
+    buttonPress.play();
+    clearInterval(countdown);
+    toggleOptions();
+    $("#resetModal").modal("toggle");
+    $(".reset-button").show();
+}
+
 // Click Event Functions  ######################################################################
 /**
  * @fires - When clicked sound on/off is toggled
@@ -548,20 +573,17 @@ $(".reset-button").on("click", function() {
     $(".modal-cancel").show();
     $(".reset-confirm").html("Yes");
     $("#resetModal").modal("toggle");
-    $(".reset-modal").html("EXIT QUIZ");
-    $(".modal-body").html("Please confirm if you would like to exit the quiz...");
-});
-
-/**
- * @fires - When the modal Ok button is clicked, stops the timer and returns to quiz options
- * @returns { void } nothing
- */
-$(".reset-confirm").on("click", function() {
-    buttonPress.play();
-    clearInterval(countdown);
-    toggleOptions();
-    $("#resetModal").modal("toggle");
-    $(".reset-button").show();
+    $(".modal-content").html(
+        `<div class="modal-div">
+            <h5 class="reset-modal" id="resetModalLabel">EXIT QUIZ</h5>
+        </div>
+        <div class="modal-body">
+            Please confirm if you would like to exit the quiz...
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()";>Yes</button>
+        </div>`);
 });
 
 /**

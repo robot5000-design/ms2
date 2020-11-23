@@ -39,6 +39,10 @@ h2 {
     line-height: 1.7em;
 }
 
+.modal {
+    color: #353535;
+}
+
 .quiz-options .list-group button {
     background-color: #f6f4f0;
     margin-bottom: 5px;
@@ -374,6 +378,7 @@ button:focus {
 .quiz-score {
     line-height: 2em;
     font-size: .8em;
+    color: #353535;
 }
 
 /*--------------------------------------------------------Footer */

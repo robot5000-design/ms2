@@ -18,6 +18,12 @@
             />
         <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+        <script type="text/javascript">
+            (function() {
+                emailjs.init("user_oV8YdlKemUPQdjcjpZQbo");
+            })();
+        </script>
         <link rel="shortcut icon" type="image/png" href="./assets/images/favicon.png" />
     </head>
     <body>
@@ -28,20 +34,15 @@
             </div>
             <div class="row">
                 <div class="col backing-image p-0">
-                    <div class="controls-container container-fluid">                        
-                        <div class="row">
-                            <div class="col">
-                                <button type="button" class="mute-sound" data-sound="off"><i class="fas fa-volume-mute"></i></button>
-                            </div>
-                        </div>
+                    <div class="controls-container container-fluid">
                         <header class="row">
                             <div class="col">
-                                <div class="icon-image">
+                                <div class="icon-image pt-5">
                                     <img src="./assets/images/icon.png" alt="bookworm-owl" class="owl-image">
                                 </div>
                                 <div class="heading-text">
                                     <h1>Test your knowledge!</h1>
-                                    <h2>Science Quiz with Computing, Nature or Mathematics</h2>
+                                    <h2>The Science Quiz<br>with Computing, Nature or Mathematics</h2>
                                 </div>
                             </div>
                         </header>
@@ -49,7 +50,7 @@
                             <div class="row">
                                 <div class="col intro">
                                     <p class="intro-text">
-                                        A fun quiz for students, academics or anybody who wants to test themselves against the clock.
+                                        A fun quiz that tests, as well as educates. For students, academics or anybody who wants to test themselves against the clock.
                                         Three levels with weighted scores for higher levels.
                                     </p>
                                 </div>
@@ -92,7 +93,7 @@
         </div>
         <div class="row footer-terms">
           <div class="col-sm-4 order-sm-1 footer-terms-item">
-            <a href="#">Feedback Contact</a>
+            <a class="feedback-form" href="#" data-toggle="modal" data-target="#resetModal">Feedback Form</a>
           </div>
           <div class="col-sm-4 order-sm-3 footer-terms-item">
             <a href="#">Privacy Policy</a>
@@ -103,6 +104,13 @@
         </div>
       </div>
     </footer>
+    <!-- Modal -->
+        <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" data-backdrop="static" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                </div>
+            </div>
+        </div>
     </body>
     <!-- bootstrap JS and external links -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -112,4 +120,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/email.js"></script>
 </html>
