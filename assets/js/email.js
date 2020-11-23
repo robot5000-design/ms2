@@ -26,14 +26,14 @@ function sendMail(contactForm) {
  */
 $(".feedback-form").on("click", function() {
     $(".modal-content").html(
-        `<div class="modal-div">
-            <h5 class="reset-modal" id="resetModalLabel">Feedback Form</h5>
+        `<div class="row modal-div">
+            <h5 class="col reset-modal" id="resetModalLabel">Feedback Form</h5>
         </div>
-        <div class="center-form">
-            <form  onsubmit="return sendMail(this)";>
+        <div class="row center-form">
+            <form  class="col" onsubmit="return sendMail(this)";>
                 <input type="text" name="name" class="form-control" id="fullname" placeholder="Name" required/>
                 <input type="text" name="emailaddress" class="form-control" id="emailaddress" placeholder="email" required/>
-                <div class="modal-body">
+                <div class="modal-body px-0">
                     <textarea rows="5" name="feedback" class="form-control" id="feedback" placeholder="We appreciate your feedback" required></textarea>
                 </div>
                 <div class="modal-footer">

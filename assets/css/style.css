@@ -412,8 +412,11 @@ button:focus {
 
 /*--------------------------------------------------------Modal */
 
-
-
+.modal-content {
+    padding: 10%;
+    background-color: #f6f4f0;
+    border-radius: 10px;
+}
 
 /*--------------------------------------------------------Footer */
 

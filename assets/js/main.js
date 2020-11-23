@@ -451,7 +451,7 @@ function timer(seconds) {
                     $(button).addClass("correct-answer");
                     enableElement(".next-question");
                 }
-                disableElement(button);
+                $(".answer").addClass("disable");
             }
         }
         // display it
@@ -489,14 +489,6 @@ function resetConfirm() {
     $(".reset-button").show();
     $(".answer").removeClass("disable");
 }
-
-/**
- * @function - Plays a sound when any button is clicked
- * @returns { void } nothing
- */
-$("button").on("click", function() {
-    buttonPress.play();
-});
 
 // Click Event Functions  ######################################################################
 /**
@@ -584,9 +576,17 @@ $(".reset-button").on("click", function() {
             Please confirm if you would like to exit the quiz...
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()";>No</button>
             <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()";>Yes</button>
         </div>`);
+});
+
+/**
+ * @fires - Plays a sound when any button is clicked
+ * @returns { void } nothing
+ */
+$("button").on("click", function() {
+    buttonPress.play();
 });
 
 // with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
@@ -595,7 +595,6 @@ $(".reset-button").on("click", function() {
  * @returns { void } nothing
  */
 $("body").on("click", ".list-group .btn", function() {
-    buttonPress.play();
     $(this).addClass("active");
     $(this).siblings().removeClass("active");
 });
