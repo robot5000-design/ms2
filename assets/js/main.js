@@ -258,7 +258,6 @@ function finishQuiz(arrayIndex) {
     if (weightedScore > highScore[categoryString]) {
         highScore[categoryString] = weightedScore;
         localStorage.setItem("highScore", JSON.stringify(highScore));
-        $(".high-score-overall").html(`Your highest score is ${highScore}.`);
         $(".computing-score").html(`${highScore["computing"]}`);
         $(".maths-score").html(`${highScore["mathematics"]}`);
         $(".nature-score").html(`${highScore["nature"]}`);
