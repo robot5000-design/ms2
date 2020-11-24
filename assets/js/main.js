@@ -66,7 +66,7 @@ let categoryButtons = $(".categories").children("button");
 let difficultyButtons = $(".difficulty-level").children("button");
 /** @type { Object } contains buttons representing quiz quantity of questions options */
 let quantityButtons = $(".question-quantity").children("button");
-/** @type { string } translates the category from numerical identifier */
+/** @type { string } translates the category from numerical identifier to text */
 let categoryString = "";
 
 // Check and retrieve Local and Session Storage Values  ######################################################################
