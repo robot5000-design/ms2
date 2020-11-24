@@ -376,14 +376,17 @@ function checkToken(questionsLoadedObject) {
     score = 0;
     questionIndex = 0;
     console.log("token response", questionsLoadedObject.response_code);
+    // response code 0 - successful return of results from api
     if (questionsLoadedObject.response_code === 0) {
         setOfQuestions = questionsLoadedObject.results;
         toggleOptions();
         // Start Quiz
         askQuestions(setOfQuestions, questionIndex, score);
         window.scroll(0, 60);
+        // response code 3 - session token not found by api
     } else if (questionsLoadedObject.response_code === 3) {
         getToken(tokenUrl).then(handleSuccess, handleFailure);
+        // response code 4 - session token is empty and needs to be reset
     } else if (questionsLoadedObject.response_code === 4) {
         /** @type { string } opentdb API url address to reset token */
         let resetTokenUrl = `https://opentdb.com/api_token.php?command=reset&token=${token}`;
