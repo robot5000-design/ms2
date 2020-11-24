@@ -48,6 +48,8 @@ let highScore = 0;
 let countdown = 0;
 /** @type { number } number of seconds remaining on the timer */
 let secondsLeft = 0;
+/** @type { number } question timer length in seconds */
+let questionTimer = 20;
 /** @type { Object } new instance of the sound class representing a correct answer */
 let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
 /** @type { Object } new instance of the sound class representing a wrong answer */
@@ -108,7 +110,7 @@ function toggleOptions() {
         }
     } else {
         $(".controls-container header").show();
-        $(".next-question").html(
+        $(".next-question").removeClass("finish-button").html(
             `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
             Next Question 
             <i class="fas fa-caret-right"></i>`);
@@ -157,7 +159,7 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     checkBoolean(arrayOfQuestions, arrayIndex, answersArray);    
     $(".questions").html(`${arrayIndex + 1}. ${currentQuestion}`);
     arrayIndex++;
-    timer(10);
+    timer(questionTimer);
     console.log(answersArray, (correctAnswer));
     console.log(arrayIndex);
 }
@@ -208,7 +210,7 @@ function nextQuestion() {
             askQuestions(setOfQuestions, questionIndex, score);
         }, 30);
         if (questionIndex === (setOfQuestions.length - 1)) {
-            $(".next-question").html(
+            $(".next-question").addClass("finish-button").html(
                 `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
                 Press To Finish 
                 <i class="fas fa-caret-right"></i>`);
@@ -248,11 +250,11 @@ function finishQuiz(arrayIndex) {
     if (score === 0) {
         $(".reset-modal").html("Better Luck Next Time!");
     } else if (weightedScore > highScore[categoryString]) {
-        $(".reset-modal").html("A New High Score for this category. Well Done!");        
+        $(".reset-modal").html(`A New High Score for the ${categoryString} category. Well Done!`);        
     } else {
         $(".reset-modal").html("Well Done!");
     }
-    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questions. Weighted score for ${difficulty} difficulty is ${weightedScore}.`);
+    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questions. The weighted score for ${difficulty} difficulty is ${weightedScore}.`);
     if (weightedScore > highScore[categoryString]) {
         highScore[categoryString] = weightedScore;
         localStorage.setItem("highScore", JSON.stringify(highScore));
@@ -616,14 +618,16 @@ $("button").on("click", function() {
     buttonPress.play();
 });
 
-// with help from https://stackoverflow.com/questions/29128228/multiple-list-groups-on-a-single-page-but-each-list-group-allows-an-unique-sele
 /**
- * @fires - Separates the multiple options bootstrap list groups on the same page
+ * @fires - Separates the multiple options bootstrap list groups on the same page 
+ * and assigns text values to categories rather than numerical for high score table
  * @returns { void } nothing
  */
 $("body").on("click", ".list-group .btn", function() {
+    /* help from stackoverflow with the following two lines to separate the selections in multiple
+        bootstrap button groups on same page */
     $(this).addClass("active");
-    $(this).siblings().removeClass("active");
+    $(this).siblings().removeClass("active");    
     category = activeButton(categoryButtons);
     amount = activeButton(quantityButtons);
     difficulty = activeButton(difficultyButtons);

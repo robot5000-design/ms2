@@ -176,11 +176,6 @@ button:focus {
   outline: none;
 }
 
-.high-score-overall {
-  font-size: 1.5em;
-  color: #f6f4f0;
-}
-
 .question-container {
   display: none;
 }
@@ -269,6 +264,11 @@ button:focus {
 
 .question-quantity {
   padding-bottom: 30px;
+}
+
+table {
+    border-color: #000;
+    color: #000;
 }
 
 .question-container {
@@ -361,6 +361,16 @@ button:focus {
 .next-question:disabled,
 .reset-button:disabled {
   border: none;
+}
+
+.action-button .finish-button {
+    background-color: #ec672e;
+}
+
+.action-button .finish-button:hover,
+.action-button .finish-button:disabled {
+    background-color: #cf5823;
+    border-color: #8f340d;
 }
 
 .action-button {
