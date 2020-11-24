@@ -26,10 +26,10 @@ class Sound {
 }
 
 // Declare variables  ######################################################################
-/** @type { number } quantity of questions selected */
-let amount = 0;
-/** @type { number } category of questions selected */
-let category = 18;
+/** @type { string } category of questions selected */
+let category = "18";
+/** @type { string } quantity of questions selected */
+let amount = "5";
 /** @type { string } difficulty level of questions selected */
 let difficulty = "easy";
 /** @type { string } token to access API */
@@ -42,7 +42,7 @@ let score = 0;
 let questionIndex = 0;
 /** @type { Object } current set of questions & answers */
 let setOfQuestions = {};
-/** @type { number } highest score achieved by user */
+/** @type { Object } highest score achieved by user in each category represented as an object */
 let highScore = 0;
 /** @type { number } the id of the setInterval timer function */
 let countdown = 0;
@@ -58,10 +58,41 @@ let buttonPress = new Sound("assets/sounds/button-press.wav");
 let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
 let tokenUrl = "https://opentdb.com/api_token.php?command=request"
+/** @type { Object } contains buttons representing quiz category options */
+let categoryButtons = $(".categories").children("button");
+/** @type { Object } contains buttons representing quiz difficulty options */
+let difficultyButtons = $(".difficulty-level").children("button");
+/** @type { Object } contains buttons representing quiz quantity of questions options */
+let quantityButtons = $(".question-quantity").children("button");
+/** @type { string } translates the category from numerical identifier */
+let categoryString = "";
 
-//let categoryString =""
+// Check and retrieve Local and Session Storage Values  ######################################################################
+/**
+ * Checks local storage for a high score object
+ */
+if (localStorage.getItem("highScore")) {
+    console.log("yes");    
+    highScore = JSON.parse(localStorage.getItem("highScore"));
+    $(".computing-score").html(`${highScore["computing"]}`);
+    $(".maths-score").html(`${highScore["mathematics"]}`);
+    $(".nature-score").html(`${highScore["nature"]}`);
+} else {
+    highScore = {
+    computing: 0,
+    mathematics: 0,
+    nature: 0 
+    }
+}
+console.log(highScore);
 
-
+/**
+ * Checks session storage if a token already exists
+ */
+if (sessionStorage.getItem("sessionToken")) {
+    token = sessionStorage.getItem("sessionToken");
+    console.log("sessionToken", token);
+}
 
 // Normal Functions  ######################################################################
 /**
@@ -190,31 +221,6 @@ function nextQuestion() {
     }
 }
 
-
-if (category === 18) {
-    categoryString = "computing";
-} else if (category === 19) {
-    categoryString = "mathematics";
-} else {
-    categoryString = "nature";
-}
-
-if (localStorage.getItem("highScore")) {
-    highScores = JSON.parse(localStorage.getItem("highScore"));
-    $(".computing-score").html(`${highScores["computing"]}`);
-    $(".maths-score").html(`${highScores["mathematics"]}`);
-    $(".nature-score").html(`${highScores["nature"]}`);
-} else {
-    highScores = {
-    computing: 0,
-    mathematics: 0,
-    nature: 0 
-}}
-console.log(highScores);
-console.log(highScores[categoryString], categoryString);
-
-
-
 /**
  * @function - Finishes the quiz by presenting a results model to the screen
  * and updating the high score in local storage if required
@@ -241,32 +247,20 @@ function finishQuiz(arrayIndex) {
     }
     if (score === 0) {
         $(".reset-modal").html("Better Luck Next Time!");
-    } else if (weightedScore > highScores[categoryString]) {
-        $(".reset-modal").html("A New High Score for this category. Well Done!");
-        
+    } else if (weightedScore > highScore[categoryString]) {
+        $(".reset-modal").html("A New High Score for this category. Well Done!");        
     } else {
         $(".reset-modal").html("Well Done!");
     }
     $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questions. Weighted score for ${difficulty} difficulty is ${weightedScore}.`);
-    if (weightedScore > highScores[categoryString]) {
-        highScores[categoryString] = weightedScore;
-        localStorage.setItem("highScore", JSON.stringify(highScores));
-        $(".high-score-overall").html(`Your highest score is ${highScores}.`);
-    }
-    /*
-    if (score === 0) {
-        $(".reset-modal").html("Better Luck Next Time!");
-    } else if (weightedScore > highScore) {
-        $(".reset-modal").html("A New High Score. Well Done!");
-    } else {
-        $(".reset-modal").html("Well Done!");
-    }
-    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questions. Weighted score for ${difficulty} difficulty is ${weightedScore}.`);
-    if (weightedScore > highScore) {
-        highScore = weightedScore;
-        localStorage.setItem("highScore", `${highScore}`);
+    if (weightedScore > highScore[categoryString]) {
+        highScore[categoryString] = weightedScore;
+        localStorage.setItem("highScore", JSON.stringify(highScore));
         $(".high-score-overall").html(`Your highest score is ${highScore}.`);
-    }*/
+        $(".computing-score").html(`${highScore["computing"]}`);
+        $(".maths-score").html(`${highScore["mathematics"]}`);
+        $(".nature-score").html(`${highScore["nature"]}`);
+    }
     $("#resetModal").modal("toggle");
 }
 
@@ -457,8 +451,7 @@ function getToken(url) {
 function activeButton(buttonGroup) {
     for (let button of buttonGroup) {
         if ($(button).hasClass("active")) {
-            buttonValue = button.getAttribute("data-value");
-            console.log(buttonValue);
+            buttonValue = button.getAttribute("data-value");            
             return buttonValue;                 
         }
     }
@@ -563,18 +556,8 @@ $(".mute-sound").on("click", function() {
  * @returns { void } nothing
  */
 $(".load-questions").click(function() {
-    /** @type { Object } contains buttons representing quiz category options */
-    let categoryButtons = $(".categories").children("button");
-    /** @type { Object } contains buttons representing quiz difficulty options */
-    let difficultyButtons = $(".difficulty-level").children("button");
-    /** @type { Object } contains buttons representing quiz quantity of questions options */
-    let quantityButtons = $(".question-quantity").children("button");
-
     buttonPress.play();
     $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
-    amount = activeButton(quantityButtons);
-    category = activeButton(categoryButtons);
-    difficulty = activeButton(difficultyButtons);
     console.log(token);
     if (!!token === false) {
         getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
@@ -641,28 +624,15 @@ $("button").on("click", function() {
 $("body").on("click", ".list-group .btn", function() {
     $(this).addClass("active");
     $(this).siblings().removeClass("active");
+    category = activeButton(categoryButtons);
+    amount = activeButton(quantityButtons);
+    difficulty = activeButton(difficultyButtons);
+    if (category === "18") {
+        categoryString = "computing";
+    } else if (category === "19") {
+        categoryString = "mathematics";
+    } else if (category === "17") {
+        categoryString = "nature";
+    }    
+    console.log(categoryString, category, difficulty, amount);
 });
-
-// Check and retrieve Local and Session Storage Values  ######################################################################
-/**
- * Checks local storage for a high score
- */
-
-
-
-/*
-if (localStorage.getItem("highScore")) {
-    highScore = localStorage.getItem("highScore");
-    $(".high-score-overall").html(`Your highest score is ${highScore}.`);
-} else {
-    highScore = 0;
-}
-*/
-
-/**
- * Checks session storage if a token already exists
- */
-if (sessionStorage.getItem("sessionToken")) {
-    token = sessionStorage.getItem("sessionToken");
-    console.log("sessionToken", token);
-}
