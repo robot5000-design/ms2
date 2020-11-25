@@ -49,7 +49,7 @@ let countdown = 0;
 /** @type { number } number of seconds remaining on the timer */
 let secondsLeft = 0;
 /** @type { number } question timer length in seconds */
-let questionTimer = 20;
+let questionTimer = 8;
 /** @type { Object } new instance of the sound class representing a correct answer */
 let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
 /** @type { Object } new instance of the sound class representing a wrong answer */
@@ -202,7 +202,7 @@ function nextQuestion() {
     buttonPress.play();
     disableElement(".next-question");
     $(".display__time-left").removeClass("time-critical");
-    $(".answer-feedback").html(" ");
+    $(".answer-feedback").addClass("hide-element");
     window.scroll(0, 60);
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
@@ -266,16 +266,6 @@ function finishQuiz(arrayIndex) {
 }
 
 /**
- * @function - Calls the submitAnswer function after a time delay
- * @returns { void } nothing
- */
-function selectSubmit() {
-    setTimeout(function() {
-        submitAnswer();
-    }, 1000);
-}
-
-/**
  * @function - Submits an answer to be checked and resets the timer
  * @returns { void } nothing
  */
@@ -283,7 +273,9 @@ function submitAnswer() {
     clearInterval(countdown);
     $(".display__time-left").html(`You answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
     // Check if answer is correct
-    checkAnswer();
+    setTimeout(() => {
+        checkAnswer();
+    }, 1000);    
     setTimeout(() => {
         enableElement(".next-question");
     }, 50);
@@ -295,9 +287,9 @@ function submitAnswer() {
  */
 function checkAnswer() {
     for (let button of answerButtons) {
-        if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer) && (secondsLeft >= 0)) {
+        if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer) && (secondsLeft > 0)) {
             correctAnswerSound.play();
-            $(".answer-feedback").html("Well Done. Correct Answer!");
+            $(".answer-feedback").removeClass("hide-element").html("Well Done. Correct Answer!");
             $(button).removeClass("active").addClass("correct-answer");
             score++;
             $(".quiz-score").html(`Score is ${score} / ${setOfQuestions.length}`);
@@ -305,7 +297,7 @@ function checkAnswer() {
             if ($(button).hasClass("active")) {
                 $(button).removeClass("active").addClass("wrong-answer");
                 wrongAnswerSound.play();
-                $(".answer-feedback").html("Bad Luck. Wrong Answer!");
+                $(".answer-feedback").removeClass("hide-element").html("Bad Luck. Wrong Answer!");
             }
             if (($(button).attr("data-answer") === correctAnswer)) {
                 $(button).addClass("correct-answer");
@@ -563,6 +555,7 @@ $(".load-questions").click(function() {
     buttonPress.play();
     $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
     console.log(token);
+    $(".answer-feedback").addClass("hide-element");
     if (!!token === false) {
         getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
     } else {
@@ -579,7 +572,7 @@ for (let button of answerButtons) {
      * @returns { void } nothing
      */    
     $(button).on("click", function() {
-        selectSubmit()
+        submitAnswer()
         $(".answer").addClass("disable");
     });
 }
