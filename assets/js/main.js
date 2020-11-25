@@ -58,6 +58,10 @@ let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
 let buttonPress = new Sound("assets/sounds/button-press.wav");
 /** @type { Object } new instance of the sound class representing a new high score */
 let highScoreSound = new Sound("assets/sounds/new-high-score.wav");
+/** @type { Object } new instance of the sound class representing a well done score */
+let wellDoneSound = new Sound("assets/sounds/well-done.wav");
+/** @type { Object } new instance of the sound class representing a sad score */
+let sadSound = new Sound("assets/sounds/sad-sound.wav");
 /** @type { Object } contains all answer buttons */
 let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
@@ -250,11 +254,13 @@ function finishQuiz(arrayIndex) {
         weightedScore = score;
     }
     if (score === 0) {
+        sadSound.play();
         $(".reset-modal").html("Better Luck Next Time!");
     } else if (weightedScore > highScore[categoryString]) {
         highScoreSound.play();
         $(".reset-modal").html(`A New High Score for the ${categoryString} category. Well Done!`);        
     } else {
+        wellDoneSound.play();
         $(".reset-modal").html("Well Done!");
     }
     $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questions. The weighted score for ${difficulty} difficulty is ${weightedScore}.`);
@@ -542,6 +548,8 @@ $(".mute-sound").on("click", function() {
         wrongAnswerSound.sound.volume = .8;
         buttonPress.sound.volume = .7;
         highScoreSound.sound.volume = .8;
+        wellDoneSound.sound.volume = .8;
+        sadSound.sound.volume = .8;
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
@@ -549,6 +557,8 @@ $(".mute-sound").on("click", function() {
         wrongAnswerSound.sound.volume = 0;
         buttonPress.sound.volume = 0;
         highScoreSound.sound.volume = 0;
+        wellDoneSound.sound.volume = 0;
+        sadSound.sound.volume = 0;
     }
 });
 

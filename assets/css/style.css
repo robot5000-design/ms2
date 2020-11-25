@@ -70,6 +70,29 @@ button:focus {
   padding-bottom: 40px;
 }
 
+/*--------------------------------------------------------Common Button Styling */
+
+.load-questions,
+.load-questions:active,
+.next-question,
+.next-question:active,
+.begin,
+.begin:active {
+  background-color: #d31363;
+  border: 3px solid #f6f4f0;
+  color: #f6f4f0;
+  border-radius: 10px;
+}
+
+.btn-success:not(:disabled):not(.disabled):active,
+.btn-success:focus,
+.load-questions:hover,
+.begin:hover,
+.next-question:hover,
+.next-question:disabled {
+  background-color: #b31154;
+  border-color: #760e39;
+}
 
 /*--------------------------------------------------------Background Images */
 
@@ -115,7 +138,6 @@ button:focus {
   right: 0;
 }
 
-
 /*--------------------------------------------------------Intro Page */
 
 .intro {
@@ -128,9 +150,7 @@ button:focus {
   line-height: 1.7em;
 }
 
-
 /* Begin button Styling */
-
 .begin-wrapper {
   text-align: center;
 }
@@ -139,25 +159,13 @@ button:focus {
   padding-left: 13px;
 }
 
-.begin,
-.begin:active {
-  background-color: #d31363;
-  border: 3px solid #f6f4f0;
-  color: #f6f4f0;
-  border-radius: 10px;
+.begin {
   font-size: 2em;
   max-width: 100%;
   height: 70px;
   padding-left: 15%;
   padding-right: 15%;
 }
-
-.begin:hover {
-  background-color: #b31154;
-  color: #f6f4f0;
-  border-color: #760e39;
-}
-
 
 /*--------------------------------------------------------Mute Sound Button */
 
@@ -169,7 +177,6 @@ button:focus {
   padding-right: 20px;
   padding-top: 0px;
 }
-
 
 /*--------------------------------------------------------Quiz Options */
 
@@ -230,7 +237,6 @@ button:focus {
 
 
 /* fontawesome icons on option headings */
-
 .icon-left,
 .icon-right {
   display: -webkit-box;
@@ -246,14 +252,9 @@ button:focus {
   padding: 0 5px 0 5px;
 }
 
-
 /*--------------------------------------------------------Load Questions Button */
 
 .load-questions {
-  background-color: #d31363;
-  border: 3px solid #f6f4f0;
-  color: #f6f4f0;
-  border-radius: 10px;
   font-size: 2em;
   width: 55%;
   height: 70px;
@@ -261,9 +262,7 @@ button:focus {
   padding-right: 0;
 }
 
-
 /* Loading in progress spinner */
-
 .spinner-border-sm {
   width: 1.2em;
   height: 1.2em;
@@ -272,13 +271,6 @@ button:focus {
 
 .load-questions-wrapper {
   padding: 0 0 40px;
-}
-
-.btn-success:not(:disabled):not(.disabled):active,
-.btn-success:focus,
-.load-questions:hover {
-  background-color: #b31154;
-  border-color: #760e39;
 }
 
 /*--------------------------------------------------------Question and Answers Container */
@@ -325,13 +317,9 @@ button:focus {
     padding-left: 7px;
 }
 
-
 /*--------------------------------------------------------Finish / Next Question Button */
 
 .next-question {
-  border: 3px solid #f6f4f0;
-  border-radius: 10px;
-  color: #f6f4f0;
   font-size: 1.6em;
   width: 100%;
   min-height: 98px;
@@ -340,14 +328,6 @@ button:focus {
   padding-left: 4px;
   padding-right: 4px;
   line-height: 1.7em;
-}
-
-.next-question:disabled {
-  background-color: #0069d9;
-}
-
-.next-question:hover {
-  border: 3px solid #353535;
 }
 
 .next-question:disabled,
@@ -370,9 +350,7 @@ button:focus {
   margin: 0 auto;
 }
 
-
 /* fontawesome symbol on next question button */
-
 .action-button i {
   font-size: 2em;
   display: -webkit-box;
@@ -393,7 +371,6 @@ button:focus {
   padding-top: 10px;
 }
 
-
 /*--------------------------------------------------------Reset Button */
 
 .reset-button {
@@ -406,7 +383,6 @@ button:focus {
   padding-right: 5px;
   margin: 30px 0 10px;
 }
-
 
 /*--------------------------------------------------------Current Quiz status Info */
 
@@ -423,14 +399,12 @@ button:focus {
   color: #353535;
 }
 
-
 /*--------------------------------------------------------High Scores Table */
 
 .table {
   max-width: 400px;
   margin: 0 auto;
 }
-
 
 /*--------------------------------------------------------Modal */
 
@@ -443,7 +417,6 @@ button:focus {
   background-color: #f6f4f0;
   border-radius: 10px;
 }
-
 
 /*--------------------------------------------------------Footer */
 
@@ -487,7 +460,6 @@ button:focus {
 .footer-terms .footer-terms-item {
   padding-bottom: 20px;
 }
-
 
 /*--------------------------------------------------------Classes Added/removed with Javascript */
 
@@ -549,12 +521,6 @@ button:focus {
   }
 }
 
-@media screen and (min-width: 992px) {
-  .question-container {
-    max-width: 60%;
-  }
-}
-
 @media screen and (min-width: 768px) {
   .mute-sound {
     font-size: 30px;
@@ -566,6 +532,9 @@ button:focus {
   }
   .intro {
     max-width: 60%
+  }
+  .question-container {
+    max-width: 70%;
   }
 }
 
@@ -582,10 +551,16 @@ button:focus {
     padding-left: 20px;
     padding-right: 20px;
   }
+  .question-container {
+    max-width: 60%;
+  }
 }
 
 @media screen and (min-width: 1200px) {
   .mute-sound {
     margin-right: 40px;
+  }
+  .question-container {
+    max-width: 50%;
   }
 }
