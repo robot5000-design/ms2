@@ -56,6 +56,8 @@ let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
 let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
 /** @type { Object } new instance of the sound class representing a button press */
 let buttonPress = new Sound("assets/sounds/button-press.wav");
+/** @type { Object } new instance of the sound class representing a new high score */
+let highScoreSound = new Sound("assets/sounds/new-high-score.wav");
 /** @type { Object } contains all answer buttons */
 let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
@@ -250,6 +252,7 @@ function finishQuiz(arrayIndex) {
     if (score === 0) {
         $(".reset-modal").html("Better Luck Next Time!");
     } else if (weightedScore > highScore[categoryString]) {
+        highScoreSound.play();
         $(".reset-modal").html(`A New High Score for the ${categoryString} category. Well Done!`);        
     } else {
         $(".reset-modal").html("Well Done!");
@@ -538,12 +541,14 @@ $(".mute-sound").on("click", function() {
         correctAnswerSound.sound.volume = .8;
         wrongAnswerSound.sound.volume = .8;
         buttonPress.sound.volume = .7;
+        highScoreSound.sound.volume = .8;
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
         correctAnswerSound.sound.volume = 0;
         wrongAnswerSound.sound.volume = 0;
         buttonPress.sound.volume = 0;
+        highScoreSound.sound.volume = 0;
     }
 });
 
