@@ -39,10 +39,6 @@ h2 {
   line-height: 1.5em;
 }
 
-.reduce-size {
-  font-size: 1.2em;
-}
-
 .disable {
   opacity: .85;
   cursor: not-allowed;
@@ -269,8 +265,9 @@ button:focus {
 /* Loading in progress spinner */
 
 .spinner-border-sm {
-  width: 2rem;
-  height: 2rem;
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 7px;
 }
 
 .load-questions-wrapper {
@@ -283,7 +280,6 @@ button:focus {
   background-color: #b31154;
   border-color: #760e39;
 }
-
 
 /*--------------------------------------------------------Question and Answers Container */
 
@@ -517,6 +513,9 @@ button:focus {
   color: #f6f4f0;
 }
 
+.reduce-size {
+  font-size: 1.2em;
+}
 
 /*--------------------------------------------------------Media Queries */
 

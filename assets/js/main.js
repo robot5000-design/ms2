@@ -114,7 +114,7 @@ function toggleOptions() {
             `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
             Next Question 
             <i class="fas fa-caret-right"></i>`);
-        $(".load-questions").html("Start!");
+        $(".load-questions").removeClass("reduce-size").html("Start!");
         $(".quiz-options").removeClass("remove-element").addClass("reinstate-element");
         $(".question-container").removeClass("reinstate-element").addClass("remove-element");
     }
