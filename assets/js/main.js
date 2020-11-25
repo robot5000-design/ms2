@@ -176,20 +176,20 @@ function checkBoolean(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
     if (arrayOfQuestions[arrayIndex].type === "boolean") {
         $("[data-number='3']").css("display", "none");
         $("[data-number='4']").css("display", "none");
-        $("[data-number='1']").html("<p>True</p>");
+        $("[data-number='1']").html(`<p>True <span class="tick"></span></p>`);
         $("[data-number='1']").attr("data-answer", "True");
-        $("[data-number='2']").html("<p>False</p>");
+        $("[data-number='2']").html(`<p>False <span class="tick"></span></p>`);
         $("[data-number='2']").attr("data-answer", "False");
     } else {
         $("[data-number='3']").css("display", "block");
         $("[data-number='4']").css("display", "block");
-        $("[data-number='1']").html(`<p>${arrayOfAnswers[0]}</p>`);
+        $("[data-number='1']").html(`<p>${arrayOfAnswers[0]} <span class="tick"></span></p>`);
         $("[data-number='1']").attr("data-answer", `${arrayOfAnswers[0]}`);
-        $("[data-number='2']").html(`<p>${arrayOfAnswers[1]}</p>`);
+        $("[data-number='2']").html(`<p>${arrayOfAnswers[1]} <span class="tick"></span></p>`);
         $("[data-number='2']").attr("data-answer", `${arrayOfAnswers[1]}`);
-        $("[data-number='3']").html(`<p>${arrayOfAnswers[2]}</p>`);
+        $("[data-number='3']").html(`<p>${arrayOfAnswers[2]} <span class="tick"></span></p>`);
         $("[data-number='3']").attr("data-answer", `${arrayOfAnswers[2]}`);
-        $("[data-number='4']").html(`<p>${arrayOfAnswers[3]}</p>`);
+        $("[data-number='4']").html(`<p>${arrayOfAnswers[3]} <span class="tick"></span></p>`);
         $("[data-number='4']").attr("data-answer", `${arrayOfAnswers[3]}`);
     }        
 }
@@ -289,11 +289,13 @@ function checkAnswer() {
             correctAnswerSound.play();
             $(".answer-feedback").removeClass("hide-element").html("Well Done. Correct Answer!");
             $(button).removeClass("active").addClass("correct-answer");
+            $(button).children("p").children("span").html(`<i class="fas fa-check"></i>`);
             score++;
             $(".quiz-score").html(`Score is ${score} / ${setOfQuestions.length}`);
         } else {
             if ($(button).hasClass("active")) {
                 $(button).removeClass("active").addClass("wrong-answer");
+                $(button).children("p").children("span").html(`<i class="fas fa-times"></i>`);
                 wrongAnswerSound.play();
                 $(".answer-feedback").removeClass("hide-element").html("Bad Luck. Wrong Answer!");
             }

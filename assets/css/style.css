@@ -321,6 +321,10 @@ button:focus {
   margin-bottom: 5px;
 }
 
+.tick {
+    padding-left: 7px;
+}
+
 
 /*--------------------------------------------------------Finish / Next Question Button */
 
