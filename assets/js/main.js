@@ -49,7 +49,7 @@ let countdown = 0;
 /** @type { number } number of seconds remaining on the timer */
 let secondsLeft = 0;
 /** @type { number } question timer length in seconds */
-let questionTimer = 8;
+let questionTimer = 20;
 /** @type { Object } new instance of the sound class representing a correct answer */
 let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
 /** @type { Object } new instance of the sound class representing a wrong answer */
@@ -172,7 +172,7 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
 
 /**
  * @function - Removes surplus answer buttons if the current question
- * is boolean rather than multiple choice
+ * is boolean rather than multiple choice & populates the answer buttons
  * @param { Object } arrayOfQuestions - current set of questions & answers
  * @param { number } arrayIndex - array index number of current question
  * @param { Array } arrayOfAnswers - array of answers to the current question
