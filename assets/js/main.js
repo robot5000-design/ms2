@@ -275,10 +275,8 @@ function submitAnswer() {
     // Check if answer is correct
     setTimeout(() => {
         checkAnswer();
-    }, 1000);    
-    setTimeout(() => {
         enableElement(".next-question");
-    }, 50);
+    }, 1000);
 }
 
 /**
@@ -475,13 +473,13 @@ function timer(seconds) {
         // check if timer should be stopped
         if (secondsLeft < 0) {
             clearInterval(countdown);
-            wrongAnswerSound.play();
             return;
         // when timer reaches zero play sound and alert user
         } else if (secondsLeft === 0) {
             for (let button of answerButtons) {
                 if (($(button).attr("data-answer") === correctAnswer)) {
                     $(button).addClass("correct-answer");
+                    wrongAnswerSound.play();
                     enableElement(".next-question");
                 }
                 $(".answer").addClass("disable");
