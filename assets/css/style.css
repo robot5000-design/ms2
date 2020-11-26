@@ -257,7 +257,7 @@ button:focus {
 .load-questions {
   font-size: 2em;
   width: 55%;
-  height: 70px;
+  min-height: 70px;
   padding-left: 0;
   padding-right: 0;
 }

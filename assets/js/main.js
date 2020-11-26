@@ -74,6 +74,8 @@ let difficultyButtons = $(".difficulty-level").children("button");
 let quantityButtons = $(".question-quantity").children("button");
 /** @type { string } translates the category from numerical identifier to text */
 let categoryString = "";
+/** @type { string } general error message to be alerted to user */
+let alertErrorMessage = "Press below to try again or refresh the page. If the problem persists, please contact the administrator.";
 
 // Check and retrieve Local and Session Storage Values  ######################################################################
 /**
@@ -133,6 +135,10 @@ function toggleOptions() {
  * @returns { void } nothing
  */
 function shuffleAnswers(arrayOfAnswers, currentCorrectAnswer) {
+    // Validate the array of answers to contain at most, 3 answers
+    if (arrayOfAnswers.length > 3) {
+        arrayOfAnswers.pop();
+    }
     arrayOfAnswers.push(currentCorrectAnswer);
     for (let i = arrayOfAnswers.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * i);
@@ -182,6 +188,7 @@ function checkBoolean(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
     if (arrayOfQuestions[arrayIndex].type === "boolean") {
         $("[data-number='3']").css("display", "none");
         $("[data-number='4']").css("display", "none");
+        // populating answer buttons for boolean choice questions
         $("[data-number='1']").html(`<p>True <span class="tick"></span></p>`);
         $("[data-number='1']").attr("data-answer", "True");
         $("[data-number='2']").html(`<p>False <span class="tick"></span></p>`);
@@ -189,14 +196,12 @@ function checkBoolean(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
     } else {
         $("[data-number='3']").css("display", "block");
         $("[data-number='4']").css("display", "block");
-        $("[data-number='1']").html(`<p>${arrayOfAnswers[0]} <span class="tick"></span></p>`);
-        $("[data-number='1']").attr("data-answer", `${arrayOfAnswers[0]}`);
-        $("[data-number='2']").html(`<p>${arrayOfAnswers[1]} <span class="tick"></span></p>`);
-        $("[data-number='2']").attr("data-answer", `${arrayOfAnswers[1]}`);
-        $("[data-number='3']").html(`<p>${arrayOfAnswers[2]} <span class="tick"></span></p>`);
-        $("[data-number='3']").attr("data-answer", `${arrayOfAnswers[2]}`);
-        $("[data-number='4']").html(`<p>${arrayOfAnswers[3]} <span class="tick"></span></p>`);
-        $("[data-number='4']").attr("data-answer", `${arrayOfAnswers[3]}`);
+        // populating answer buttons for nultiple choice questions
+        for (let i = 0; i <= 3; i++) {
+            console.log(i)
+            $(`[data-number='${i + 1}']`).html(`<p>${arrayOfAnswers[i]} <span class="tick"></span></p>`);
+            $(`[data-number='${i + 1}']`).attr("data-answer", `${arrayOfAnswers[i]}`);
+        }
     }        
 }
 
@@ -363,11 +368,12 @@ function getQuizData(myToken) {
                 // Check the token and start the Quiz
                 checkToken(questionsLoaded);
             } catch (error) {
-                $(".load-questions").html("Try Again");
-                alert(`${error.name}: Quiz Data not in correct format. Press below or refresh the page and try again. If the problem persists, please contact the administrator.`);
+                $(".load-questions").html("Error. Press to Retry");
+                alert(`${error.name}: Quiz Data not in correct format. ${alertErrorMessage}.`);
             }            
         } else if (this.readyState === 4 && this.status != 200) {
-            alert("Cannot communicate with the Quiz Database. Please try again later by refreshing the page.");
+            $(".load-questions").html("Error. Press to Retry");
+            alert(`Cannot communicate with the Quiz Database. ${alertErrorMessage}.`);
         }
     }
 }
@@ -397,10 +403,9 @@ function checkToken(questionsLoadedObject) {
         let resetTokenUrl = `https://opentdb.com/api_token.php?command=reset&token=${token}`;
         getToken(resetTokenUrl).then(handleSuccess, handleFailure);
     } else {
-        alert("Cannot get results from the Quiz Database. Please try again later by refreshing the page.");
-        $(".load-questions").prop("disabled", true);
-        $(".load-questions").attr("aria-disabled", "true");
-        $(".load-questions").html("Error");
+        // any other response means db could not return results
+        alert(`Cannot get results from the Quiz Database. ${alertErrorMessage}.`);
+        $(".load-questions").html("Error. Press to Retry");
     }
 }
 
@@ -417,9 +422,6 @@ function handleSuccess(resolvedValue) {
  * @returns { void } nothing
  */
 function handleFailure(rejectionReason) {
-    $(".load-questions").prop("disabled", true);
-    $(".load-questions").attr("aria-disabled", "true");
-    $(".load-questions").html("Error");
     alert(rejectionReason);
 }
 
@@ -448,11 +450,12 @@ function getToken(url) {
                     console.log(token);
                     myResolve(token);
                 } catch (error) {
-                    $(".load-questions").html("Try Again");
-                    alert(`${error.name}: Quiz Token not in correct format. Press below or refresh the page to try again. If the problem persists, please contact the administrator.`);
+                    $(".load-questions").html("Error. Press to Retry");
+                    alert(`${error.name}: Quiz Token not in correct format. ${alertErrorMessage}.`);
                 }
             } else if (this.readyState === 4 && this.status != 200) {
-                myReject("Cannot obtain Token. Please try again later by refreshing the page.");
+                $(".load-questions").html("Error. Press to Retry");
+                myReject(`Cannot obtain Quiz Token. ${alertErrorMessage}.`);
             }
         }
     });
