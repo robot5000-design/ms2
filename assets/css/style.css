@@ -284,7 +284,7 @@ button:focus {
 
 .question-container .question-answers .questions {
   padding: 30px 20px 30px;
-  margin-bottom: 30px;
+  margin-bottom: 7px;
   background-color: #353535;
   color: #f6f4f0;
   border-radius: 10px;
@@ -300,7 +300,8 @@ button:focus {
 
 .question-container .list-group button {
   background-color: #f6f4f0;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   border: 2px solid #000;
   padding: 20px 7px 20px 7px;
   border-radius: 10px;
@@ -366,9 +367,8 @@ button:focus {
   padding: 0 5px 0 5px;
 }
 
-.status-info {
-  color: #f6f4f0;
-  padding-top: 10px;
+.display {
+  padding-top: 7px;
 }
 
 /*--------------------------------------------------------Reset Button */
