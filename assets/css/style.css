@@ -387,7 +387,7 @@ button:focus {
 /*--------------------------------------------------------Current Quiz status Info */
 
 .display__time-left {
-  border-radius: 5px;
+  border-radius: 10px;
   margin-top: 5px;
   padding: 5px 0 5px;
   margin-bottom: 5px;
