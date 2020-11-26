@@ -92,6 +92,7 @@ button:focus {
 .next-question:disabled {
   background-color: #b31154;
   border-color: #760e39;
+  box-shadow: none;
 }
 
 /*--------------------------------------------------------Background Images */
