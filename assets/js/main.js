@@ -80,7 +80,7 @@ let categoryString = "";
  * Checks local storage for a high score object
  */
 if (localStorage.getItem("highScore")) {
-    console.log("yes");    
+    console.log("highscore exists");    
     highScore = JSON.parse(localStorage.getItem("highScore"));
     $(".computing-score").html(`${highScore["computing"]}`);
     $(".maths-score").html(`${highScore["mathematics"]}`);
@@ -358,9 +358,14 @@ function getQuizData(myToken) {
         if (this.readyState === 4 && this.status === 200) {
             /** @type { Object } Will represent quiz data returned from opentdb API */
             let questionsLoaded = {};
-            questionsLoaded = JSON.parse(this.responseText);
-            // Check the token and start the Quiz
-            checkToken(questionsLoaded);
+            try {
+                questionsLoaded = JSON.parse(this.responseText);
+                // Check the token and start the Quiz
+                checkToken(questionsLoaded);
+            } catch (error) {
+                $(".load-questions").html("Try Again");
+                alert(`${error.name}: Quiz Data not in correct format. Press below or refresh the page and try again. If the problem persists, please contact the administrator.`);
+            }            
         } else if (this.readyState === 4 && this.status != 200) {
             alert("Cannot communicate with the Quiz Database. Please try again later by refreshing the page.");
         }
@@ -437,10 +442,15 @@ function getToken(url) {
         xhr.onreadystatechange = function() {
             console.log(this.readyState, this.status);
             if (this.readyState === 4 && this.status === 200) {
-                token = (JSON.parse(this.responseText)).token;
-                sessionStorage.setItem("sessionToken", `${token}`);
-                console.log(token);
-                myResolve(token);
+                try {
+                    token = (JSON.parse(this.responseText)).token;
+                    sessionStorage.setItem("sessionToken", `${token}`);
+                    console.log(token);
+                    myResolve(token);
+                } catch (error) {
+                    $(".load-questions").html("Try Again");
+                    alert(`${error.name}: Quiz Token not in correct format. Press below or refresh the page to try again. If the problem persists, please contact the administrator.`);
+                }
             } else if (this.readyState === 4 && this.status != 200) {
                 myReject("Cannot obtain Token. Please try again later by refreshing the page.");
             }
@@ -569,7 +579,6 @@ $(".mute-sound").on("click", function() {
 $(".load-questions").click(function() {
     buttonPress.play();
     $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
-    console.log(token);
     $(".answer-feedback").addClass("hide-element");
     if (!!token === false) {
         getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
