@@ -84,9 +84,9 @@ let alertErrorMessage = "Press below to try again or refresh the page. If the pr
 if (localStorage.getItem("highScore")) {
     console.log("highscore exists");    
     highScore = JSON.parse(localStorage.getItem("highScore"));
-    $(".computing-score").html(`${highScore[computing]}`);
-    $(".maths-score").html(`${highScore[mathematics]}`);
-    $(".nature-score").html(`${highScore[nature]}`);
+    $(".computing-score").html(`${highScore["computing"]}`);
+    $(".maths-score").html(`${highScore["mathematics"]}`);
+    $(".nature-score").html(`${highScore["nature"]}`);
 } else {
     highScore = {
     computing: 0,
@@ -272,9 +272,9 @@ function finishQuiz(arrayIndex) {
     if (weightedScore > highScore[categoryString]) {
         highScore[categoryString] = weightedScore;
         localStorage.setItem("highScore", JSON.stringify(highScore));
-        $(".computing-score").html(`${highScore[computing]}`);
-        $(".maths-score").html(`${highScore[mathematics]}`);
-        $(".nature-score").html(`${highScore[nature]}`);
+        $(".computing-score").html(`${highScore["computing"]}`);
+        $(".maths-score").html(`${highScore["mathematics"]}`);
+        $(".nature-score").html(`${highScore["nature"]}`);
     }
     $("#resetModal").modal("toggle");
 }
