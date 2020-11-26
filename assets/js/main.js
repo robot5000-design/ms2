@@ -263,7 +263,7 @@ function finishQuiz(arrayIndex) {
         $(".reset-modal").html("Better Luck Next Time!");
     } else if (weightedScore > highScore[categoryString]) {
         highScoreSound.play();
-        $(".reset-modal").html(`A New High Score for the ${categoryString} category. Well Done!`);        
+        $(".reset-modal").html(`A New High Score for the ${(categoryString[0].toUpperCase() + categoryString.slice(1,))} category. Well Done!`);        
     } else {
         wellDoneSound.play();
         $(".reset-modal").html("Well Done!");
