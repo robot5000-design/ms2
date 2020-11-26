@@ -30,15 +30,15 @@ $(".feedback-form").on("click", function() {
             <h5 class="col reset-modal" id="resetModalLabel">Feedback Form</h5>
         </div>
         <div class="row center-form">
-            <form  class="col" onsubmit="return sendMail(this)";>
+            <form  class="col" onsubmit="return sendMail(this)">
                 <input type="text" name="name" class="form-control" id="fullname" placeholder="Name" required/>
-                <input type="text" name="emailaddress" class="form-control" id="emailaddress" placeholder="email" required/>
+                <input type="email" name="emailaddress" class="form-control" id="emailaddress" placeholder="email" required/>
                 <div class="modal-body px-0">
                     <textarea rows="5" name="feedback" class="form-control" id="feedback" placeholder="We appreciate your feedback" required></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()";>Dismiss</button>
-                    <button type="submit" class="btn btn-primary center-block" onclick="buttonPress.play()";>Send Feedback</button>
+                    <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">Dismiss</button>
+                    <button type="submit" class="btn btn-primary center-block" onclick="buttonPress.play()">Send Feedback</button>
                 </div>
             </form>
         </div>`

@@ -65,7 +65,7 @@ let sadSound = new Sound("assets/sounds/sad-sound.wav");
 /** @type { Object } contains all answer buttons */
 let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
-let tokenUrl = "https://opentdb.com/api_token.php?command=request"
+let tokenUrl = "https://opentdb.com/api_token.php?command=request";
 /** @type { Object } contains buttons representing quiz category options */
 let categoryButtons = $(".categories").children("button");
 /** @type { Object } contains buttons representing quiz difficulty options */
@@ -84,15 +84,15 @@ let alertErrorMessage = "Press below to try again or refresh the page. If the pr
 if (localStorage.getItem("highScore")) {
     console.log("highscore exists");    
     highScore = JSON.parse(localStorage.getItem("highScore"));
-    $(".computing-score").html(`${highScore["computing"]}`);
-    $(".maths-score").html(`${highScore["mathematics"]}`);
-    $(".nature-score").html(`${highScore["nature"]}`);
+    $(".computing-score").html(`${highScore[computing]}`);
+    $(".maths-score").html(`${highScore[mathematics]}`);
+    $(".nature-score").html(`${highScore[nature]}`);
 } else {
     highScore = {
     computing: 0,
     mathematics: 0,
     nature: 0 
-    }
+    };
 }
 console.log(highScore);
 
@@ -141,8 +141,8 @@ function shuffleAnswers(arrayOfAnswers, currentCorrectAnswer) {
     }
     arrayOfAnswers.push(currentCorrectAnswer);
     for (let i = arrayOfAnswers.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * i);
-        k = arrayOfAnswers[i];
+        let j = Math.floor(Math.random() * i);
+        let k = arrayOfAnswers[i];
         arrayOfAnswers[i] = arrayOfAnswers[j];
         arrayOfAnswers[j] = k;
     }
@@ -198,7 +198,7 @@ function checkBoolean(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
         $("[data-number='4']").css("display", "block");
         // populating answer buttons for nultiple choice questions
         for (let i = 0; i <= 3; i++) {
-            console.log(i)
+            console.log(i);
             $(`[data-number='${i + 1}']`).html(`<p>${arrayOfAnswers[i]} <span class="tick"></span></p>`);
             $(`[data-number='${i + 1}']`).attr("data-answer", `${arrayOfAnswers[i]}`);
         }
@@ -249,7 +249,7 @@ function finishQuiz(arrayIndex) {
         <div class="modal-body">
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()";>Exit</button>
+            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()">Exit</button>
         </div>`);
     if (difficulty === "medium") {
         weightedScore = Math.round(score * 1.2);
@@ -263,7 +263,7 @@ function finishQuiz(arrayIndex) {
         $(".reset-modal").html("Better Luck Next Time!");
     } else if (weightedScore > highScore[categoryString]) {
         highScoreSound.play();
-        $(".reset-modal").html(`A New High Score for the ${(categoryString[0].toUpperCase() + categoryString.slice(1,))} Category. Well Done!`);        
+        $(".reset-modal").html(`A New High Score for the ${(categoryString[0].toUpperCase() + categoryString.slice(1, categoryString.length))} Category. Well Done!`);        
     } else {
         wellDoneSound.play();
         $(".reset-modal").html("Well Done!");
@@ -272,9 +272,9 @@ function finishQuiz(arrayIndex) {
     if (weightedScore > highScore[categoryString]) {
         highScore[categoryString] = weightedScore;
         localStorage.setItem("highScore", JSON.stringify(highScore));
-        $(".computing-score").html(`${highScore["computing"]}`);
-        $(".maths-score").html(`${highScore["mathematics"]}`);
-        $(".nature-score").html(`${highScore["nature"]}`);
+        $(".computing-score").html(`${highScore[computing]}`);
+        $(".maths-score").html(`${highScore[mathematics]}`);
+        $(".nature-score").html(`${highScore[nature]}`);
     }
     $("#resetModal").modal("toggle");
 }
@@ -375,7 +375,7 @@ function getQuizData(myToken) {
             $(".load-questions").html("Error. Press to Retry");
             alert(`Cannot communicate with the Quiz Database. ${alertErrorMessage}.`);
         }
-    }
+    };
 }
 
 /**
@@ -457,7 +457,7 @@ function getToken(url) {
                 $(".load-questions").html("Error. Press to Retry");
                 myReject(`Cannot obtain Quiz Token. ${alertErrorMessage}.`);
             }
-        }
+        };
     });
 }
 
@@ -469,7 +469,7 @@ function getToken(url) {
 function activeButton(buttonGroup) {
     for (let button of buttonGroup) {
         if ($(button).hasClass("active")) {
-            buttonValue = button.getAttribute("data-value");            
+            let buttonValue = button.getAttribute("data-value");            
             return buttonValue;                 
         }
     }
@@ -557,12 +557,12 @@ $(".mute-sound").on("click", function() {
     if ($(".mute-sound").attr("data-sound") === "off") {
         $(".mute-sound").html(soundOn);
         $(".mute-sound").attr("data-sound", "on");
-        correctAnswerSound.sound.volume = .8;
-        wrongAnswerSound.sound.volume = .8;
-        buttonPress.sound.volume = .7;
-        highScoreSound.sound.volume = .8;
-        wellDoneSound.sound.volume = .8;
-        sadSound.sound.volume = .8;
+        correctAnswerSound.sound.volume = 0.8;
+        wrongAnswerSound.sound.volume = 0.8;
+        buttonPress.sound.volume = 0.7;
+        highScoreSound.sound.volume = 0.8;
+        wellDoneSound.sound.volume = 0.8;
+        sadSound.sound.volume = 0.8;
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
@@ -591,18 +591,13 @@ $(".load-questions").click(function() {
 });
 
 /**
- * When an answer button is clicked calls the selectSubmit function
+ * @fires - When the next question button is clicked calls the nextQuestion function
+ * @returns { void } nothing
  */
-for (let button of answerButtons) {
-    /**
-     * @fires - When the next question button is clicked calls the nextQuestion function
-     * @returns { void } nothing
-     */    
-    $(button).on("click", function() {
-        submitAnswer()
-        $(".answer").addClass("disable");
-    });
-}
+$(".answer").on("click", function() {
+    submitAnswer();
+    $(".answer").addClass("disable");
+});
 
 /**
  * @fires - When the next question button is clicked calls the nextQuestion function
@@ -627,8 +622,8 @@ $(".reset-button").on("click", function() {
             Please confirm if you would like to exit the quiz...
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()";>No</button>
-            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()";>Yes</button>
+            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">No</button>
+            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()">Yes</button>
         </div>`);
 });
 
