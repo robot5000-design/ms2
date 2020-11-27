@@ -136,7 +136,8 @@ function toggleOptions() {
  */
 function shuffleAnswers(arrayOfAnswers, currentCorrectAnswer) {
     // Validate the array of answers to contain at most, 3 answers
-    if (arrayOfAnswers.length > 3) {
+    console.log(arrayOfAnswers)
+    if (arrayOfAnswers.length > 4) {
         arrayOfAnswers.pop();
     }
     arrayOfAnswers.push(currentCorrectAnswer);
@@ -196,9 +197,8 @@ function checkBoolean(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
     } else {
         $("[data-number='3']").css("display", "block");
         $("[data-number='4']").css("display", "block");
-        // populating answer buttons for nultiple choice questions
+        // populating answer buttons for multiple choice questions
         for (let i = 0; i <= 3; i++) {
-            console.log(i);
             $(`[data-number='${i + 1}']`).html(`<p>${arrayOfAnswers[i]} <span class="tick"></span></p>`);
             $(`[data-number='${i + 1}']`).attr("data-answer", `${arrayOfAnswers[i]}`);
         }
@@ -217,9 +217,13 @@ function nextQuestion() {
     window.scroll(0, 60);
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
+        $(".answer").removeClass("disable");
+        $(".question-answers, .status-info").fadeOut(500, function() {
+            $(".question-answers, .status-info").fadeIn(1000);
+        });
         setTimeout(function() {
             askQuestions(setOfQuestions, questionIndex, score);
-        }, 30);
+        }, 500);
         if (questionIndex === (setOfQuestions.length - 1)) {
             $(".next-question").addClass("finish-button").html(
                 `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
@@ -227,8 +231,6 @@ function nextQuestion() {
                 <i class="fas fa-caret-right"></i>`);
             $(".reset-button").hide();
         }
-        $(".answer").removeClass("disable").html("");
-        $(".questions").html("");
     } else {
         finishQuiz(questionIndex);
     }
@@ -290,7 +292,7 @@ function submitAnswer() {
     setTimeout(() => {
         checkAnswer();
         enableElement(".next-question");
-    }, 1000);
+    }, 800);
 }
 
 /**

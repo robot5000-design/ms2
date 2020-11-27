@@ -90,7 +90,7 @@ button:focus {
 .begin:hover,
 .next-question:hover,
 .next-question:disabled {
-  background-color: #b31154;
+  background-color: #9e104b;
   border-color: #760e39;
   box-shadow: none;
 }
@@ -397,7 +397,7 @@ button:focus {
 .quiz-score {
   line-height: 2em;
   font-size: .8em;
-  color: #353535;
+  color: #f6f4f0;
 }
 
 /*--------------------------------------------------------High Scores Table */
