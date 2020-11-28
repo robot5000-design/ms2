@@ -297,7 +297,7 @@ function finishQuiz(arrayIndex) {
  */
 function submitAnswer() {
     clearInterval(countdown);
-    $(".display__time-left").html(`You answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
+    $(".display__time-left").html(`Answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
     // Check if answer is correct
     setTimeout(() => {
         checkAnswer();
@@ -331,7 +331,7 @@ function checkAnswer() {
         }
     }
     if (setOfQuestions[questionIndex].type != "boolean" && screen.availHeight < 750) {
-            let elem = $(".question-answers").children("p")[0];
+            let elem = $(".question-answers").children(".answer")[0];
             elem.scrollIntoView({behaviour: "smooth"});
         }
 }
