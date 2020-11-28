@@ -87,7 +87,9 @@ button:focus {
 }
 
 .load-questions:hover,
+.load-questions:disabled,
 .begin:hover,
+.begin:disabled,
 .next-question:hover,
 .next-question:disabled {
   background-color: #9e104b;

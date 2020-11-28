@@ -125,6 +125,7 @@ function toggleOptions() {
             `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
             Next Question 
             <i class="fas fa-caret-right"></i>`);
+        enableElement(".load-questions");
         $(".load-questions").removeClass("reduce-size").html("Start!");
         $(".question-container").fadeOut(300, function() {
             window.scroll(0, 60);
@@ -587,6 +588,7 @@ $(".mute-sound").on("click", function() {
  */
 $(".load-questions").click(function() {
     buttonPress.play();
+    disableElement(".load-questions");
     $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
     $(".answer-feedback").addClass("hide-element");
     if (!!token === false) {
