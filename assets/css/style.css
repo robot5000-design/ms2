@@ -20,7 +20,7 @@
 body {
   font-family: "Pangolin", cursive;
   background-color: #306821;
-  color: #f6f4f0;
+  color: #e4dfd5;
   text-align: center;
 }
 
@@ -56,7 +56,7 @@ button:focus {
 }
 
 .controls-container header {
-  color: #f6f4f0;
+  color: #e4dfd5;
   padding: 0px 15px 30px 15px;
   text-align: center;
 }
@@ -81,8 +81,8 @@ button:focus {
 .begin,
 .begin:active {
   background-color: #d31363;
-  border: 3px solid #f6f4f0;
-  color: #f6f4f0;
+  border: 3px solid #e4dfd5;
+  color: #e4dfd5;
   border-radius: 10px;
 }
 
@@ -196,7 +196,7 @@ button:focus {
 }
 
 .quiz-options .list-group button {
-  background-color: #f6f4f0;
+  background-color: #e4dfd5;
   margin-bottom: 5px;
   border: 2px solid #000;
   padding: 20px 0 20px 0;
@@ -225,7 +225,7 @@ button:focus {
 
 .quiz-options .group-heading {
   background-color: #353535;
-  color: #f6f4f0;
+  color: #e4dfd5;
   margin-bottom: 7px;
   padding: 15px 5% 15px 5%;
   border-radius: 10px;
@@ -289,7 +289,7 @@ button:focus {
   padding: 30px 20px 30px;
   margin-bottom: 7px;
   background-color: #353535;
-  color: #f6f4f0;
+  color: #e4dfd5;
   border-radius: 10px;
 }
 
@@ -302,7 +302,7 @@ button:focus {
 }
 
 .question-container .list-group button {
-  background-color: #f6f4f0;
+  background-color: #e4dfd5;
   margin-top: 5px;
   margin-bottom: 5px;
   border: 2px solid #000;
@@ -351,7 +351,7 @@ button:focus {
 .action-button .finish-button:disabled {
   background-color: #cf5823;
   border-color: #8f340d;
-  color: #f6f4f0;
+  color: #e4dfd5;
 }
 
 .action-button {
@@ -382,7 +382,7 @@ button:focus {
 /*--------------------------------------------------------Reset Button */
 
 .reset-button {
-  color: #f6f4f0;
+  color: #e4dfd5;
   border: none;
   border-radius: 10px;
   font-size: 1.2em;
@@ -405,7 +405,7 @@ button:focus {
 .quiz-score {
   line-height: 2em;
   font-size: .8em;
-  color: #f6f4f0;
+  color: #e4dfd5;
 }
 
 /*--------------------------------------------------------High Scores Table */
@@ -423,7 +423,7 @@ button:focus {
 
 .modal-content {
   padding: 5%;
-  background-color: #f6f4f0;
+  background-color: #e4dfd5;
   border-radius: 20px;
   border: thick dotted #ec672e;
 }
@@ -438,7 +438,7 @@ button:focus {
 }
 
 .footer-container li a i {
-  color: #f6f4f0;
+  color: #e4dfd5;
   font-size: 28px;
 }
 
@@ -446,7 +446,7 @@ button:focus {
 .footer-terms {
   font-family: "Roboto Mono", monospace;
   font-weight: 500;
-  color: #f6f4f0;
+  color: #e4dfd5;
   margin: 0 auto;
   text-decoration: none;
 }
@@ -484,13 +484,13 @@ button:focus {
 .question-container .list-group .correct-answer,
 .question-container .list-group .correct-answer:disabled {
   background-color: #06b906;
-  color: #f6f4f0;
+  color: #e4dfd5;
 }
 
 .question-container .list-group .wrong-answer,
 .question-container .list-group .wrong-answer:disabled {
   background-color: red;
-  color: #f6f4f0;
+  color: #e4dfd5;
 }
 
 .reduce-size {
