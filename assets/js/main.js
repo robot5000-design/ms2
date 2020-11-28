@@ -331,9 +331,11 @@ function checkAnswer() {
         }
     }
     if (setOfQuestions[questionIndex].type != "boolean" && screen.availHeight < 750) {
+        setTimeout(function() {
             let elem = $(".question-answers").children(".answer")[0];
             elem.scrollIntoView({behaviour: "smooth"});
-        }
+        }, 1000);    
+    }
 }
 
 /**
