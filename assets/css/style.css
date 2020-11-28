@@ -416,9 +416,10 @@ button:focus {
 }
 
 .modal-content {
-  padding: 10%;
+  padding: 5%;
   background-color: #f6f4f0;
-  border-radius: 10px;
+  border-radius: 20px;
+  border: thick dotted #ec672e;
 }
 
 /*--------------------------------------------------------Footer */
