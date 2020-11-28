@@ -329,7 +329,7 @@ function checkAnswer() {
     }
     if (setOfQuestions[questionIndex].type != "boolean" && screen.availHeight < 750) {
             console.log(screen.availHeight)
-            window.scroll(0, 225);
+            window.scroll(0, 250);
         }
 }
 
