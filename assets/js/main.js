@@ -116,6 +116,7 @@ function toggleOptions() {
             if (screen.availHeight < 1000) {
                 $(".controls-container header").hide();
             }
+            window.scroll(0, 60);
             $(".question-container").fadeIn(500);
         });
     } else {
@@ -399,7 +400,6 @@ function checkToken(questionsLoadedObject) {
         toggleOptions();
         // Start Quiz
         askQuestions(setOfQuestions, questionIndex, score);
-        window.scroll(0, 60);
         // response code 3 - session token not found by api
     } else if (questionsLoadedObject.response_code === 3) {
         getToken(tokenUrl).then(handleSuccess, handleFailure);
