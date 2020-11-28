@@ -219,11 +219,11 @@ function nextQuestion() {
     disableElement(".next-question");
     $(".display__time-left").removeClass("time-critical");
     $(".answer-feedback").addClass("hide-element");
-    window.scroll(0, 60);
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
         $(".answer").removeClass("disable");
         $(".question-answers, .status-info").fadeOut(500, function() {
+            window.scroll(0, 60);
             $(".question-answers, .status-info").fadeIn(1000);
         });
         setTimeout(function() {
