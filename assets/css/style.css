@@ -321,7 +321,7 @@ button:focus {
     padding-left: 7px;
 }
 
-/*--------------------------------------------------------Finish / Next Question Button */
+/*--------------------------------------------------------Finish / Next Question / Reset Button */
 
 .next-question {
   font-size: 1.6em;
@@ -339,14 +339,19 @@ button:focus {
   border: none;
 }
 
+.reset-button,
 .action-button .finish-button {
   background-color: #ec672e;
 }
 
+.reset-button:hover,
+.btn-warning:not(:disabled):not(.disabled):active,
+.reset-button:focus,
 .action-button .finish-button:hover,
 .action-button .finish-button:disabled {
   background-color: #cf5823;
   border-color: #8f340d;
+  color: #f6f4f0;
 }
 
 .action-button {
@@ -377,8 +382,9 @@ button:focus {
 /*--------------------------------------------------------Reset Button */
 
 .reset-button {
-  border-radius: 10px;
   color: #f6f4f0;
+  border: none;
+  border-radius: 10px;
   font-size: 1.2em;
   width: 30%;
   min-height: 50px;
