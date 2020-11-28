@@ -112,7 +112,7 @@ if (sessionStorage.getItem("sessionToken")) {
 function toggleOptions() {
     // show quiz questions and answers
     if ($(".quiz-options").css("display") != "none") {
-        $(".quiz-options").fadeOut(300, function() {
+        $(".quiz-options, .controls-container header").fadeOut(300, function() {
             if (screen.availHeight < 1000) {
                 $(".controls-container header").hide();
             }
@@ -120,7 +120,6 @@ function toggleOptions() {
         });
     } else {
         // show quiz options
-        $(".controls-container header").show();
         $(".next-question").removeClass("finish-button").html(
             `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
             Next Question 
@@ -129,7 +128,7 @@ function toggleOptions() {
         $(".load-questions").removeClass("reduce-size").html("Start!");
         $(".question-container").fadeOut(300, function() {
             window.scroll(0, 60);
-            $(".quiz-options").fadeIn(500);
+            $(".quiz-options, .controls-container header").fadeIn(700);
         });
     }
 }
