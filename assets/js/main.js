@@ -114,7 +114,8 @@ function toggleOptions() {
     if ($(".quiz-options").css("display") != "none") {
         $(".quiz-options, .controls-container header").fadeOut(300, function() {
             $(".question-container").fadeIn(500);
-            window.scroll(0, 90);
+            let elem = $(".questions")[0];
+            elem.scrollIntoView();
             if (screen.availHeight < 1000) {
                 $(".controls-container header").hide();
             } else {
@@ -130,7 +131,8 @@ function toggleOptions() {
         enableElement(".load-questions");
         $(".load-questions").removeClass("reduce-size").html("Start!");
         $(".question-container").fadeOut(300, function() {
-            window.scroll(0, 60);
+            let elem = $(".mute-sound")[0];
+            elem.scrollIntoView();
             $(".quiz-options, .controls-container header").fadeIn(700);
         });
     }
@@ -225,7 +227,8 @@ function nextQuestion() {
     if (questionIndex < setOfQuestions.length) {
         $(".answer").removeClass("disable");
         $(".question-container, .status-info").fadeOut(500, function() {
-            window.scroll(0, 90);
+            let elem = $(".questions")[0];
+            elem.scrollIntoView();
             $(".question-container, .status-info").fadeIn(1000);
         });
         setTimeout(function() {
@@ -328,8 +331,8 @@ function checkAnswer() {
         }
     }
     if (setOfQuestions[questionIndex].type != "boolean" && screen.availHeight < 750) {
-            console.log(screen.availHeight)
-            window.scroll(0, 250);
+            let elem = $(".question-answers").children("p")[0];
+            elem.scrollIntoView({behaviour: "smooth"});
         }
 }
 
