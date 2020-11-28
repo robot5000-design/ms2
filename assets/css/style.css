@@ -72,6 +72,8 @@ button:focus {
 
 /*--------------------------------------------------------Common Button Styling */
 
+.btn-success:not(:disabled):not(.disabled):active,
+.btn-success:focus,
 .load-questions,
 .load-questions:active,
 .next-question,
@@ -84,8 +86,6 @@ button:focus {
   border-radius: 10px;
 }
 
-.btn-success:not(:disabled):not(.disabled):active,
-.btn-success:focus,
 .load-questions:hover,
 .begin:hover,
 .next-question:hover,
@@ -466,14 +466,6 @@ button:focus {
 
 .hide-element {
   visibility: hidden;
-}
-
-.remove-element {
-  display: none;
-}
-
-.reinstate-element {
-  display: block;
 }
 
 .time-critical {
