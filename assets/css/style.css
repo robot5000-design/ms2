@@ -45,16 +45,6 @@ h2 {
   pointer-events: none;
 }
 
-.btn.disabled,
-.btn:disabled {
-  opacity: .85;
-  cursor: not-allowed;
-}
-
-button:focus {
-  outline: none;
-}
-
 .controls-container header {
   color: #e4dfd5;
   padding: 0px 15px 30px 15px;
@@ -71,6 +61,20 @@ button:focus {
 }
 
 /*--------------------------------------------------------Common Button Styling */
+
+.btn {
+  box-shadow: 9px 10px 8px -4px rgba(0,0,0,0.59);
+}
+
+.btn:active,
+.btn:disabled,
+.btn:focus {
+  box-shadow: none;
+}
+
+.no-shadow {
+  box-shadow: none;
+}
 
 .btn-success:not(:disabled):not(.disabled):active,
 .btn-success:focus,
@@ -94,7 +98,17 @@ button:focus {
 .next-question:disabled {
   background-color: #9e104b;
   border-color: #760e39;
+}
+
+.btn.disabled,
+.btn:disabled {
+  opacity: .85;
+  cursor: not-allowed;
   box-shadow: none;
+}
+
+button:focus {
+  outline: none;
 }
 
 /*--------------------------------------------------------Background Images */
@@ -208,6 +222,7 @@ button:focus {
   border-color: #000;
   color: #353535;
   margin-bottom: 5px;
+  box-shadow: none;
 }
 
 .quiz-options .list-group button:focus {
@@ -237,7 +252,6 @@ button:focus {
   max-width: 300px;
   margin: 0 auto;
 }
-
 
 /* fontawesome icons on option headings */
 .icon-left,
@@ -318,7 +332,7 @@ button:focus {
 }
 
 .tick {
-    padding-left: 7px;
+  padding-left: 7px;
 }
 
 /*--------------------------------------------------------Finish / Next Question / Reset Button */

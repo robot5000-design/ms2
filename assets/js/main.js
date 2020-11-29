@@ -171,7 +171,7 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     /** @type { Array } array of incorrect answers to current question */
     let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers;    
     // Prepare the various buttons
-    $(".answer").removeClass("correct-answer wrong-answer");
+    $(".answer").removeClass("correct-answer wrong-answer no-shadow");
     disableElement(".next-question");
     // Assign the correct answer
     correctAnswer = arrayOfQuestions[arrayIndex].correct_answer;
@@ -314,13 +314,13 @@ function checkAnswer() {
         if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer) && (secondsLeft > 0)) {
             correctAnswerSound.play();
             $(".answer-feedback").removeClass("hide-element").html("Well Done. Correct Answer!");
-            $(button).removeClass("active").addClass("correct-answer");
+            $(button).removeClass("active").addClass("correct-answer no-shadow");
             $(button).children("p").children("span").html(`<i class="fas fa-check"></i>`);
             score++;
             $(".quiz-score").html(`Score is ${score} / ${setOfQuestions.length}`);
         } else {
             if ($(button).hasClass("active")) {
-                $(button).removeClass("active").addClass("wrong-answer");
+                $(button).removeClass("active").addClass("wrong-answer no-shadow");
                 $(button).children("p").children("span").html(`<i class="fas fa-times"></i>`);
                 wrongAnswerSound.play();
                 $(".answer-feedback").removeClass("hide-element").html("Bad Luck. Wrong Answer!");
