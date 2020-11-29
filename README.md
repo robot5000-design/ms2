@@ -72,3 +72,17 @@ As the site owner:
 - I want the site to have significant interactivity.
 - I want the site to deal with potential errors without breaking the site or affecting the user negatively.
 - I want the functionality to be as automated as possible but I want the user to be able to move between qustions themselves so that they can take in the answers at their own pace.
+
+As a user:
+- I want the site to be fun and appealing to use.
+- I want the site to look visually appealing.
+- I want the site to be easy to use with smooth navigation between sections.
+- I want to learn something from using the site.
+- I want to be able to offer feedback and suggest new questions.
+- I want to be aware of updates or new features.
+- I want the site to have a good variety of questions without continuous repetition.
+- Sounds effects feedback would be useful.
+- I want to be able to keep track of my best scores.
+- I want to be able to choose a difficulty level i can manage and vary the quiz length depending on how much time i have.
+- I want a site that is not commonly crashing with errors, or if there is an error it is managed properly.
+
