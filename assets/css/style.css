@@ -67,8 +67,7 @@ h2 {
 }
 
 .btn:active,
-.btn:disabled,
-.btn:focus {
+.btn:disabled {
   box-shadow: none;
 }
 
@@ -96,7 +95,7 @@ h2 {
 .begin:disabled,
 .next-question:hover,
 .next-question:disabled {
-  background-color: #9e104b;
+  background-color: #b60f54;
   border-color: #760e39;
 }
 
@@ -354,13 +353,15 @@ button:focus {
 }
 
 .reset-button,
-.action-button .finish-button {
+.reset-button:focus,
+.action-button .finish-button,
+.action-button .finish-button:focus,
+.btn-warning:not(:disabled):not(.disabled):active {
   background-color: #ec672e;
+  color: #e4dfd5;
 }
 
 .reset-button:hover,
-.btn-warning:not(:disabled):not(.disabled):active,
-.reset-button:focus,
 .action-button .finish-button:hover,
 .action-button .finish-button:disabled {
   background-color: #cf5823;
