@@ -539,6 +539,7 @@ function timer(seconds) {
 function displayTimeLeft(remainderSeconds) {
     if (remainderSeconds === 0) {
         $(".display__time-left").html("Oops you ran out of time!");
+        $(".answer").addClass("no-shadow");
     } else {
         $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds remaining.`);
     }
