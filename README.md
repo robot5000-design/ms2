@@ -98,9 +98,44 @@ Based on the results of the Strategy research the features to be included are:
 - Use buttons if possible rather than dropdowns or tickboxes for a better user experience.
 - A Modal containing a Feedback form.
 - Social Links, eg. facebook, twitter.
-- A countdown timer.
+- A countdown timer if possible.
 - Shows Correct Answer Feedback.
+- Display the current high score.
 - Sound effects and a button to mute them.
 - Use a free quiz API.
 - Use the available API Token which ensure questions are not repeated during a session.
-- From the Strategy Table and graph it was clear that all features considered important are probably viable.
+
+From the Strategy Table and graph it was clear that all features considered important are probably viable.
+
+#### Structure
+
+- A simple structure with just 2 pages, the introduction/landing page and the quiz page.
+- On the Quiz page, hide the quiz options and show the questions using javascript or vice versa.
+- Custom 404 page, so in the case of a broken internal link a button is provided for the user to return to safety. Unlikely to be requred but included nevertheless.
+
+#### Skeleton
+
+Wireframes made in Balsamiq Wireframes were used for basic layout. These can be viewed here:
+
+[Landing Page All Sizes](./documentation/wireframes/landing-page-all-sizes.png)
+
+[Options Page All Sizes](./documentation/wireframes/options-page-all-sizes.png)
+
+[Questions Page All Sizes](./documentation/wireframes/questions-page-all-sizes.png)
+
+
+#### Surface
+
+It was decided to use a green chalkboard themed background to suit the science theme of the site.
+[Pixabay](https://pixabay.com/) provided the free background image and the owl icon.
+
+The main background colour is courtesy of the background image and the median colour is green #306821. Text colour is an off-white #E4DFD5 which contrasts well with the green  background colour and a charcoal colour #353535 was used for the footer. The main CTA buttons are an eye catching pink #D31363.
+The combination of colours provide contrast ratios that allow the site to score 100% in the Accessibility category on Chrome Development Tools Lighthouse.
+A single font was chosen, Pangolin from Google Fonts. This was chosen for its imperfect appearance so that it could be handwritten.
+ 
+
+![ColourChoices][3]
+
+[3]: ./documentation/images-for-readme/coolors-palette.png "Colour Choices"
+
+---
