@@ -51,17 +51,17 @@ let secondsLeft = 0;
 /** @type { number } question timer length in seconds */
 let questionTimer = 20;
 /** @type { Object } new instance of the sound class representing a correct answer */
-let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
+let correctAnswerSound = new Sound("assets/sounds/correct-answer.mp3");
 /** @type { Object } new instance of the sound class representing a wrong answer */
-let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
+let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.mp3");
 /** @type { Object } new instance of the sound class representing a button press */
-let buttonPress = new Sound("assets/sounds/button-press.wav");
+let buttonPress = new Sound("assets/sounds/button-press.mp3");
 /** @type { Object } new instance of the sound class representing a new high score */
-let highScoreSound = new Sound("assets/sounds/new-high-score.wav");
+let highScoreSound = new Sound("assets/sounds/new-high-score.mp3");
 /** @type { Object } new instance of the sound class representing a well done score */
-let wellDoneSound = new Sound("assets/sounds/well-done.wav");
+let wellDoneSound = new Sound("assets/sounds/well-done.mp3");
 /** @type { Object } new instance of the sound class representing a sad score */
-let sadSound = new Sound("assets/sounds/sad-sound.wav");
+let sadSound = new Sound("assets/sounds/sad-sound.mp3");
 /** @type { Object } contains all answer buttons */
 let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
