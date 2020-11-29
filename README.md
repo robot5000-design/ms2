@@ -86,3 +86,21 @@ As a user:
 - I want to be able to choose a difficulty level i can manage and vary the quiz length depending on how much time i have.
 - I want a site that is not commonly crashing with errors, or if there is an error it is managed properly.
 
+From researching other online quizzes, most are quite similar in presentation. Some have timers, but others do not. Most offer points scoring which helps to keep them addictive. Most do not offer any kind of difficulty level option which is not good for user retention if the user cannot find a level which suits them. Some offer the option of a hint but because the free API that is being used for this project does not have that option, this project will not have that particular feature. [Opentdb](https://opentdb.com/) Quiz API was used for this project because of the choice of topics, it's free to use and appears to be reliable.
+
+#### Scope
+
+Based on the results of the Strategy research the features to be included are:
+
+- A Landing page which offers a brief explanation and introduction to the site and the reason for its existence.
+- An Options page, where the user chooses topic, difficulty level and quantity of questions.
+- The Questions/answers page should show 4 answers for multiple choice and 2 answers for boolean questions. It should have a submit and next-question button and a reset quiz button.
+- Use buttons if possible rather than dropdowns or tickboxes for a better user experience.
+- A Modal containing a Feedback form.
+- Social Links, eg. facebook, twitter.
+- A countdown timer.
+- Shows Correct Answer Feedback.
+- Sound effects and a button to mute them.
+- Use a free quiz API.
+- Use the available API Token which ensure questions are not repeated during a session.
+- From the Strategy Table and graph it was clear that all features considered important are probably viable.
