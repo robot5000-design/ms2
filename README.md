@@ -109,8 +109,8 @@ From the Strategy Table and graph it was clear that all features considered impo
 
 #### Structure
 
-- A simple structure with just 2 pages, the introduction/landing page and the quiz page.
-- On the Quiz page, hide the quiz options and show the questions using javascript or vice versa.
+- A simple structure with just 2 main pages; the introduction/landing page and the quiz page.
+- The Quiz page shows either the quiz options or the questions/answers. Javascript is used to achieve this.
 - Custom 404 page, so in the case of a broken internal link a button is provided for the user to return to safety. Unlikely to be requred but included nevertheless.
 
 #### Skeleton

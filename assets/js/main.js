@@ -302,7 +302,7 @@ function submitAnswer() {
     setTimeout(() => {
         checkAnswer();
         enableElement(".next-question");
-    }, 800);
+    }, 1200);
 }
 
 /**
@@ -334,8 +334,11 @@ function checkAnswer() {
         setTimeout(function() {
             let elem = $(".question-answers").children(".answer")[0];
             elem.scrollIntoView({behaviour: "smooth"});
-        }, 1000);    
+        }, 1500);    
     }
+    setTimeout(function() {
+        $(".answer").addClass("no-shadow");
+    }, 1500);
 }
 
 /**
