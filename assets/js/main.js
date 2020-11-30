@@ -117,6 +117,10 @@ $(document).ready(function() {
 function toggleOptions() {
     // show quiz questions and answers
     if ($(".quiz-options").css("display") != "none") {
+        // timeout to allow countdown timer to start
+        setTimeout(function() {
+            $(".answer").removeClass("disable");
+        }, 1000);
         $(".quiz-options, .controls-container header").fadeOut(300, function() {
             $(".question-container").fadeIn(500);
             if (screen.availHeight < 1000) {
@@ -181,7 +185,8 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     /** @type { string } current question */
     let currentQuestion = arrayOfQuestions[arrayIndex].question;
     /** @type { Array } array of incorrect answers to current question */
-    let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers;    
+    let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers; 
+    timer(questionTimer);   
     // Prepare the various buttons
     $(".answer").removeClass("correct-answer wrong-answer no-shadow");
     disableElement(".next-question");
@@ -193,7 +198,6 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     checkBoolean(arrayOfQuestions, arrayIndex, answersArray);    
     $(".questions").html(`${arrayIndex + 1}. ${currentQuestion}`);
     arrayIndex++;
-    timer(questionTimer);
     console.log(answersArray, (correctAnswer));
     console.log(arrayIndex);
 }
@@ -237,7 +241,6 @@ function nextQuestion() {
     $(".answer-feedback").addClass("hide-element");
     questionIndex++;
     if (questionIndex < setOfQuestions.length) {
-        $(".answer").removeClass("disable");
         $(".question-container, .status-info").fadeOut(500, function() {
             $(".question-container, .status-info").fadeIn(1000);
             if (screen.availHeight < 1000) {
@@ -251,6 +254,10 @@ function nextQuestion() {
         setTimeout(function() {
             askQuestions(setOfQuestions, questionIndex, score);
         }, 500);
+        // timeout to allow the timer to start
+        setTimeout(function() {
+            $(".answer").removeClass("disable");
+        }, 1000);
         if (questionIndex === (setOfQuestions.length - 1)) {
             $(".next-question").addClass("finish-button").html(
                 `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
@@ -318,7 +325,6 @@ function submitAnswer() {
     // Check if answer is correct
     setTimeout(() => {
         checkAnswer();
-        enableElement(".next-question");
     }, 1200);
 }
 
@@ -355,6 +361,7 @@ function checkAnswer() {
     }
     setTimeout(function() {
         $(".answer").addClass("no-shadow");
+        enableElement(".next-question");
     }, 1500);
 }
 
