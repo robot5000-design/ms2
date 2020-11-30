@@ -638,6 +638,7 @@ $(".load-questions").click(function() {
 $(".answer").on("click", function() {
     submitAnswer();
     $(".answer").addClass("disable");
+    $(this).addClass("no-shadow");
 });
 
 /**

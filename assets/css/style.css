@@ -39,12 +39,6 @@ h2 {
   line-height: 1.5em;
 }
 
-.disable {
-  opacity: .85;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
 .controls-container header {
   color: #e4dfd5;
   padding: 0px 15px 30px 15px;
@@ -510,6 +504,12 @@ button:focus {
 
 .reduce-size {
   font-size: 1.2em;
+}
+
+.disable {
+  opacity: .85;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 /*--------------------------------------------------------Media Queries */
