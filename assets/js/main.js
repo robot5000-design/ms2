@@ -146,7 +146,7 @@ function toggleOptions() {
  */
 function shuffleAnswers(arrayOfAnswers, currentCorrectAnswer) {
     // Validate the array of answers to contain at most, 3 answers
-    if (arrayOfAnswers.length > 4) {
+    while (arrayOfAnswers.length > 3) {
         arrayOfAnswers.pop();
     }
     arrayOfAnswers.push(currentCorrectAnswer);
@@ -391,10 +391,12 @@ function getQuizData(myToken) {
             } catch (error) {
                 $(".load-questions").html("Error. Press to Retry");
                 alert(`${error.name}: Quiz Data not in correct format. ${alertErrorMessage}.`);
+                enableElement(".load-questions");
             }            
         } else if (this.readyState === 4 && this.status != 200) {
             $(".load-questions").html("Error. Press to Retry");
             alert(`Cannot communicate with the Quiz Database. ${alertErrorMessage}.`);
+            enableElement(".load-questions");
         }
     };
 }
@@ -424,8 +426,9 @@ function checkToken(questionsLoadedObject) {
         getToken(resetTokenUrl).then(handleSuccess, handleFailure);
     } else {
         // any other response means db could not return results
-        alert(`Cannot get results from the Quiz Database. ${alertErrorMessage}.`);
+        alert(`Cannot get results from the Quiz Database at this time. ${alertErrorMessage}.`);
         $(".load-questions").html("Error. Press to Retry");
+        enableElement(".load-questions");
     }
 }
 
@@ -443,6 +446,7 @@ function handleSuccess(resolvedValue) {
  */
 function handleFailure(rejectionReason) {
     alert(rejectionReason);
+    enableElement(".load-questions");
 }
 
 /**
@@ -472,10 +476,11 @@ function getToken(url) {
                 } catch (error) {
                     $(".load-questions").html("Error. Press to Retry");
                     alert(`${error.name}: Quiz Token not in correct format. ${alertErrorMessage}.`);
+                    enableElement(".load-questions");
                 }
             } else if (this.readyState === 4 && this.status != 200) {
                 $(".load-questions").html("Error. Press to Retry");
-                myReject(`Cannot obtain Quiz Token. ${alertErrorMessage}.`);
+                myReject(`Cannot obtain Quiz Token at this time. ${alertErrorMessage}.`);
             }
         };
     });
