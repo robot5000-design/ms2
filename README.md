@@ -139,3 +139,27 @@ A single font was chosen, Pangolin from Google Fonts. This was chosen for its im
 [3]: ./documentation/images-for-readme/coolors-palette.png "Colour Choices"
 
 ---
+
+### **2. Features**
+
+The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this. There are sound effects but the site is muted by default. There is a button in the top right corner to unmute.
+
+_Landing page:_
+
+The landing page features a simple message as the users focus falls to a black box which contains an explanation of what the site does. A large obvious CTA with the text Go! signifies to the user what to do next.
+
+_Quiz Options:_
+
+Box shadows have been placed under all the buttons to give them a 3D effect and the illusion of lifting them off the page. When a button is pressed the shadow disappears. This is most evident on the quiz options page when cycling through the options. There are three sets of buttons: for the category, the difficulty level and the number of questions. Below them is a large CTA which says Start! which acts as an obvious indicator to the user, what to do next.
+
+Below the options is a high scores table which contains the highest score the user has acheived in each category. This information is saved as an object to local storage and checked for existence every time the page is loaded. It is updated after each quiz round.
+
+When the Start! button is pressed, some asynchronous tasks are performed. A loading spinner is displayed in the Start button to alert the user that something is happening while the quiz data is being retrieved.
+First the program checks if a token exists already. The token ensures that question repetition does not occur during a session. This will have been retrieved from session storage on page load. If it does not exist the getToken function is run, which returns a promise to get a new token through a new XMLHttpRequest. If this resolves successfully the getQuizData function is run. This function is a new XMLHttpRequest using the main quiz API URL with the token appended. If the token is found to be invalid, expired (expires after 6 hours of inactivity) or exhausted (all questions for that topic have been presented) the main API returns different response codes. The checkToken function handles these. If the token is invalid or expired  a new token is requested or if it is exhausted  the token can be reset using a specific reset token URL.
+
+If there is a problem obtaining a token from the API an alert box is displayed to the user informing them of the error and that they can try again. Likewise, if there is a problem with the readyState or status of either of the XMLHttpRequests an alert box is displayed to the user informing them of the error and that they can try again. By way of validating the JSON data returned by the XMLHttpRequest, if there is a JSON parsing error the error is caught and alerted to the user with the option to try again.
+
+_Quiz Questions and Answers:_
+
+When the token checks ok, the askQuestions function is run which presents the question/answers to the screen to the user. Questions can be either multiple choice or boolean. Multiple choice questions should have 4 possible answers. Boolean questions have two, so when a boolean question is presented the extra unused answer buttons are hidden from the user.
+In addition to that the JSON answers quantity is validated to ensure there is no more than 4 answers to each question. If the array of answers is greater than 3 the shuffleAnswers function pops the extra unnecessary answers.
