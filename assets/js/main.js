@@ -124,6 +124,7 @@ function toggleOptions() {
                 let elem = $(".questions")[0];
                 elem.scrollIntoView();
             } else {
+                $(".heading-text h2").hide();
                 $(".controls-container header").fadeIn(500);
                 window.scroll(0, 0);
             }
@@ -137,6 +138,7 @@ function toggleOptions() {
         enableElement(".load-questions");
         $(".load-questions").removeClass("reduce-size").html("Start!");
         $(".question-container").fadeOut(300, function() {
+            $(".heading-text h2").show();
             $(".quiz-options, .controls-container header").fadeIn(700);
             if (screen.availHeight < 1000) {
                 let elem = $(".mute-sound")[0];
@@ -245,6 +247,7 @@ function nextQuestion() {
                 window.scroll(0, 0);
             }
         });
+        // timeout to allow for the fade out/in of next question
         setTimeout(function() {
             askQuestions(setOfQuestions, questionIndex, score);
         }, 500);
