@@ -140,7 +140,7 @@ A single font was chosen, Pangolin from Google Fonts. This was chosen for its im
 
 ---
 
-### **2. Features**
+### **2. Features & Functionality**
 
 The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this. There are sound effects but the site is muted by default. There is a button in the top right corner to unmute.
 
@@ -161,5 +161,31 @@ If there is a problem obtaining a token from the API an alert box is displayed t
 
 _Quiz Questions and Answers:_
 
-When the token checks ok, the askQuestions function is run which presents the question/answers to the screen to the user. Questions can be either multiple choice or boolean. Multiple choice questions should have 4 possible answers. Boolean questions have two, so when a boolean question is presented the extra unused answer buttons are hidden from the user.
+When the token checks ok, the askQuestions function is run which hides the quiz options and presents the question/answers to the screen. The header element with owl icon is removed for screen heights lower than 1000 pixels, to provide for a better user experience on smaller screens. In addition, the window scrolls so that the question appears at the top of the page. Questions can be either multiple choice or boolean. Multiple choice questions should have 4 possible answers. Boolean questions have two, so when a boolean question is presented the extra unused answer buttons are hidden from the user.
 In addition to that the JSON answers quantity is validated to ensure there is no more than 4 answers to each question. If the array of answers is greater than 3 the shuffleAnswers function pops the extra unnecessary answers.
+
+Answers are presented as buttons on screen. When the user selects an answer the button appears to be pushed as the box-shadow is removed. After a timeout the correct answer is informed to the user by lighting up green while the incorrect answer lights up red.
+
+The countdown timer is shown both above and below the answers and it lights up red when there is 5 seconds left. This really catches the users peripheral vision. If the timer times 
+
+For a better user experience, for multiple choice questions and on screens of less available height than 750px, after a timeout the window scrolls down to show the Next Question button and the box shadow is removed from all answers to show that they can no longer be pressed. The only available buttons with shadows are the Next Question or Exit Quiz buttons. When the quiz gets to the last question the Exit Quiz button is hidden and the Next Question text is changed to Finish Quiz and the button colour is changed to the same colour as the Exit Quiz button. When the Finish Quiz button is pressed a modal showing information on the score achieved is shown.
+
+Media Queries are used to reduce the width of the question/answers container as the screen width increases so it keeps visually better proportions.
+
+Common to both pages is a constant footer which contains links to social media and privacy(doesn't exist). These links provide interactive feedback, when hovered over they change colour. They open in a new tab. The footer also contains a link for providing feedback to the site admin. This is implemented using a modified bootstrap modal which uses the [Emailjs](https://www.emailjs.com/) service and some custome javascript in the [email.js](./assets/js/email.js) file. If feedback is provided the service returns an acknowledgement email to the sender and forwards the message to the admin. All entries to the modal are required. The modal can only be dismissed via the modal buttons so the user cannot be trapped on a screen with potentially disabled buttons.
+
+The same modal is used for feedback, quiz exit and final score.
+
+_Custom 404 page:_
+
+This is activated if there was a broken internal link or if a user manually tries to type or modify an internal address.
+
+_Other potential features which could be implemented in future:_
+
+- the landing page could contain wigets to different themed sites covering other topics. Most of the existing code would be repeated.
+
+These would allow the website to be constantly updating which would keep users
+coming back.
+
+---
+
