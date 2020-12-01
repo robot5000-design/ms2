@@ -650,7 +650,8 @@ $(".load-questions").click(function() {
  */
 $(".answer").on("click", function() {
     submitAnswer();
-    $(".answer").addClass("disable").attr("aria-disabled", "true");
+    $(this).addClass("active no-shadow disable").attr("aria-disabled", "true");
+    $(this).siblings().addClass("disable").attr("aria-disabled", "true");    
 });
 
 /**
@@ -694,7 +695,7 @@ $("button").on("click", function() {
  * and assigns text values to categories rather than numerical for high score table
  * @returns { void } nothing
  */
-$("body").on("click", ".list-group .btn", function() {
+$("body").on("click", ".quiz-options .btn", function() {
     /* help from stackoverflow with the following two lines to separate the selections in multiple
         bootstrap button groups on same page */
     $(this).addClass("active no-shadow disable").attr("aria-disabled", "true");
