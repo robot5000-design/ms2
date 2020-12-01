@@ -325,7 +325,7 @@ function submitAnswer() {
     clearInterval(countdown);
     $(".display__time-left").html(`Answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
     // Check if answer is correct
-    setTimeout(() => {
+    setTimeout(function() {
         checkAnswer();
     }, 1200);
 }
@@ -345,9 +345,9 @@ function checkAnswer() {
             $(".quiz-score").html(`Score is ${score} / ${setOfQuestions.length}`);
         } else {
             if ($(button).hasClass("active")) {
+                wrongAnswerSound.play();
                 $(button).removeClass("active").addClass("wrong-answer no-shadow");
                 $(button).children("p").children("span").html(`<i class="fas fa-times"></i>`);
-                wrongAnswerSound.play();
                 $(".answer-feedback").removeClass("hide-element").html("Bad Luck. Wrong Answer!");
             }
             if (($(button).attr("data-answer") === correctAnswer)) {
