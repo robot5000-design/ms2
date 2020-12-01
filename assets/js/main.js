@@ -43,10 +43,10 @@ let setOfQuestions = {};
 let highScore = 0;
 /** @type { number } the id of the setInterval timer function */
 let countdown = 0;
-/** @type { number } number of seconds remaining on the timer */
-let secondsLeft = 0;
 /** @type { number } question timer length in seconds */
 let questionTimer = 20;
+/** @type { number } number of seconds remaining on the timer */
+let secondsLeft = 0;
 /** @type { Object } new instance of the sound class representing a correct answer */
 let correctAnswerSound = new Sound("assets/sounds/correct-answer.mp3");
 /** @type { Object } new instance of the sound class representing a wrong answer */
@@ -539,14 +539,17 @@ function timer(seconds) {
     let now = Date.now();
     /** @type { number } represents current time + timer value converted to milliseconds */
     let then = now + seconds * 1000;
+    console.log(then)
+    secondsLeft = questionTimer;
     // clear any existing timers
     clearInterval(countdown);
     displayTimeLeft(seconds);
     /**
      * @function - Interval timer which calculated and sets the secondsLeft every 1000ms
      */
-    countdown = setInterval(() => {
+    countdown = setInterval(function() {
         secondsLeft = Math.round((then - Date.now()) / 1000);
+        console.log(secondsLeft)
         // check if timer should be stopped
         if (secondsLeft < 0) {
             clearInterval(countdown);

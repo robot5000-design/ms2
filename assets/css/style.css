@@ -509,7 +509,7 @@ button:focus {
 }
 
 .disable {
-  opacity: .35;
+  opacity: .85;
   cursor: not-allowed;
   pointer-events: none;
 }
