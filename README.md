@@ -35,7 +35,7 @@ Click the image to be taken to a live demo of the site:
 
 [1. UX Design](#1-ux-design)
 
-[2. Features](#2-features)
+[2. Features & Functionality](#2-features-&-functionality)
 
 [3. Technologies Used](#3-technologies-used)
 
@@ -109,8 +109,8 @@ From the Strategy Table and graph it was clear that all features considered impo
 
 #### Structure
 
-- A simple structure with just 2 main pages; the introduction/landing page and the quiz page.
-- The Quiz page shows either the quiz options or the questions/answers. Javascript is used to achieve this.
+- A simple structure with just 2 pages, the introduction/landing page and the quiz page.
+- On the Quiz page, hide the quiz options and show the questions using javascript or vice versa.
 - Custom 404 page, so in the case of a broken internal link a button is provided for the user to return to safety. Unlikely to be requred but included nevertheless.
 
 #### Skeleton
@@ -142,7 +142,7 @@ A single font was chosen, Pangolin from Google Fonts. This was chosen for its im
 
 ### **2. Features & Functionality**
 
-The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this. There are sound effects but the site is muted by default. There is a button in the top right corner to unmute.
+The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this. There are sound effects but the site is muted by default. There is a button in the top right corner to unmute. The background image was split into 3 parts, top, middle and bottom. By doing this the middle image can stretch to the height of the content on screen without distortion of the top and bottom of the image due to the stretching.
 
 _Landing page:_
 
@@ -155,7 +155,7 @@ Box shadows have been placed under all the buttons to give them a 3D effect and 
 Below the options is a high scores table which contains the highest score the user has acheived in each category. This information is saved as an object to local storage and checked for existence every time the page is loaded. It is updated after each quiz round.
 
 When the Start! button is pressed, some asynchronous tasks are performed. A loading spinner is displayed in the Start button to alert the user that something is happening while the quiz data is being retrieved.
-First the program checks if a token exists already. The token ensures that question repetition does not occur during a session. This will have been retrieved from session storage on page load. If it does not exist the getToken function is run, which returns a promise to get a new token through a new XMLHttpRequest. If this resolves successfully the getQuizData function is run. This function is a new XMLHttpRequest using the main quiz API URL with the token appended. If the token is found to be invalid, expired (expires after 6 hours of inactivity) or exhausted (all questions for that topic have been presented) the main API returns different response codes. The checkToken function handles these. If the token is invalid or expired  a new token is requested or if it is exhausted  the token can be reset using a specific reset token URL.
+First the program checks if a token exists already. The token ensures that question repetition does not occur during a session. This will have been retrieved from session storage on page load. If it does not exist the getToken function is run, which returns a promise to get a new token through a new XMLHttpRequest. If this resolves successfully the getQuizData function is run. This function is a new XMLHttpRequest using the main quiz API URL with the token appended. If the token is found to be invalid, expired (expires after 6 hours of inactivity) or exhausted (all questions for that topic have been presented) the main API returns different response codes. The checkToken function handles these. If the token is invalid or expired  a new token is requested or if it is exhausted the token can be reset using a specific reset token URL.
 
 If there is a problem obtaining a token from the API an alert box is displayed to the user informing them of the error and that they can try again. Likewise, if there is a problem with the readyState or status of either of the XMLHttpRequests an alert box is displayed to the user informing them of the error and that they can try again. By way of validating the JSON data returned by the XMLHttpRequest, if there is a JSON parsing error the error is caught and alerted to the user with the option to try again.
 
@@ -184,8 +184,135 @@ _Other potential features which could be implemented in future:_
 
 - the landing page could contain wigets to different themed sites covering other topics. Most of the existing code would be repeated.
 
-These would allow the website to be constantly updating which would keep users
-coming back.
+These would allow the website to have updates which could keep some users coming back.
 
 ---
 
+### **3. Technologies Used**
+
+_IDE and Languages:_
+
+- Gitpod - IDE used.
+- HTML - Base structural language.
+- CSS - Language used for styling.
+
+_Libraries:_
+
+- jQuery 3.5.1 - used to speed up selection of elements in javascript.
+- Bootstrap 4.5.2 - Used to help with grid layout and screen size responsiveness.
+- Javascript, Popper.js, and jQuery as part of Bootstrap.
+- Font Awesome for icons.
+- Google Fonts for Bebas Neue and Roboto Mono fonts.
+
+_Hosting and Version Control:_
+
+- Github - Holding repository and hosting site.
+- Git - Version control.
+
+_Others:_
+
+- Balsamiq - For wireframes.
+- Emailjs - For feedback email service.
+- Microsoft Paint 3D - For colourmatch.
+- Browserstack - To check base compatibility.
+- freeformatter.com - to format html files.
+- tinyJPG - to reduce image file size.
+- Autoprefixer - used to automatically add browser compatibility prefixes.
+
+As per industry practice and to reduce the number of small commits on the master branch, seperate branches were created and used for features (where appropriate) and for the readme file as they were developed. These were squashed, merged and deleted after use.
+
+---
+
+### **4a. Testing Part 1**
+
+The first part of testing was to confirm that all user stories requirements have been met. There is large crossover between both sets of user stories.
+
+For the site owner:
+- I want the site to be fun and appealing to use.
+- I want the site to look visually appealing.
+- I want the site to provoke a positive response.
+- I want the site to be easy and natural to use with smooth navigation between sections.
+- I want the site to have significant interactivity.
+
+For a user:
+- I want the site to be fun and appealing to use.
+- I want the site to look visually appealing.
+- I want the site to be easy to use with smooth navigation between sections.
+- I want to be able to choose a difficulty level i can manage and vary the quiz length depending on how much time i have.
+
+_This has been achieved by the overall theme and the liberal use of buttons for every function. The strategic use of shadows and colours indicates to the user what they can and can't operate at any given moment. The options menu allows the user to set difficulty level and quantity of questions._
+![options-page](./documentation/images-for-readme/options-dashboard.jpg)
+
+For the site owner:
+- I want the site to not only tell the user if they got a question wrong but also to tell them the correct answer.
+- I want the site to be a learning tool.
+- I want the functionality to be as automated as possible but I want the user to be able to move between qustions themselves so that they can take in the answers at their own pace.
+
+For a user:
+- I want to learn something from using the site.
+
+_This has been achieved by not just telling the user if they got the question wrong but by also informing them of the correct answer and allowing them to continue to the next question when they are ready. Therefore allowing the user to properly process the answer._
+![correct-wrong-answer](./documentation/images-for-readme/right-wrong-answer.JPG)
+
+For the site owner:
+- I want users to be able to offer feedback to the site, maybe new questions.
+- I want users to be able to see updates or news on the site through social media links.
+
+For a user:
+- I want to be able to offer feedback and suggest new questions.
+- I want to be aware of updates or new features.
+
+_This has been achieved by providing social media links in the footer and a feedback form in a modal which forwards the information to the admin and returns an acknowledgement email to the user. All inputs of the form are required._
+![footer](./documentation/images-for-readme/footer.JPG)
+![feedback](./documentation/images-for-readme/feedback.JPG)
+
+For the site owner:
+- I want a countdown timer to make the quiz more exciting.
+
+_This has been achieved by having a countdown timer._
+![timer](./documentation/images-for-readme/timer.JPG)
+
+For the site owner:
+- I want sound effects to reward the user and to offer feedback.
+
+For a user:
+- Sounds effects feedback would be useful.
+
+_This has been achieved by providing sound effects which are muted by default. Abutton is provided in the top right corner to un-mute._
+![mute-button](./documentation/images-for-readme/mute-button.JPG)
+
+For the site owner:
+- I want a high score table saved from session to session.
+
+For a user:
+- I want to be able to keep track of my best scores.
+
+_This has been achieved by providing sound effects which are muted by default. Abutton is provided in the top right corner to un-mute._
+![hi-score-table](./documentation/images-for-readme/hi-score-table.JPG)
+
+For the site owner:
+- I want a high score table saved from session to session.
+
+For a user:
+- I want to be able to keep track of my best scores.
+
+_This has been achieved by providing sound effects which are muted by default. Abutton is provided in the top right corner to un-mute._
+![hi-score-table](./documentation/images-for-readme/hi-score-table.JPG)
+
+For the site owner:
+- I want to avoid repetition of questions to a user.
+
+For a user:
+- I want the site to have a good variety of questions without continuous repetition.
+
+_This has been achieved by making use of the opentdb API token, which ensures that questions are not repeated during a session. The token is saved to session storage. This is explained in more detail in the features section above._
+![token-image](./documentation/images-for-readme/token.JPG)
+
+For the site owner:
+- I want the site to deal with potential errors without breaking the site or affecting the user negatively.
+
+For a user:
+- I want a site that is not commonly crashing with errors, or if there is an error it is managed properly.
+
+_This has been achieved by handling errors when they occur requesting data from the API URL or the token URL and handling JSON parsing errors by alerting the user. Some basic data validation on the JSON data is carried out. There's more detail on this in the features section above._
+![error-alert](./documentation/images-for-readme/error-alert.JPG)
