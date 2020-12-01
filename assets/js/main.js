@@ -120,7 +120,7 @@ function toggleOptions() {
         // timeout to allow countdown timer to start
         setTimeout(function() {
             $(".answer").removeClass("disable").attr("aria-disabled", "false");
-        }, 1000);
+        }, 1200);
         $(".quiz-options, .controls-container header").fadeOut(300, function() {
             $(".question-container").fadeIn(500);
             if (screen.availHeight < 1000) {
