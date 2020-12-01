@@ -35,7 +35,7 @@ Click the image to be taken to a live demo of the site:
 
 [1. UX Design](#1-ux-design)
 
-[2. Features & Functionality](#2-features-&-functionality)
+[2. Features and Functionality](#2-features-and-functionality)
 
 [3. Technologies Used](#3-technologies-used)
 
@@ -140,7 +140,7 @@ A single font was chosen, Pangolin from Google Fonts. This was chosen for its im
 
 ---
 
-### **2. Features & Functionality**
+### **2. Features and Functionality**
 
 The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this. There are sound effects but the site is muted by default. There is a button in the top right corner to unmute. The background image was split into 3 parts, top, middle and bottom. By doing this the middle image can stretch to the height of the content on screen without distortion of the top and bottom of the image due to the stretching.
 
@@ -202,7 +202,7 @@ _Libraries:_
 - Bootstrap 4.5.2 - Used to help with grid layout and screen size responsiveness.
 - Javascript, Popper.js, and jQuery as part of Bootstrap.
 - Font Awesome for icons.
-- Google Fonts for Bebas Neue and Roboto Mono fonts.
+- Google Fonts for Pangolin font.
 
 _Hosting and Version Control:_
 
@@ -241,7 +241,7 @@ For a user:
 - I want to be able to choose a difficulty level i can manage and vary the quiz length depending on how much time i have.
 
 _This has been achieved by the overall theme and the liberal use of buttons for every function. The strategic use of shadows and colours indicates to the user what they can and can't operate at any given moment. The options menu allows the user to set difficulty level and quantity of questions._
-![options-page](./documentation/images-for-readme/options-dashboard.jpg)
+![options-page](./documentation/images-for-readme/options-dashboard.JPG&s=50)
 
 For the site owner:
 - I want the site to not only tell the user if they got a question wrong but also to tell them the correct answer.

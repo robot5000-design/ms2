@@ -240,6 +240,7 @@ function nextQuestion() {
     $(".display__time-left").removeClass("time-critical");
     $(".answer-feedback").addClass("hide-element");
     questionIndex++;
+    // fade out/in to the next question
     if (questionIndex < setOfQuestions.length) {
         $(".question-container, .status-info").fadeOut(500, function() {
             $(".question-container, .status-info").fadeIn(1000);
@@ -258,6 +259,7 @@ function nextQuestion() {
         setTimeout(function() {
             $(".answer").removeClass("disable");
         }, 1000);
+        // display a finish button for the last question
         if (questionIndex === (setOfQuestions.length - 1)) {
             $(".next-question").addClass("finish-button").html(
                 `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
@@ -353,12 +355,14 @@ function checkAnswer() {
             }
         }
     }
+    // on smaller height screens scroll down to show the next question button
     if (setOfQuestions[questionIndex].type != "boolean" && screen.availHeight < 750) {
         setTimeout(function() {
             let elem = $(".question-answers").children(".answer")[0];
             elem.scrollIntoView({behaviour: "smooth"});
         }, 1500);    
     }
+    // remove box shadow on all answers after a timeout
     setTimeout(function() {
         $(".answer").addClass("no-shadow");
         enableElement(".next-question");
@@ -603,25 +607,24 @@ function resetConfirm() {
 $(".mute-sound").on("click", function() {
     let soundOff = "<i class='fas fa-volume-mute'></i>";
     let soundOn = "<i class='fas fa-volume-up'></i>";
+    let soundsArray = [correctAnswerSound, wrongAnswerSound, buttonPress, highScoreSound, wellDoneSound, sadSound];
     buttonPress.play();
     if ($(".mute-sound").attr("data-sound") === "off") {
         $(".mute-sound").html(soundOn);
         $(".mute-sound").attr("data-sound", "on");
-        correctAnswerSound.sound.volume = 0.8;
-        wrongAnswerSound.sound.volume = 0.8;
-        buttonPress.sound.volume = 0.7;
-        highScoreSound.sound.volume = 0.8;
-        wellDoneSound.sound.volume = 0.8;
-        sadSound.sound.volume = 0.8;
+        for (let item of soundsArray) {
+            if (item === buttonPress) {
+                item.sound.volume = 0.7;
+            } else {
+                item.sound.volume = 0.8;
+            }                
+        }       
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
-        correctAnswerSound.sound.volume = 0;
-        wrongAnswerSound.sound.volume = 0;
-        buttonPress.sound.volume = 0;
-        highScoreSound.sound.volume = 0;
-        wellDoneSound.sound.volume = 0;
-        sadSound.sound.volume = 0;
+        for (let item of soundsArray) {
+            item.sound.volume = 0;
+        }
     }
 });
 
@@ -696,7 +699,11 @@ $("body").on("click", ".list-group .btn", function() {
     /* help from stackoverflow with the following two lines to separate the selections in multiple
         bootstrap button groups on same page */
     $(this).addClass("active");
-    $(this).siblings().removeClass("active");    
+    $(this).siblings().removeClass("active");
+    if ($(this).hasClass("answer") === false) {
+        $(this).addClass("disable");
+        $(this).siblings().removeClass("disable");
+    }
     category = activeButton(categoryButtons);
     amount = activeButton(quantityButtons);
     difficulty = activeButton(difficultyButtons);
