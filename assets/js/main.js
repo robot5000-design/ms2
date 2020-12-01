@@ -119,7 +119,7 @@ function toggleOptions() {
     if ($(".quiz-options").css("display") != "none") {
         // timeout to allow countdown timer to start
         setTimeout(function() {
-            $(".answer").removeClass("disable");
+            $(".answer").removeClass("disable").attr("aria-disabled", "false");
         }, 1000);
         $(".quiz-options, .controls-container header").fadeOut(300, function() {
             $(".question-container").fadeIn(500);
@@ -651,7 +651,6 @@ $(".load-questions").click(function() {
 $(".answer").on("click", function() {
     submitAnswer();
     $(".answer").addClass("disable").attr("aria-disabled", "true");
-    $(this).addClass("no-shadow");
 });
 
 /**
@@ -698,12 +697,8 @@ $("button").on("click", function() {
 $("body").on("click", ".list-group .btn", function() {
     /* help from stackoverflow with the following two lines to separate the selections in multiple
         bootstrap button groups on same page */
-    $(this).addClass("active");
-    $(this).siblings().removeClass("active");
-    if ($(this).hasClass("answer") === false) {
-        $(this).addClass("disable");
-        $(this).siblings().removeClass("disable");
-    }
+    $(this).addClass("active no-shadow disable").attr("aria-disabled", "true");
+    $(this).siblings().removeClass("active disable no-shadow").attr("aria-disabled", "false");
     category = activeButton(categoryButtons);
     amount = activeButton(quantityButtons);
     difficulty = activeButton(difficultyButtons);
