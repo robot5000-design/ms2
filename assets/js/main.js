@@ -139,7 +139,7 @@ function toggleOptions() {
             `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
             Next Question 
             <i class="fas fa-caret-right"></i>`);
-        enableElement(".load-questions");
+        enableElement(".quiz-options .btn");
         $(".load-questions").removeClass("reduce-size").html("Start!");
         $(".question-container").fadeOut(300, function() {
             $(".heading-text h2").show();
@@ -258,7 +258,7 @@ function nextQuestion() {
         // timeout to allow the timer to start
         setTimeout(function() {
             $(".answer").removeClass("disable").attr("aria-disabled", "false");
-        }, 1000);
+        }, 1200);
         // display a finish button for the last question
         if (questionIndex === (setOfQuestions.length - 1)) {
             $(".next-question").addClass("finish-button").html(
@@ -634,7 +634,7 @@ $(".mute-sound").on("click", function() {
  */
 $(".load-questions").click(function() {
     buttonPress.play();
-    disableElement(".load-questions");
+    disableElement(".quiz-options .btn");
     $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
     $(".answer-feedback").addClass("hide-element");
     if (!!token === false) {
