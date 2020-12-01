@@ -257,7 +257,7 @@ function nextQuestion() {
         }, 500);
         // timeout to allow the timer to start
         setTimeout(function() {
-            $(".answer").removeClass("disable");
+            $(".answer").removeClass("disable").attr("aria-disabled", "false");
         }, 1000);
         // display a finish button for the last question
         if (questionIndex === (setOfQuestions.length - 1)) {
@@ -650,7 +650,7 @@ $(".load-questions").click(function() {
  */
 $(".answer").on("click", function() {
     submitAnswer();
-    $(".answer").addClass("disable");
+    $(".answer").addClass("disable").attr("aria-disabled", "true");
     $(this).addClass("no-shadow");
 });
 
