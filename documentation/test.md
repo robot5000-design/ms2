@@ -87,6 +87,15 @@ After efforts to "break" the application testing on mobile produced bug #14, whi
 - Samsung Galaxy S7
 - Samsung Galaxy S10
 - Huawei P30 Pro
-- iPhones 8, 6s, X through Browserstack
+- iPhone 8 Safari through Browserstack
 - Asus k501u 4k laptop
 - Chrome Dev Tools Device Emulator
+
+## 6. Test Cases:
+- TC01 - Check options buttons work as intended. When selected should be disabled and box shadow removed.
+The 3 options groups should not affect each other. The console log shows the variables are changing when
+the button is pressed and are then correctly insertedin the quiz API URL. _Pass_
+![options-buttons-log](./documentation/images-for-readme/options-buttons-log.jpg)
+
+- TC02 - Check the feedback modal operation. Both notification to admin and acknoledgement to user are 
+received.  _Pass_
