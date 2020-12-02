@@ -530,7 +530,7 @@ SSH certificate authority, click Use SSH, then copy the URL.
 
 - All code in this project is 100% the authors unless otherwise indicated in the code.
 
-- All images are from pixabay.com.
+- All images are from pixabay.com and are free to use without attribution.
 
 - Information on deployment was taken from Github Documentation
 [here](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).

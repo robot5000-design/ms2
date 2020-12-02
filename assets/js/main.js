@@ -537,7 +537,7 @@ function timer(seconds) {
     let now = Date.now();
     /** @type { number } represents current time + timer value converted to milliseconds */
     let then = now + seconds * 1000;
-    secondsLeft = questionTimer;
+    secondsLeft = seconds;
     // clear any existing timers
     clearInterval(countdown);
     displayTimeLeft(seconds);

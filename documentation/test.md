@@ -62,38 +62,82 @@ After efforts to "break" the application testing on mobile produced bug #14, whi
 to #12. All bugs below were fixed and explanations can be found in the github issues section of the
 repository.
 
-- timer secondsLeft is not displaying the correct value after a question is answered too quickly. A
-value from the previous iteration is displayed. #14
+- #14 - timer secondsLeft is not displaying the correct value after a question is answered too quickly. A
+value from the previous running is displayed. 
 
-- jshint suggested highscore should be accessed via dot notation bug #13
+    _solution was to reset secondsLeft to the same 
+    value as questionTimer every time the timer is run. And to increase the time delay to more than 
+    1000ms before answer buttons are enabled. This allows sufficient time for the timer timeInterval
+    to do its first iteration._
 
-- If answers are answered too quickly it appears the timer has not started bug #12
+- #13 - jshint suggested highscore should be accessed via dot notation bug.
 
-- Answer button could still be pressed after answer is clicked thereby adding the box-shadow again
-bug #11
+    _dot notation did not work properly with edge. Reverted to square bracket notation._
 
-- After a new high score the high score table is not displaying bug #10 
+- #12 - If answers are answered too quickly it appears the timer has not started bug.
+Then the timer is not cleared and continues to run.
 
-- Bug when timer counts down and disables answer buttons and exit modal is brought up but 
-bug #9 
+    _This bug was solved by not enabling the buttons until the timer has started.
+    There was also a bug observed that if the next question button was pressed too quickly the box
+    shadow was removed for the answer buttons for the next question. This problem was solved by
+    only enabling the next button at the same time as the box shadow had been removed (or when the
+    answer checking process had fully ended)._
 
-- When exiting from a quiz answer buttons remain disabled bug #8 
+- #11 - Answer button could still be pressed after answer is clicked thereby adding the box-shadow again
+bug.
 
-- Bug which allows an answer to be clicked more than once bug #7 
+    _solved by adding class of no-shadow to answer after answer is clicked._
 
-- Wrong answer sound plays at same time as correct answer sound at almost zero seconds remaining 
-bug #6 
+- #10 - After a new high score the high score table is not displaying bug. 
 
-- Bug Exit Quiz button is still showing at the final question of the quiz bug #5
+    _There was an old line of code still there from before the high score table was implemented._
 
-- Bug where question can still be submitted after timer runs out and answer  as been revealed bug #4 
+- #9 - Bug when timer counts down and disables answer buttons and exit modal is brought up but 
+bug. When next question button is clicked answer buttons stay disabled on following question.
 
-- Need to obtain token from API before obtaining questions bug #3 
+    _Solved by using disable class rather than disabling element when the timer === 0._
 
-- html encoding of api answers bug #2 
+- #8 - When exiting from a quiz answer buttons remain disabled bug.
 
-- Issue with Next Question Button bug #1 
+    _Solved by removing disable class when quiz ends._
 
+- #7 - Bug which allows an answer to be clicked more than once.
+
+    _Problem solved by creating a disable class to apply to buttons._
+
+- #6 - Wrong answer sound plays at same time as correct answer sound at almost zero seconds remaining 
+bug. 
+
+    _This is due to experimentation with removing the submit button and having select and 
+    submit in the same keypress with a built-in time delay. Solve by adjusting the timing of
+    sounds and where they are implemented._
+
+- #5 - Bug Exit Quiz button is still showing at the final question of the quiz bug.
+
+    _Code to show this button was in the wrong position. Moved inside the .reset-confirm click function._
+
+- #4 - Bug where question can still be submitted after timer runs out and answer  as been revealed bug.
+    
+    _Adjusted logic and fixed bug by disabling submit-answer button in displayTimeLeft function when time = 0._
+
+- #3 - Need to obtain token from API before obtaining questions bug.
+
+    _When obtaining questions from the api the token must first be requested and then attached to 
+    the questions url. This presents an asynchronous problem. The solution is to have the getToken 
+    function return a resolved promise to be used afterwards to download the questions._
+
+- #2 - html encoding of api answers bug. Some answers not being registered correct due to api returning 
+html encoded characters.
+
+    _Solution was to put the answers in a custom data attribute of the answer element. So rather than 
+    matching the answer presented in the browser (which doesn't show the special characters) to the 
+    correct answer, we match to the data attribute._
+
+- #1 - Issue with Next Question Button bug. Causing many more loops than intended.
+
+    _Solution was to add the .off("click") to the click event function to detach the click event.
+    The ultimate solution was to remove the nextQuestion function from the askQuestions function.
+    The mistake was one was nested inside the other._
 ---
 
 ## 5. List of devices tested:
