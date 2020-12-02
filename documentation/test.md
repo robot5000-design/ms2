@@ -15,6 +15,7 @@ Facebook | y | y
 Twitter | y | y
 Privacy | y | y
 
+---
 
 ## 2. Feedback Form and EmailJs:
 
@@ -25,6 +26,7 @@ Privacy | y | y
 - Send and dismiss buttons working correctly.
 - Displays Alert of failure message to the user if there's a problem.
 
+---
 
 ## 3. Page Responsiveness:
 
@@ -41,17 +43,18 @@ H1000px | y | y | y
 
 
 - In addition each page is checked for responsiveness using Chrome Dev Tools infinitely	adjustable 
-sliding re-sizer tool. From 280px (Samsung Galaxy Fold) up to full width	1536px on a 4k laptop.
+sliding re-sizer tool. From 280px (Samsung Galaxy Fold) up to full width 1536px on a 4k laptop.
 The 404 page not included in the above table was checked this way.
 - If the height is less than 1000px the header is hidden during questions.
 - If the height is less than 750px the screen scrolls to show the next question button.
 - No problems are found.
 
----
+
 ### __Summary:__
 
 - No problems found.
 
+---
 
 ## 4. Bugs List from Github Issues section:
 
@@ -91,18 +94,23 @@ bug #6
 
 - Issue with Next Question Button bug #1 
 
+---
+
 ## 5. List of devices tested:
 - Samsung Galaxy S7
+- Samsung A21s
 - Samsung Galaxy S10
 - Huawei P30 Pro
 - iPhone 8 Safari through Browserstack
 - Asus k501u 4k laptop
 - Chrome Dev Tools Device Emulator
 
+---
+
 ## 6. Test Cases:
 - TC01 - Check options buttons work as intended. When selected should be disabled and box shadow removed.
 The 3 options groups should not affect each other. The console log shows the variables are changing when
-the button is pressed and are then correctly insertedin the quiz API URL. _Pass_
+the button is pressed and are then correctly inserted in the quiz API URL. _Pass_
 ![options-buttons-log](./images-for-readme/options-buttons-log.jpg)
 
 - TC02 - Check the feedback modal operation. Both notification to admin and acknoledgement to user are 
@@ -113,16 +121,16 @@ no contact with API, alert message is displayed to user. Confirm loading spinner
 ![api-url-log](./images-for-readme/options-buttons-log.jpg)
 
 - TC04 - Confirm if highscore object exists in local storage, it is retrieved and displayed to the user.
-Use the colnsole log to confirm. Confirm if it does not exist all scores display as zero. _Pass_
+Use the console log to confirm. Confirm if it does not exist all scores display as zero. _Pass_
 ![highscore-exists](./images-for-readme/highscore-exists.jpg)
 
 - TC05 - Use the console log to confirm if token exists in session storage, it is used to try to 
-retrieve quiz data. If the token is expired response code 3 is logged and a new token obtained and
- used. _Pass_
+retrieve quiz data. If the token (77663a...) is expired response code 3 is logged and a new token obtained and
+used (b78318...). Response code 0 means success. _Pass_
 ![token-not-found](./images-for-readme/token-not-found.jpg)
 
-- TC06 - Use the console log to confirm if token is exhausted, response code 4 is received and the token
-is reset and reused. _Pass_
+- TC06 - Use the console log to confirm if token b78318... is exhausted, response code 4 is received and the token
+is reset and reused. Token b78318... receives response code 0. _Pass_
 ![token-reset](./images-for-readme/token-reset.jpg)
 
 - TC07 - Supply a json object with a mistake to the token and quiz api's to confirm json parse errors
@@ -135,9 +143,14 @@ responses are handled with user alert. _Pass_
 depending on the score outcome and high score is displayed in table after quiz ends. _Pass_
 
 - TC10 - Confirm the multi-use model which is used for feedback, reset-quiz and end-quiz-message all
-independently without leaving text behind, removing button that is not replaced or otherwise affecting
- each other. _Pass_
+operate independently without leaving text behind, removing button that is not replaced or otherwise
+affecting each other. _Pass_
 
- -TC11 - Confirm pressing buttons repeatedly does not work and that trying to press options buttons 
- or answer buttons before fully loaded or displayed does not "break" anything or otherwise cause an 
- unecpected outcome. _Pass_
+- TC11 - Confirm pressing buttons repeatedly does not work and that trying to press options buttons 
+or answer buttons before fully loaded or displayed does not "break" anything or otherwise cause an 
+unexpected outcome. _Pass_
+
+- TC12 - After nature category was renamed to general, highscore table tests were re-run to confirm
+functionality. _Pass_
+
+---

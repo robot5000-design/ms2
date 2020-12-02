@@ -83,12 +83,12 @@ if (localStorage.getItem("highScore")) {
     highScore = JSON.parse(localStorage.getItem("highScore"));
     $(".computing-score").html(`${highScore["computing"]}`);
     $(".maths-score").html(`${highScore["mathematics"]}`);
-    $(".nature-score").html(`${highScore["nature"]}`);
+    $(".general-science-score").html(`${highScore["general"]}`);
 } else {
     highScore = {
     computing: 0,
     mathematics: 0,
-    nature: 0 
+    general: 0 
     };
 }
 console.log(highScore);
@@ -312,7 +312,7 @@ function finishQuiz(arrayIndex) {
         localStorage.setItem("highScore", JSON.stringify(highScore));
         $(".computing-score").html(`${highScore["computing"]}`);
         $(".maths-score").html(`${highScore["mathematics"]}`);
-        $(".nature-score").html(`${highScore["nature"]}`);
+        $(".general-science-score").html(`${highScore["general"]}`);
     }
     $("#resetModal").modal("toggle");
 }
@@ -707,7 +707,7 @@ $("body").on("click", ".quiz-options .btn", function() {
     } else if (category === "19") {
         categoryString = "mathematics";
     } else if (category === "17") {
-        categoryString = "nature";
+        categoryString = "general";
     }    
     console.log(categoryString, category, difficulty, amount);
 });

@@ -9,12 +9,12 @@
 ---
 
 The brief for this project was to build an interactive website application using HTML, CSS and
-JavaScript. The author chose to develop a quiz game as the subject. The design is based on user
-experience priciples. Clean coding and a responsive mobile first method was employed. The purpose 
-of this website is to provide users with:
+JavaScript. The author chose to develop a quiz game as the subject, obtaining quiz data from the
+Opentdb.com quiz API. The design is based on user experience priciples. Clean coding and a responsive
+mobile first method was employed. The purpose of this website is to provide users with:
 
-- a useful fun and appealing test for students, academics or anybody else who has an interest in
-computing, maths or nature science.
+- a useful, fun and appealing test for students, academics or anybody else who has an interest in
+computing, maths or general science.
 - multiple science categories.
 - varying difficulties.
 - a question countdown timer.
