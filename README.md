@@ -26,7 +26,7 @@ Click the image to be taken to a live demo of the site:
 
 [![homepage][1]][2]
 
-[1]: ./documentation/images-for-readme/am-i-responsive.JPG
+[1]: ./documentation/images-for-readme/am-i-responsive.jpg
 [2]: https://robot5000-design.github.io/ms2-the-science-quiz/index.html "Live Site"
 
 ---
@@ -35,7 +35,7 @@ Click the image to be taken to a live demo of the site:
 
 [1. UX Design](#1-ux-design)
 
-[2. Features and Functionality](#2-features-and-functionality)
+[2. Features & Functionality](#2-features-&-functionality)
 
 [3. Technologies Used](#3-technologies-used)
 
@@ -140,7 +140,7 @@ A single font was chosen, Pangolin from Google Fonts. This was chosen for its im
 
 ---
 
-### **2. Features and Functionality**
+### **2. Features & Functionality**
 
 The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this. There are sound effects but the site is muted by default. There is a button in the top right corner to unmute. The background image was split into 3 parts, top, middle and bottom. By doing this the middle image can stretch to the height of the content on screen without distortion of the top and bottom of the image due to the stretching.
 
@@ -216,7 +216,7 @@ _Others:_
 - Microsoft Paint 3D - For colourmatch.
 - Browserstack - To check base compatibility.
 - freeformatter.com - to format html files.
-- tinyJPG - to reduce image file size.
+- tinyjpg - to reduce image file size.
 - Autoprefixer - used to automatically add browser compatibility prefixes.
 
 As per industry practice and to reduce the number of small commits on the master branch, seperate branches were created and used for features (where appropriate) and for the readme file as they were developed. These were squashed, merged and deleted after use.
@@ -241,7 +241,7 @@ For a user:
 - I want to be able to choose a difficulty level i can manage and vary the quiz length depending on how much time i have.
 
 _This has been achieved by the overall theme and the liberal use of buttons for every function. The strategic use of shadows and colours indicates to the user what they can and can't operate at any given moment. The options menu allows the user to set difficulty level and quantity of questions._
-![options-page](./documentation/images-for-readme/options-dashboard.JPG&s=50)
+![options-page](./documentation/images-for-readme/options-dashboard.jpg)
 
 For the site owner:
 - I want the site to not only tell the user if they got a question wrong but also to tell them the correct answer.
@@ -252,7 +252,7 @@ For a user:
 - I want to learn something from using the site.
 
 _This has been achieved by not just telling the user if they got the question wrong but by also informing them of the correct answer and allowing them to continue to the next question when they are ready. Therefore allowing the user to properly process the answer._
-![correct-wrong-answer](./documentation/images-for-readme/right-wrong-answer.JPG)
+![correct-wrong-answer](./documentation/images-for-readme/right-wrong-answer.jpg)
 
 For the site owner:
 - I want users to be able to offer feedback to the site, maybe new questions.
@@ -263,14 +263,14 @@ For a user:
 - I want to be aware of updates or new features.
 
 _This has been achieved by providing social media links in the footer and a feedback form in a modal which forwards the information to the admin and returns an acknowledgement email to the user. All inputs of the form are required._
-![footer](./documentation/images-for-readme/footer.JPG)
-![feedback](./documentation/images-for-readme/feedback.JPG)
+![footer](./documentation/images-for-readme/footer.jpg)
+![feedback](./documentation/images-for-readme/feedback.jpg)
 
 For the site owner:
 - I want a countdown timer to make the quiz more exciting.
 
 _This has been achieved by having a countdown timer._
-![timer](./documentation/images-for-readme/timer.JPG)
+![timer](./documentation/images-for-readme/timer.jpg)
 
 For the site owner:
 - I want sound effects to reward the user and to offer feedback.
@@ -279,7 +279,7 @@ For a user:
 - Sounds effects feedback would be useful.
 
 _This has been achieved by providing sound effects which are muted by default. Abutton is provided in the top right corner to un-mute._
-![mute-button](./documentation/images-for-readme/mute-button.JPG)
+![mute-button](./documentation/images-for-readme/mute-button.jpg)
 
 For the site owner:
 - I want a high score table saved from session to session.
@@ -287,17 +287,8 @@ For the site owner:
 For a user:
 - I want to be able to keep track of my best scores.
 
-_This has been achieved by providing sound effects which are muted by default. Abutton is provided in the top right corner to un-mute._
-![hi-score-table](./documentation/images-for-readme/hi-score-table.JPG)
-
-For the site owner:
-- I want a high score table saved from session to session.
-
-For a user:
-- I want to be able to keep track of my best scores.
-
-_This has been achieved by providing sound effects which are muted by default. Abutton is provided in the top right corner to un-mute._
-![hi-score-table](./documentation/images-for-readme/hi-score-table.JPG)
+_This has been achieved by providing sound effects which are muted by default. A button is provided in the top right corner to un-mute._
+![hi-score-table](./documentation/images-for-readme/hi-score-table.jpg)
 
 For the site owner:
 - I want to avoid repetition of questions to a user.
@@ -306,7 +297,7 @@ For a user:
 - I want the site to have a good variety of questions without continuous repetition.
 
 _This has been achieved by making use of the opentdb API token, which ensures that questions are not repeated during a session. The token is saved to session storage. This is explained in more detail in the features section above._
-![token-image](./documentation/images-for-readme/token.JPG)
+![token-image](./documentation/images-for-readme/token.jpg)
 
 For the site owner:
 - I want the site to deal with potential errors without breaking the site or affecting the user negatively.
@@ -315,4 +306,121 @@ For a user:
 - I want a site that is not commonly crashing with errors, or if there is an error it is managed properly.
 
 _This has been achieved by handling errors when they occur requesting data from the API URL or the token URL and handling JSON parsing errors by alerting the user. Some basic data validation on the JSON data is carried out. There's more detail on this in the features section above._
-![error-alert](./documentation/images-for-readme/error-alert.JPG)
+![error-alert](./documentation/images-for-readme/error-alert.jpg)
+
+---
+
+### **4b. Testing Part 2**
+
+The site has been tested on the following browsers on Windows 10:
+
+- Internet Explorer 11
+- Firefox 83.0
+- Google Chrome 87.0.4280.66
+- Opera 72.0.3815.320
+- Microsoft Edge 87.0.664.52
+- Safari 13.1 on Mac using www.browserstack.com
+
+and tested on a Samsung Galaxy S7:
+- Samsung on Android 12.1.2.5
+- Firefox 80.1.3
+- Chrome 85.0.4183.101
+
+The site has been tested on both mobile and desktop for responsiveness.
+In addition to Chrome Development Tools, BrowserStack allowed for limited additional testing on Apple desktop and mobile. Only manual testing was conducted for this project.
+
+Any issues have been cataloged in the Issues section on Github and closed
+when a sufficient solution was reached. 
+
+__Further testing of links and responsiveness can be found in the [test document](./documentation/test.md).__
+
+All HTML and CSS files have been passed through the w3c validation service here https://validator.w3.org/ with no significant issues. It advised not to use aria-disabled on disabled buttons. These were removed.
+
+Javascript files were passed through jshint.com without any significant issues. Jshint had suggested using dot notation accessing the highscore object, however the high score table did not display values on edge browser, so reverted back to square bracket notation.
+
+
+__Chrome Dev Tools Lighthouse made some suggestions:__
+
+- size of images was reducing performance. All images have been reduced in size.
+
+- form inputs had no label. This is for styling reasons with only placeholder text present. An appropriate aria-label has been added to each form input for assistive technology as suggested here (https://www.w3.org/WAI/tutorials/forms/labels/#hidden).
+
+- pages did not have a meta description for search engine optimisation. This has now been added.
+
+_The Chrome Dev Tools Lighthouse scores are now as follows:_
+
+- Index Page:
+  ![Index Score](./documentation/images-for-readme/lighthouse-scores/index-lighthouse-score.jpg)
+
+- Quiz Page:
+  ![Music Score](./documentation/images-for-readme/lighthouse-scores/quiz-lighthouse-score.jpg)
+
+
+All links both internal and external have been tested and verified from each page in turn. External links open in a new tab. As stated previously the privacy link is not directed to any address.
+
+As was pointed out on the Code Institute Slack community and by my mentor the 404 page has limited functionality. It is only for broken internal links of which there are none. However, it can be tested by modifying the web address to be incorrect in the browser address bar. Note that if a forward slash is added to the end of the address the 404 page appears unstyled. Thanks again to the Slack community for pointing this out.
+
+---
+
+### **5. Deployment**
+
+The site has been deployed on Github pages [here](https://robot5000-design.github.io/ms2-the-science-quiz/index.html).
+
+_To Deploy on Github Pages:_
+
+1. On Github, navigate to Settings in the Github repository.
+2. Scroll down to the Github Pages section.
+3. Under Source, select the Master branch.
+4. Press Save.
+5. After it saves, scroll back down to the Github Pages section and the URL for
+   where the site is published will now be available.
+
+_For this website to be run locally it can downloaded as a ZIP file or it can be cloned:_
+
+- To download and run a local ZIP copy:
+
+  1. On GitHub, navigate to the main page of the repository.
+  2. Above the list of files, click Code.
+  3. Click Download ZIP.
+  4. Navigate to the local Downloads folder and un-zip the project_one-master folder.
+  5. Open the file index.html in an internat browser.
+
+- To Clone using Command Line:
+
+  1. On GitHub, navigate to the main page of the repository.
+  2. Above the list of files, click Code.
+  3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the URL.
+     To clone the repository using an SSH key, including a certificate issued by your organization's
+     SSH certificate authority, click Use SSH, then copy the URL.
+  4. Open Git Bash.
+  5. Change the current working directory to the location where you want the cloned directory.
+  6. Type git clone, and then paste the URL you copied earlier: \$ git clone url-copied-earlier
+  7. Press Enter to create your local clone.
+
+- To Clone using Github Desktop:
+
+  1. On GitHub, navigate to the main page of the repository.
+  2. Above the list of files, click Code.
+  3. Click "Open with GitHub Desktop" to clone and open the repository with GitHub Desktop.
+  4. Follow the prompts in GitHub Desktop to complete the clone.
+
+---
+
+### **6. Credits**
+
+- All images are from pixabay.com.
+
+- Information on deployment was taken from Github Documentation
+[here](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+
+- The Code Institute Slack community for information regarding the imlementation of the 404 page.
+
+- Mentor for time and advice.
+
+- Friends and family who tested the site.
+
+---
+
+### **Disclaimer**
+
+- This website is for educational purposes only.

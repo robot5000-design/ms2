@@ -15,12 +15,6 @@
             crossorigin="anonymous"
             />
         <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
-        <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-        <script>
-            (function() {
-                emailjs.init("user_oV8YdlKemUPQdjcjpZQbo");
-            })();
-        </script>
         <link rel="shortcut icon" type="image/png" href="./assets/images/favicon.png" />
     </head>
     <body>
@@ -130,7 +124,13 @@
                 </div>
             </div>
         </div>
-        <!-- bootstrap JS and external links -->
+        <!-- bootstrap JS, emailjs and external links -->
+        <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+        <script>
+            (function() {
+                emailjs.init("user_oV8YdlKemUPQdjcjpZQbo");
+            })();
+        </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
