@@ -35,7 +35,7 @@ Click the image to be taken to a live demo of the site:
 
 [1. UX Design](#1-ux-design)
 
-[2. Features & Functionality](#2-features-&-functionality)
+[2. Features and Functionality](#2-features-and-functionality)
 
 [3. Technologies Used](#3-technologies-used)
 
@@ -140,7 +140,7 @@ A single font was chosen, Pangolin from Google Fonts. This was chosen for its im
 
 ---
 
-### **2. Features & Functionality**
+### **2. Features and Functionality**
 
 The site was designed with a mobile first approach. Customised Bootstrap was used to help with the responsiveness and layout of the site. In addition targeted media queries were used to assist with this. There are sound effects but the site is muted by default. There is a button in the top right corner to unmute. The background image was split into 3 parts, top, middle and bottom. By doing this the middle image can stretch to the height of the content on screen without distortion of the top and bottom of the image due to the stretching.
 
