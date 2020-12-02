@@ -47,7 +47,7 @@ Click the image to be taken to a live demo of the site:
 
 [5. Deployment](#5-deployment)
 
-[6. Credits](#6-credits)
+[6. Credits and Notes](#6-credits-and-notes)
 
 ---
 
@@ -155,7 +155,7 @@ colour #353535 was used for the footer. The main CTA buttons are an eye catching
 The combination of colours provide contrast ratios that allow the site to score 100% in the Accessibility 
 category on Chrome Development Tools Lighthouse.
 A single font was chosen, Pangolin from Google Fonts. This was chosen for its imperfect appearance so
-that it could be handwritten.
+that text could look like it's handwritten.
 
 
 ![ColourChoices][3]
@@ -171,13 +171,14 @@ responsiveness and layout of the site. In addition targeted media queries were u
 There are sound effects but the site is muted by default. There is a button in the top right corner to
 unmute. The background image was split into 3 parts, top, middle and bottom. By doing this the middle
 image can stretch to the height of the content on screen without distortion of the top and bottom of 
-the image due to the stretching.
+the image due to the stretching. The bottom image which contains a duster and chalk can stretch wide or
+narrow without looking odd, so it works equally well on desktops or mobile.
 
 _Landing page:_
 
 The landing page features a simple message as the users focus falls to a black box which contains an
 explanation of what the site does. A large obvious CTA with the text Go! signifies to the user what 
-to do next.
+to do next. Font Awesome icons are used where appropriate to help guide the user.
 
 _Quiz Options:_
 
@@ -185,7 +186,7 @@ Box shadows have been placed under all the buttons to give them a 3D effect and 
 them off the page. When a button is pressed the shadow disappears. This is most evident on the quiz 
 options page when cycling through the options. There are three sets of buttons: for the category, the 
 difficulty level and the number of questions. Below them is a large CTA which says Start! which acts as
-an obvious indicator to the user, what to do next.
+an obvious indicator to the user, of what to do next.
 
 Below the options is a high scores table which contains the highest score the user has acheived in each 
 category. This information is saved as an object to local storage and checked for existence every time 
@@ -197,9 +198,17 @@ First the program checks if a token exists already. The token ensures that quest
 occur during a session. This will have been retrieved from session storage on page load. If it does not 
 exist the getToken function is run, which returns a promise to get a new token through a new XMLHttpRequest.
 If this resolves successfully the getQuizData function is run. This function is a new XMLHttpRequest 
-using the main quiz API URL with the token appended. If the token is found to be invalid, expired (expires after 6 hours of inactivity) or exhausted (all questions for that topic have been presented) the main API returns different response codes. The checkToken function handles these. If the token is invalid or expired  a new token is requested or if it is exhausted the token can be reset using a specific reset token URL.
+using the main quiz API URL with the token appended. If data is returned it is passed to the checkToken
+function for validation. If the token is found to be invalid, expired (expires after 6 hours of inactivity)
+or exhausted (all questions for that topic have been presented) the main API returns different response
+codes. The checkToken function handles these. If the token is invalid or expired a new token is requested
+or if it is exhausted the token can be reset using a specific reset token URL.
 
-If there is a problem obtaining a token from the API an alert box is displayed to the user informing them of the error and that they can try again. Likewise, if there is a problem with the readyState or status of either of the XMLHttpRequests an alert box is displayed to the user informing them of the error and that they can try again. By way of validating the JSON data returned by the XMLHttpRequest, if there is a JSON parsing error the error is caught and alerted to the user with the option to try again.
+If there is a problem obtaining a token from the API an alert box is displayed to the user informing them of
+the error and that they can try again. Likewise, if there is a problem with the readyState or status of 
+either of the XMLHttpRequests an alert box is displayed to the user informing them of the error and that 
+they can try again. By way of validating the JSON data returned by the XMLHttpRequest, if there is a JSON 
+parsing error the error is caught and alerted to the user with the option to try again.
 
 _Quiz Questions and Answers:_
 
@@ -209,16 +218,19 @@ than 1000 pixels, to provide for a better user experience on smaller screens. In
 scrolls so that the question appears at the top of the page. Questions can be either multiple choice or
 boolean. Multiple choice questions should have 4 possible answers. Boolean questions have two, so when
 a boolean question is presented the extra unused answer buttons are hidden from the user.
-In addition to that the JSON answers quantity is validated to ensure there is no more than 4 answers to 
-each question. If the array of answers is greater than 3 the shuffleAnswers function pops the extra
-unnecessary answers.
+In addition to that the JSON answers quantity is validated to ensure there is no more than 3 incorrect 
+answers to each question. If the array of answers is greater than 3 the shuffleAnswers function pops the
+extra unnecessary answers.
 
 Answers are presented as buttons on screen. When the user selects an answer the button appears to be
 pushed as the box-shadow is removed. After a timeout the correct answer is informed to the user by 
-lighting up green while the incorrect answer lights up red.
+lighting up green while the incorrect answer lights up red. After another timeout all answers shadows
+are removed indicating that they can no longer be pressed, while the shadow is then applied to the 
+Next Question button signifying it is now live.
 
 The countdown timer is shown both above and below the answers and it lights up red when there is 5 
-seconds left. This really catches the users peripheral vision. If the timer times 
+seconds left. This really catches the users peripheral vision. If the timer times out all answer 
+shadows are removed and visual and text signify to the user that time is up.
 
 For a better user experience, for multiple choice questions and on screens of less available height
 than 750px, after a timeout the window scrolls down to show the Next Question button and the box 
@@ -235,7 +247,7 @@ Common to both pages is a constant footer which contains links to social media a
 exist). These links provide interactive feedback, when hovered over they change colour. They open in
 a new tab. The footer also contains a link for providing feedback to the site admin. This is implemented
 ng a modified bootstrap modal which uses the [Emailjs](https://www.emailjs.com/) service and some 
-custome javascript in the [email.js](./assets/js/email.js) file. If feedback is provided the service
+custom javascript in the [email.js](./assets/js/email.js) file. If feedback is provided the service
 returns an acknowledgement email to the sender and forwards the message to the admin. All entries to
 the modal are required. The modal can only be dismissed via the modal buttons so the user cannot be 
 trapped on a screen with potentially disabled buttons.
@@ -263,6 +275,7 @@ _IDE and Languages:_
 - Gitpod - IDE used.
 - HTML - Base structural language.
 - CSS - Language used for styling.
+- Javascript - for application functionality and DOM manipulation.
 
 _Libraries:_
 
@@ -286,6 +299,8 @@ _Others:_
 - freeformatter.com - to format html files.
 - tinyjpg - to reduce image file size.
 - Autoprefixer - used to automatically add browser compatibility prefixes.
+- w3c - for HTML and CSS validation.
+- jshint - for javascript validation.
 
 As per industry practice and to reduce the number of small commits on the master branch, seperate 
 branches were created and used for features (where appropriate) and for the readme file as they were
@@ -358,7 +373,7 @@ For the site owner:
 For a user:
 - Sounds effects feedback would be useful.
 
-_This has been achieved by providing sound effects which are muted by default. Abutton is provided in 
+_This has been achieved by providing sound effects which are muted by default. A button is provided in 
 the top right corner to un-mute._
 ![mute-button](./documentation/images-for-readme/mute-button.jpg)
 
@@ -380,7 +395,8 @@ For a user:
 
 _This has been achieved by making use of the opentdb API token, which ensures that questions are not
 repeated during a session. The token is saved to session storage. This is explained in more detail in
-the features section above._
+the features section above. However, even with the token some options configurations will only have a
+certain quantity of questions available in the quiz API._
 ![token-image](./documentation/images-for-readme/token.jpg)
 
 For the site owner:
@@ -507,7 +523,9 @@ SSH certificate authority, click Use SSH, then copy the URL.
 
 ---
 
-### **6. Credits**
+### **6. Credits and Notes**
+
+- All code in this project is 100% the authors unless otherwise indicated in the code.
 
 - All images are from pixabay.com.
 
