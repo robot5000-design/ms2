@@ -1,6 +1,3 @@
-$(document).ready(function() {
-
-});
 // Declare Classes  ######################################################################
 /**
  * @class - Represents all page sound effects
@@ -46,22 +43,22 @@ let setOfQuestions = {};
 let highScore = 0;
 /** @type { number } the id of the setInterval timer function */
 let countdown = 0;
-/** @type { number } number of seconds remaining on the timer */
-let secondsLeft = 0;
 /** @type { number } question timer length in seconds */
 let questionTimer = 20;
+/** @type { number } number of seconds remaining on the timer */
+let secondsLeft = 0;
 /** @type { Object } new instance of the sound class representing a correct answer */
-let correctAnswerSound = new Sound("assets/sounds/correct-answer.wav");
+let correctAnswerSound = new Sound("assets/sounds/correct-answer.mp3");
 /** @type { Object } new instance of the sound class representing a wrong answer */
-let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.wav");
+let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.mp3");
 /** @type { Object } new instance of the sound class representing a button press */
-let buttonPress = new Sound("assets/sounds/button-press.wav");
+let buttonPress = new Sound("assets/sounds/button-press.mp3");
 /** @type { Object } new instance of the sound class representing a new high score */
-let highScoreSound = new Sound("assets/sounds/new-high-score.wav");
+let highScoreSound = new Sound("assets/sounds/new-high-score.mp3");
 /** @type { Object } new instance of the sound class representing a well done score */
-let wellDoneSound = new Sound("assets/sounds/well-done.wav");
+let wellDoneSound = new Sound("assets/sounds/well-done.mp3");
 /** @type { Object } new instance of the sound class representing a sad score */
-let sadSound = new Sound("assets/sounds/sad-sound.wav");
+let sadSound = new Sound("assets/sounds/sad-sound.mp3");
 /** @type { Object } contains all answer buttons */
 let answerButtons = $(".question-answers").children("button");
 /** @type { string } opentdb API url address to obtain token */
@@ -86,12 +83,12 @@ if (localStorage.getItem("highScore")) {
     highScore = JSON.parse(localStorage.getItem("highScore"));
     $(".computing-score").html(`${highScore["computing"]}`);
     $(".maths-score").html(`${highScore["mathematics"]}`);
-    $(".nature-score").html(`${highScore["nature"]}`);
+    $(".general-science-score").html(`${highScore["general"]}`);
 } else {
     highScore = {
     computing: 0,
     mathematics: 0,
-    nature: 0 
+    general: 0 
     };
 }
 console.log(highScore);
@@ -106,20 +103,34 @@ if (sessionStorage.getItem("sessionToken")) {
 
 // Normal Functions  ######################################################################
 /**
+ * @function - scrolls to top on page load
+ * @returns { void } nothing
+ */
+$(document).ready(function() {
+    window.scroll(0, 0);
+});
+
+/**
  * @function - switches between quiz options and quiz questions
  * @returns { void } nothing
  */
 function toggleOptions() {
     // show quiz questions and answers
     if ($(".quiz-options").css("display") != "none") {
+        // timeout to allow countdown timer to start
+        setTimeout(function() {
+            $(".answer").removeClass("disable");
+        }, 1200);
         $(".quiz-options, .controls-container header").fadeOut(300, function() {
             $(".question-container").fadeIn(500);
-            let elem = $(".questions")[0];
-            elem.scrollIntoView();
             if (screen.availHeight < 1000) {
                 $(".controls-container header").hide();
+                let elem = $(".questions")[0];
+                elem.scrollIntoView();
             } else {
+                $(".heading-text h2").hide();
                 $(".controls-container header").fadeIn(500);
+                window.scroll(0, 0);
             }
         });
     } else {
@@ -128,12 +139,17 @@ function toggleOptions() {
             `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
             Next Question 
             <i class="fas fa-caret-right"></i>`);
-        enableElement(".load-questions");
+        enableElement(".quiz-options .btn");
         $(".load-questions").removeClass("reduce-size").html("Start!");
         $(".question-container").fadeOut(300, function() {
-            let elem = $(".mute-sound")[0];
-            elem.scrollIntoView();
+            $(".heading-text h2").show();
             $(".quiz-options, .controls-container header").fadeIn(700);
+            if (screen.availHeight < 1000) {
+                let elem = $(".mute-sound")[0];
+                elem.scrollIntoView();
+            } else {
+                window.scroll(0, 0);
+            }
         });
     }
 }
@@ -146,7 +162,7 @@ function toggleOptions() {
  */
 function shuffleAnswers(arrayOfAnswers, currentCorrectAnswer) {
     // Validate the array of answers to contain at most, 3 answers
-    if (arrayOfAnswers.length > 4) {
+    while (arrayOfAnswers.length > 3) {
         arrayOfAnswers.pop();
     }
     arrayOfAnswers.push(currentCorrectAnswer);
@@ -169,7 +185,8 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     /** @type { string } current question */
     let currentQuestion = arrayOfQuestions[arrayIndex].question;
     /** @type { Array } array of incorrect answers to current question */
-    let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers;    
+    let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers; 
+    timer(questionTimer);   
     // Prepare the various buttons
     $(".answer").removeClass("correct-answer wrong-answer no-shadow");
     disableElement(".next-question");
@@ -181,7 +198,6 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     checkBoolean(arrayOfQuestions, arrayIndex, answersArray);    
     $(".questions").html(`${arrayIndex + 1}. ${currentQuestion}`);
     arrayIndex++;
-    timer(questionTimer);
     console.log(answersArray, (correctAnswer));
     console.log(arrayIndex);
 }
@@ -224,16 +240,26 @@ function nextQuestion() {
     $(".display__time-left").removeClass("time-critical");
     $(".answer-feedback").addClass("hide-element");
     questionIndex++;
+    // fade out/in to the next question
     if (questionIndex < setOfQuestions.length) {
-        $(".answer").removeClass("disable");
         $(".question-container, .status-info").fadeOut(500, function() {
-            let elem = $(".questions")[0];
-            elem.scrollIntoView();
             $(".question-container, .status-info").fadeIn(1000);
+            if (screen.availHeight < 1000) {
+                let elem = $(".questions")[0];
+                elem.scrollIntoView();
+            } else {
+                window.scroll(0, 0);
+            }
         });
+        // timeout to allow for the fade out/in of next question
         setTimeout(function() {
             askQuestions(setOfQuestions, questionIndex, score);
         }, 500);
+        // timeout to allow the timer to start
+        setTimeout(function() {
+            $(".answer").removeClass("disable");
+        }, 1200);
+        // display a finish button for the last question
         if (questionIndex === (setOfQuestions.length - 1)) {
             $(".next-question").addClass("finish-button").html(
                 `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
@@ -286,7 +312,7 @@ function finishQuiz(arrayIndex) {
         localStorage.setItem("highScore", JSON.stringify(highScore));
         $(".computing-score").html(`${highScore["computing"]}`);
         $(".maths-score").html(`${highScore["mathematics"]}`);
-        $(".nature-score").html(`${highScore["nature"]}`);
+        $(".general-science-score").html(`${highScore["general"]}`);
     }
     $("#resetModal").modal("toggle");
 }
@@ -299,10 +325,9 @@ function submitAnswer() {
     clearInterval(countdown);
     $(".display__time-left").html(`Answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
     // Check if answer is correct
-    setTimeout(() => {
+    setTimeout(function() {
         checkAnswer();
-        enableElement(".next-question");
-    }, 800);
+    }, 1200);
 }
 
 /**
@@ -320,9 +345,9 @@ function checkAnswer() {
             $(".quiz-score").html(`Score is ${score} / ${setOfQuestions.length}`);
         } else {
             if ($(button).hasClass("active")) {
+                wrongAnswerSound.play();
                 $(button).removeClass("active").addClass("wrong-answer no-shadow");
                 $(button).children("p").children("span").html(`<i class="fas fa-times"></i>`);
-                wrongAnswerSound.play();
                 $(".answer-feedback").removeClass("hide-element").html("Bad Luck. Wrong Answer!");
             }
             if (($(button).attr("data-answer") === correctAnswer)) {
@@ -330,12 +355,18 @@ function checkAnswer() {
             }
         }
     }
+    // on smaller height screens scroll down to show the next question button
     if (setOfQuestions[questionIndex].type != "boolean" && screen.availHeight < 750) {
         setTimeout(function() {
             let elem = $(".question-answers").children(".answer")[0];
             elem.scrollIntoView({behaviour: "smooth"});
-        }, 1000);    
+        }, 1500);    
     }
+    // remove box shadow on all answers after a timeout
+    setTimeout(function() {
+        $(".answer").addClass("no-shadow");
+        enableElement(".next-question");
+    }, 1500);
 }
 
 /**
@@ -345,7 +376,6 @@ function checkAnswer() {
  */
 function disableElement(buttonIdentifier) {
     $(buttonIdentifier).prop("disabled", true);
-    $(buttonIdentifier).attr("aria-disabled", "true");
 }
 
 /**
@@ -355,7 +385,6 @@ function disableElement(buttonIdentifier) {
  */
 function enableElement(buttonIdentifier) {
     $(buttonIdentifier).prop("disabled", false);
-    $(buttonIdentifier).attr("aria-disabled", "false");
 }
 
 /**
@@ -388,10 +417,12 @@ function getQuizData(myToken) {
             } catch (error) {
                 $(".load-questions").html("Error. Press to Retry");
                 alert(`${error.name}: Quiz Data not in correct format. ${alertErrorMessage}.`);
+                enableElement(".load-questions");
             }            
         } else if (this.readyState === 4 && this.status != 200) {
             $(".load-questions").html("Error. Press to Retry");
             alert(`Cannot communicate with the Quiz Database. ${alertErrorMessage}.`);
+            enableElement(".load-questions");
         }
     };
 }
@@ -421,8 +452,9 @@ function checkToken(questionsLoadedObject) {
         getToken(resetTokenUrl).then(handleSuccess, handleFailure);
     } else {
         // any other response means db could not return results
-        alert(`Cannot get results from the Quiz Database. ${alertErrorMessage}.`);
+        alert(`Cannot get results from the Quiz Database at this time. ${alertErrorMessage}.`);
         $(".load-questions").html("Error. Press to Retry");
+        enableElement(".load-questions");
     }
 }
 
@@ -440,6 +472,7 @@ function handleSuccess(resolvedValue) {
  */
 function handleFailure(rejectionReason) {
     alert(rejectionReason);
+    enableElement(".load-questions");
 }
 
 /**
@@ -469,10 +502,11 @@ function getToken(url) {
                 } catch (error) {
                     $(".load-questions").html("Error. Press to Retry");
                     alert(`${error.name}: Quiz Token not in correct format. ${alertErrorMessage}.`);
+                    enableElement(".load-questions");
                 }
             } else if (this.readyState === 4 && this.status != 200) {
                 $(".load-questions").html("Error. Press to Retry");
-                myReject(`Cannot obtain Quiz Token. ${alertErrorMessage}.`);
+                myReject(`Cannot obtain Quiz Token at this time. ${alertErrorMessage}.`);
             }
         };
     });
@@ -503,13 +537,14 @@ function timer(seconds) {
     let now = Date.now();
     /** @type { number } represents current time + timer value converted to milliseconds */
     let then = now + seconds * 1000;
+    secondsLeft = questionTimer;
     // clear any existing timers
     clearInterval(countdown);
     displayTimeLeft(seconds);
     /**
      * @function - Interval timer which calculated and sets the secondsLeft every 1000ms
      */
-    countdown = setInterval(() => {
+    countdown = setInterval(function() {
         secondsLeft = Math.round((then - Date.now()) / 1000);
         // check if timer should be stopped
         if (secondsLeft < 0) {
@@ -571,25 +606,24 @@ function resetConfirm() {
 $(".mute-sound").on("click", function() {
     let soundOff = "<i class='fas fa-volume-mute'></i>";
     let soundOn = "<i class='fas fa-volume-up'></i>";
+    let soundsArray = [correctAnswerSound, wrongAnswerSound, buttonPress, highScoreSound, wellDoneSound, sadSound];
     buttonPress.play();
     if ($(".mute-sound").attr("data-sound") === "off") {
         $(".mute-sound").html(soundOn);
         $(".mute-sound").attr("data-sound", "on");
-        correctAnswerSound.sound.volume = 0.8;
-        wrongAnswerSound.sound.volume = 0.8;
-        buttonPress.sound.volume = 0.7;
-        highScoreSound.sound.volume = 0.8;
-        wellDoneSound.sound.volume = 0.8;
-        sadSound.sound.volume = 0.8;
+        for (let item of soundsArray) {
+            if (item === buttonPress) {
+                item.sound.volume = 0.7;
+            } else {
+                item.sound.volume = 0.8;
+            }                
+        }       
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
-        correctAnswerSound.sound.volume = 0;
-        wrongAnswerSound.sound.volume = 0;
-        buttonPress.sound.volume = 0;
-        highScoreSound.sound.volume = 0;
-        wellDoneSound.sound.volume = 0;
-        sadSound.sound.volume = 0;
+        for (let item of soundsArray) {
+            item.sound.volume = 0;
+        }
     }
 });
 
@@ -599,7 +633,7 @@ $(".mute-sound").on("click", function() {
  */
 $(".load-questions").click(function() {
     buttonPress.play();
-    disableElement(".load-questions");
+    disableElement(".quiz-options .btn");
     $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
     $(".answer-feedback").addClass("hide-element");
     if (!!token === false) {
@@ -615,7 +649,8 @@ $(".load-questions").click(function() {
  */
 $(".answer").on("click", function() {
     submitAnswer();
-    $(".answer").addClass("disable");
+    $(this).addClass("active no-shadow disable");
+    $(this).siblings().addClass("disable");    
 });
 
 /**
@@ -659,11 +694,11 @@ $("button").on("click", function() {
  * and assigns text values to categories rather than numerical for high score table
  * @returns { void } nothing
  */
-$("body").on("click", ".list-group .btn", function() {
+$("body").on("click", ".quiz-options .btn", function() {
     /* help from stackoverflow with the following two lines to separate the selections in multiple
         bootstrap button groups on same page */
-    $(this).addClass("active");
-    $(this).siblings().removeClass("active");    
+    $(this).addClass("active no-shadow disable");
+    $(this).siblings().removeClass("active disable no-shadow");
     category = activeButton(categoryButtons);
     amount = activeButton(quantityButtons);
     difficulty = activeButton(difficultyButtons);
@@ -672,7 +707,7 @@ $("body").on("click", ".list-group .btn", function() {
     } else if (category === "19") {
         categoryString = "mathematics";
     } else if (category === "17") {
-        categoryString = "nature";
+        categoryString = "general";
     }    
     console.log(categoryString, category, difficulty, amount);
 });
