@@ -53,7 +53,9 @@ H1000px | y | y | y
 
 ## 4. Bugs List from Github Issues section:
 
-All bugs below were fixed and explanations can be found in the github issues section of the repository.
+After efforts to "break" the application testing on mobile produced bug #14, which was similar issue to #12. All bugs below were fixed and explanations can be found in the github issues section of the repository.
+
+- timer secondsLeft is not displaying the correct value after a question is answered too quickly. A value from the previous iteration is displayed. #14
 
 - jshint suggested highscore should be accessed via dot notation bug #13
 

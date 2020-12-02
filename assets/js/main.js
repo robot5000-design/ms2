@@ -119,7 +119,7 @@ function toggleOptions() {
     if ($(".quiz-options").css("display") != "none") {
         // timeout to allow countdown timer to start
         setTimeout(function() {
-            $(".answer").removeClass("disable").attr("aria-disabled", "false");
+            $(".answer").removeClass("disable");
         }, 1200);
         $(".quiz-options, .controls-container header").fadeOut(300, function() {
             $(".question-container").fadeIn(500);
@@ -257,7 +257,7 @@ function nextQuestion() {
         }, 500);
         // timeout to allow the timer to start
         setTimeout(function() {
-            $(".answer").removeClass("disable").attr("aria-disabled", "false");
+            $(".answer").removeClass("disable");
         }, 1200);
         // display a finish button for the last question
         if (questionIndex === (setOfQuestions.length - 1)) {
@@ -376,7 +376,6 @@ function checkAnswer() {
  */
 function disableElement(buttonIdentifier) {
     $(buttonIdentifier).prop("disabled", true);
-    $(buttonIdentifier).attr("aria-disabled", "true");
 }
 
 /**
@@ -386,7 +385,6 @@ function disableElement(buttonIdentifier) {
  */
 function enableElement(buttonIdentifier) {
     $(buttonIdentifier).prop("disabled", false);
-    $(buttonIdentifier).attr("aria-disabled", "false");
 }
 
 /**
@@ -539,7 +537,6 @@ function timer(seconds) {
     let now = Date.now();
     /** @type { number } represents current time + timer value converted to milliseconds */
     let then = now + seconds * 1000;
-    console.log(then)
     secondsLeft = questionTimer;
     // clear any existing timers
     clearInterval(countdown);
@@ -549,7 +546,6 @@ function timer(seconds) {
      */
     countdown = setInterval(function() {
         secondsLeft = Math.round((then - Date.now()) / 1000);
-        console.log(secondsLeft)
         // check if timer should be stopped
         if (secondsLeft < 0) {
             clearInterval(countdown);
@@ -653,8 +649,8 @@ $(".load-questions").click(function() {
  */
 $(".answer").on("click", function() {
     submitAnswer();
-    $(this).addClass("active no-shadow disable").attr("aria-disabled", "true");
-    $(this).siblings().addClass("disable").attr("aria-disabled", "true");    
+    $(this).addClass("active no-shadow disable");
+    $(this).siblings().addClass("disable");    
 });
 
 /**
@@ -701,8 +697,8 @@ $("button").on("click", function() {
 $("body").on("click", ".quiz-options .btn", function() {
     /* help from stackoverflow with the following two lines to separate the selections in multiple
         bootstrap button groups on same page */
-    $(this).addClass("active no-shadow disable").attr("aria-disabled", "true");
-    $(this).siblings().removeClass("active disable no-shadow").attr("aria-disabled", "false");
+    $(this).addClass("active no-shadow disable");
+    $(this).siblings().removeClass("active disable no-shadow");
     category = activeButton(categoryButtons);
     amount = activeButton(quantityButtons);
     difficulty = activeButton(difficultyButtons);
