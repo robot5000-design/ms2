@@ -235,10 +235,12 @@ shadows are removed and visual and text signify to the user that time is up.
 For a better user experience, for multiple choice questions and on screens of less available height
 than 750px, after a timeout the window scrolls down to show the Next Question button and the box 
 shadow is removed from all answers to show that they can no longer be pressed. The only available
-buttons with shadows are the Next Question or Exit Quiz buttons. When the quiz gets to the last 
-question the Exit Quiz button is hidden and the Next Question text is changed to Finish Quiz and 
-the button colour is changed to the same colour as the Exit Quiz button. When the Finish Quiz button 
-is pressed a modal showing information on the score achieved is shown.
+buttons with shadows are the Next Question or Exit Quiz buttons. Originally there were separate Submit
+and Next buttons, but it was decided that a better experience would be achieved by removing the
+Submit button. When the quiz gets to the last question the Exit Quiz button is hidden and the Next
+Question text is changed to Finish Quiz and the button colour is changed to the same colour as the 
+Exit Quiz button. When the Finish Quiz button is pressed a modal showing information on the score
+achieved is shown.
 
 Media Queries are used to reduce the width of the question/answers container as the screen width increases
 so it keeps visually better proportions.
@@ -292,6 +294,7 @@ _Hosting and Version Control:_
 
 _Others:_
 
+- JSDoc for JavaScript comments.
 - Balsamiq - For wireframes.
 - Emailjs - For feedback email service.
 - Microsoft Paint 3D - For colourmatch.
