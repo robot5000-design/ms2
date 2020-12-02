@@ -58,7 +58,7 @@ The 404 page not included in the above table was checked this way.
 
 ## 4. Bugs List from Github Issues section:
 
-After efforts to "break" the application testing on mobile produced bug #14, which was similar issue
+After efforts to "break" the application, testing on mobile produced bug #14, which was a similar issue
 to #12. All bugs below were fixed and explanations can be found in the github issues section of the
 repository.
 
@@ -157,7 +157,7 @@ The 3 options groups should not affect each other. The console log shows the var
 the button is pressed and are then correctly inserted in the quiz API URL. _Pass_
 ![options-buttons-log](./images-for-readme/options-buttons-log.jpg)
 
-- TC02 - Check the feedback modal operation. Both notification to admin and acknoledgement to user are 
+- TC02 - Check the feedback modal operation. Both notification to admin and acknowledgement to user are 
 received.  _Pass_
 
 - TC03 - Load questions and check console log for API URL to match options selected. Confirm if
@@ -168,26 +168,26 @@ no contact with API, alert message is displayed to user. Confirm loading spinner
 Use the console log to confirm. Confirm if it does not exist all scores display as zero. _Pass_
 ![highscore-exists](./images-for-readme/highscore-exists.jpg)
 
-- TC05 - Use the console log to confirm if token exists in session storage, it is used to try to 
-retrieve quiz data. If the token (77663a...) is expired response code 3 is logged and a new token obtained and
-used (b78318...). Response code 0 means success. _Pass_
+- TC05 - Use the console log to confirm if a token exists in session storage, it is used to try to 
+retrieve quiz data. If the token (example below 77663a...) is expired response code 3 is logged and a new
+token obtained and used (example below b78318...). Response code 0 means success. _Pass_
 ![token-not-found](./images-for-readme/token-not-found.jpg)
 
-- TC06 - Use the console log to confirm if token b78318... is exhausted, response code 4 is received and the token
-is reset and reused. Token b78318... receives response code 0. _Pass_
+- TC06 - Use the console log to confirm if token (example below b78318...) is exhausted, response code 4 is 
+received and the token is reset and reused. Same Token (b78318... below) receives response code 0. _Pass_
 ![token-reset](./images-for-readme/token-reset.jpg)
 
-- TC07 - Supply a json object with a mistake to the token and quiz api's to confirm json parse errors
-are handled with user alert. _Pass_
+- TC07 - Supply a fabricated json object (with an error built-in) to the token and quiz api's to confirm 
+json parse errors are handled with a user alert. _Pass_
 
-- TC08 - Supply different status and response code variables to the api requests to confirm potential 
-responses are handled with user alert. _Pass_
+- TC08 - Supply different fabricated status and response code variables to the api requests to confirm
+potential responses are handled with user alert. _Pass_
 
 - TC09 - Confirm question/answers are displaying and functioning correctly and correct sounds are played
-depending on the score outcome and high score is displayed in table after quiz ends. _Pass_
+depending on the score outcome and high score value is displayed in updated table after quiz ends. _Pass_
 
 - TC10 - Confirm the multi-use model which is used for feedback, reset-quiz and end-quiz-message all
-operate independently without leaving text behind, removing button that is not replaced or otherwise
+operate independently without leaving text behind, or removing a button that is not replaced or otherwise
 affecting each other. _Pass_
 
 - TC11 - Confirm pressing buttons repeatedly does not work and that trying to press options buttons 
