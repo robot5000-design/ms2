@@ -1,3 +1,8 @@
+// Scrolls to top on page load
+$(document).ready(function() {
+    window.scroll(0, 0);
+});
+
 // Declare Classes  ######################################################################
 /**
  * @class - Represents all page sound effects courtesy w3schools
@@ -23,53 +28,54 @@ class Sound {
 }
 
 // Declare variables  ######################################################################
-/** @type { string } category of questions selected */
+
+// category of questions selected
 let category = "18";
-/** @type { string } quantity of questions selected */
+// quantity of questions selected
 let amount = "5";
-/** @type { string } difficulty level of questions selected */
+// difficulty level of questions selected
 let difficulty = "easy";
-/** @type { string } token to access API */
+// token to access API
 let token = "";
-/** @type { string } correct answer to current question */
+// correct answer to current question
 let correctAnswer = "";
-/** @type { number } number of correct answers current quiz */
+// number of correct answers current quiz
 let score = 0;
-/** @type { number } array index number of current question */
+// array index number of current question
 let questionIndex = 0;
-/** @type { Object } current set of questions & answers */
+// current set of questions & answers
 let setOfQuestions = {};
-/** @type { Object } highest score achieved by user in each category represented as an object */
+// highest score achieved by user in each category represented as an object
 let highScore = 0;
-/** @type { number } the id of the setInterval timer function */
+// the id of the setInterval timer function
 let countdown = 0;
-/** @type { number } question timer length in seconds */
+// question timer length in seconds
 let questionTimer = 20;
-/** @type { number } number of seconds remaining on the timer */
+// number of seconds remaining on the timer
 let secondsLeft = 0;
-/** @type { Object } new instance of the sound class representing a correct answer */
+// new instance of the sound class representing a correct answer
 let correctAnswerSound = new Sound("assets/sounds/correct-answer.mp3");
-/** @type { Object } new instance of the sound class representing a wrong answer */
+// new instance of the sound class representing a wrong answer
 let wrongAnswerSound = new Sound("assets/sounds/wrong-answer.mp3");
-/** @type { Object } new instance of the sound class representing a button press */
+// new instance of the sound class representing a button press
 let buttonPress = new Sound("assets/sounds/button-press.mp3");
-/** @type { Object } new instance of the sound class representing a new high score */
+// new instance of the sound class representing a new high score
 let highScoreSound = new Sound("assets/sounds/new-high-score.mp3");
-/** @type { Object } new instance of the sound class representing a well done score */
+// new instance of the sound class representing a well done score
 let wellDoneSound = new Sound("assets/sounds/well-done.mp3");
-/** @type { Object } new instance of the sound class representing a sad score */
+// new instance of the sound class representing a sad score
 let sadSound = new Sound("assets/sounds/sad-sound.mp3");
-/** @type { Object } contains all answer buttons */
+// contains all answer buttons
 let answerButtons = $(".question-answers").children("button");
-/** @type { string } opentdb API url address to obtain token */
+// opentdb API url address to obtain token
 let tokenUrl = "https://opentdb.com/api_token.php?command=request";
-/** @type { Object } contains buttons representing quiz category options */
+// contains buttons representing quiz category options
 let categoryButtons = $(".categories").children("button");
-/** @type { Object } contains buttons representing quiz difficulty options */
+// contains buttons representing quiz difficulty options
 let difficultyButtons = $(".difficulty-level").children("button");
-/** @type { Object } contains buttons representing quiz quantity of questions options */
+// contains buttons representing quiz quantity of questions options
 let quantityButtons = $(".question-quantity").children("button");
-/** @type { string } translates the category from numerical identifier to text */
+// translates the category from numerical identifier to text
 let categoryString = "";
 
 
@@ -103,16 +109,7 @@ if (sessionStorage.getItem("sessionToken")) {
 
 // Normal Functions  ######################################################################
 /**
- * @function - scrolls to top on page load
- * @returns { void } nothing
- */
-$(document).ready(function() {
-    window.scroll(0, 0);
-});
-
-/**
- * @function - switches between quiz options and quiz questions
- * @returns { void } nothing
+ * Switches between quiz options OR quiz questions/answers
  */
 function toggleOptions() {
     // show quiz questions and answers
@@ -155,10 +152,9 @@ function toggleOptions() {
 }
 
 /**
- * @function - Shuffles questions using The Fisher-Yates Shuffle Method
+ * Shuffles questions using The Fisher-Yates Shuffle Method
  * @param { Array } arrayOfAnswers - the array to be shuffled
  * @param { string } currentCorrectAnswer - to be pushed into the array before shuffling
- * @returns { void } nothing
  */
 function shuffleAnswers(arrayOfAnswers, currentCorrectAnswer) {
     // Validate the array of answers to contain at most, 3 answers
@@ -175,16 +171,15 @@ function shuffleAnswers(arrayOfAnswers, currentCorrectAnswer) {
 }
 
 /**
- * @function - Prepares and presents the quiz questions to the screen
+ * Prepares and presents the quiz questions to the screen
  * @param { Object } arrayOfQuestions - current set of questions & answers
  * @param { number } arrayIndex - array index number of current question
  * @param { number } currentScore - number of correct answers current quiz
- * @returns { void } nothing
  */
 function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
-    /** @type { string } current question */
+    // current question
     let currentQuestion = arrayOfQuestions[arrayIndex].question;
-    /** @type { Array } array of incorrect answers to current question */
+    // array of incorrect answers to current question
     let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers; 
     timer(questionTimer);   
     // Prepare the various buttons
@@ -195,7 +190,7 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     shuffleAnswers(answersArray, correctAnswer);
     $(".quiz-score").html(`Score is ${currentScore} / ${setOfQuestions.length}`);
     // check if question is boolean and if yes, hide redundant answer buttons
-    checkBoolean(arrayOfQuestions, arrayIndex, answersArray);    
+    displayBooleanQuestion(arrayOfQuestions, arrayIndex, answersArray);    
     $(".questions").html(`${arrayIndex + 1}. ${currentQuestion}`);
     arrayIndex++;
     console.log(answersArray, (correctAnswer));
@@ -203,14 +198,13 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
 }
 
 /**
- * @function - Removes surplus answer buttons if the current question
- * is boolean rather than multiple choice & populates the answer buttons
+ * Removes surplus answer buttons if the current question is boolean rather
+ * than multiple choice & populates the answer buttons
  * @param { Object } arrayOfQuestions - current set of questions & answers
  * @param { number } arrayIndex - array index number of current question
  * @param { Array } arrayOfAnswers - array of answers to the current question
- * @returns { void } nothing
  */
-function checkBoolean(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
+function displayBooleanQuestion(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
     if (arrayOfQuestions[arrayIndex].type === "boolean") {
         $("[data-number='3']").css("display", "none");
         $("[data-number='4']").css("display", "none");
@@ -231,10 +225,9 @@ function checkBoolean(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
 }
 
 /**
- * @function - Moves the quiz to the next question
- * @returns { void } nothing
+ * Moves the quiz to the next question
  */
-function nextQuestion() {
+function nextQuestionDisplay() {
     buttonPress.play();
     disableElement(".next-question");
     $(".display__time-left").removeClass("time-critical");
@@ -273,10 +266,9 @@ function nextQuestion() {
 }
 
 /**
- * @function - Finishes the quiz by presenting a results model to the screen
+ * Finishes the quiz by presenting a results model to the screen
  * and updating the high score in local storage if required
  * @param { number } arrayIndex - array index number of current question
- * @returns { void } nothing
  */
 function finishQuiz(arrayIndex) {
     let weightedScore = 0;
@@ -318,8 +310,7 @@ function finishQuiz(arrayIndex) {
 }
 
 /**
- * @function - Submits an answer to be checked and resets the timer
- * @returns { void } nothing
+ * Submits an answer to be checked and resets the timer
  */
 function submitAnswer() {
     clearInterval(countdown);
@@ -331,8 +322,7 @@ function submitAnswer() {
 }
 
 /**
- * @function - Checks if an answer is correct and provides visual feedback
- * @returns { void } nothing
+ * Checks if an answer is correct and provides visual feedback
  */
 function checkAnswer() {
     for (let button of answerButtons) {
@@ -370,18 +360,16 @@ function checkAnswer() {
 }
 
 /**
- * @function - Used to disable an element on screen
+ * Used to disable an element on screen
  * @param { Object | string } buttonIdentifier - a button element
- * @returns { void } nothing
  */
 function disableElement(buttonIdentifier) {
     $(buttonIdentifier).prop("disabled", true);
 }
 
 /**
- * @function - Used to enable an element on screen
+ * Used to enable an element on screen
  * @param { Object | string } buttonIdentifier - a button element
- * @returns { void } nothing
  */
 function enableElement(buttonIdentifier) {
     $(buttonIdentifier).prop("disabled", false);
@@ -420,27 +408,20 @@ function displayErrorModal(errorCode, errorName) {
 }
 
 /**
- * @function - Gets quiz data object containing questions and answers from the opentdb API
+ * Gets quiz data object containing questions and answers from the opentdb API
  * @param { string } myToken - token used to access the quiz API
- * @returns { void } nothing
  */
 function getQuizData(myToken) {
-    /** @type { string } opentdb API url address */
     let apiUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${myToken}`;
-    /** @type { Object } new instance of the object XMLHttpRequest */
     let xhr = new XMLHttpRequest();
     xhr.open("GET", apiUrl);
     xhr.send();
     console.log(apiUrl);
-    /**
-     * @function - Checks the status of the response from the quiz API and when ready and if ok calls to check the 
-     * status of the token used otherwise alerts the user to an error obtaining quiz data
-     * @returns { void } nothing
-     */
+    /* Checks the status of the response from the quiz API and when ready and if ok calls to check the 
+       status of the token used, otherwise alerts the user to an error obtaining quiz data */
     xhr.onreadystatechange = function () {
         console.log(this.readyState, this.status, score);
         if (this.readyState === 4 && this.status === 200) {
-            /** @type { Object } Will represent quiz data returned from opentdb API */
             let questionsLoaded = {};
             try {
                 questionsLoaded = JSON.parse(this.responseText);
@@ -456,9 +437,8 @@ function getQuizData(myToken) {
 }
 
 /**
- * @function - Checks the token status and if ok begins the quiz, otherwise calls for a new token
+ * Checks the token status and if ok begins the quiz, otherwise calls for a new token
  * @param { Object } questionsLoadedObject - quiz data object returned from opentdb API
- * @returns { void } nothing
  */
 function checkToken(questionsLoadedObject) {
     score = 0;
@@ -475,7 +455,6 @@ function checkToken(questionsLoadedObject) {
         getToken(tokenUrl).then(handleSuccess, handleFailure);
         // response code 4 - session token is empty and needs to be reset
     } else if (questionsLoadedObject.response_code === 4) {
-        /** @type { string } opentdb API url address to reset token */
         let resetTokenUrl = `https://opentdb.com/api_token.php?command=reset&token=${token}`;
         getToken(resetTokenUrl).then(handleSuccess, handleFailure);
     } else {
@@ -499,21 +478,18 @@ function handleFailure(rejectionReason) {
 }
 
 /**
- * @function - Requests a token from the opentdb API
+ * Requests a token from the opentdb API
  * @param { string } url - url for obtaining token to access the quiz API
  * @returns { Promise } returns a Promise Object which resolves to contain a token on success
  * or alerts the user to a problem if unsuccessful
  */
 function getToken(url) {
-    return new Promise(function(myResolve, myReject) {        
-        /** @type { Object } new instance of the object XMLHttpRequest */
+    return new Promise(function(myResolve, myReject) {
         let xhr = new XMLHttpRequest();
         xhr.open("GET", url);
         xhr.send();
-        /**
-         * @function - Checks the status of the response from the quiz API and when ready and if ok 
-         * resolves to a token otherwise alerts the user to a problem
-         */
+        /* Checks the status of the response from the quiz API and when ready and if ok 
+            resolves to a token otherwise alerts the user to a problem */
         xhr.onreadystatechange = function() {
             console.log(this.readyState, this.status);
             if (this.readyState === 4 && this.status === 200) {
@@ -533,7 +509,7 @@ function getToken(url) {
 }
 
 /**
- * @function - Check if a button is active & gets its data attribute value
+ * Check if a button is active & gets its data attribute value
  * @param { Object } buttonGroup - represents a group of button elements
  * @returns { string } represents the answer text of that particular button
  */
@@ -552,9 +528,9 @@ function activeButton(buttonGroup) {
  * @param { number } seconds - Countdown timer starting number of seconds
  */
 function timer(seconds) {
-    /** @type { number } represents current time */
+    // represents current time
     let now = Date.now();
-    /** @type { number } represents current time + timer value converted to milliseconds */
+    // represents current time + timer value converted to milliseconds
     let then = now + seconds * 1000;
     secondsLeft = seconds;
     // clear any existing timers
@@ -712,7 +688,7 @@ $(".answer").on("click", function() {
 $(".load-questions").click(loadQuestions);
 
 // Next Question or Finish Quiz Button
-$(".next-question").on("click", nextQuestion);
+$(".next-question").on("click", nextQuestionDisplay);
 
 // When the Exit Quiz button is clicked displays a modal for the user to confirm
 $(".reset-button").on("click", showResetModal);
