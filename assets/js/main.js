@@ -439,7 +439,7 @@ function getQuizData(myToken) {
      */
     xhr.onreadystatechange = function () {
         console.log(this.readyState, this.status, score);
-        if (this.readyState === 4 && this.status != 200) {
+        if (this.readyState === 4 && this.status === 200) {
             /** @type { Object } Will represent quiz data returned from opentdb API */
             let questionsLoaded = {};
             try {
@@ -449,7 +449,7 @@ function getQuizData(myToken) {
             } catch (error) {
                 displayErrorModal("json-parse-error", error.name);
             }            
-        } else if (this.readyState === 4 && this.status === 200) {
+        } else if (this.readyState === 4 && this.status != 200) {
             displayErrorModal("status-not-ok");
         }
     };
@@ -548,9 +548,8 @@ function activeButton(buttonGroup) {
 
 // Timer inspired by Wes Bos version here:- https://github.com/wesbos/JavaScript30/blob/master/29%20-%20Countdown%20Timer/scripts-FINISHED.js
 /**
- * @function - Countdown Timer
+ * Countdown Timer
  * @param { number } seconds - Countdown timer starting number of seconds
- * @returns { void } nothing
  */
 function timer(seconds) {
     /** @type { number } represents current time */
@@ -561,9 +560,7 @@ function timer(seconds) {
     // clear any existing timers
     clearInterval(countdown);
     displayTimeLeft(seconds);
-    /**
-     * @function - Interval timer which calculated and sets the secondsLeft every 1000ms
-     */
+    // Interval timer which calculates and sets the secondsLeft every 1000ms
     countdown = setInterval(function() {
         secondsLeft = Math.round((then - Date.now()) / 1000);
         // check if timer should be stopped
@@ -587,9 +584,8 @@ function timer(seconds) {
 }
 
 /**
- * @function - Displays timer current value on screen
+ * Displays timer current value on screen
  * @param { number } remainderSeconds - Countdown timer remaining number of seconds
- * @returns { void } nothing
  */
 function displayTimeLeft(remainderSeconds) {
     if (remainderSeconds === 0) {
@@ -636,12 +632,47 @@ function showResetModal() {
         </div>`);
 }
 
-// Click Event Functions  ######################################################################
 /**
- * @fires - When clicked sound on/off is toggled
- * @returns { void } nothing
+ * Separates the multiple options bootstrap list groups on the same page 
+ * and assigns text values to categories rather than numerical for high score table
  */
-$(".mute-sound").on("click", function() {
+function optionButtonsOutput() {
+    /* help from stackoverflow with the following two lines to separate the selections in multiple
+        bootstrap button groups on same page */
+    $(this).addClass("active no-shadow disable");
+    $(this).siblings().removeClass("active disable no-shadow");
+    category = activeButton(categoryButtons);
+    amount = activeButton(quantityButtons);
+    difficulty = activeButton(difficultyButtons);
+    if (category === "18") {
+        categoryString = "computing";
+    } else if (category === "19") {
+        categoryString = "mathematics";
+    } else if (category === "17") {
+        categoryString = "general";
+    }    
+    console.log(categoryString, category, difficulty, amount);
+}
+
+/**
+ * When button is clicked sets the pre quiz options and checks if a token already exists
+ */    
+function loadQuestions() {
+    buttonPress.play();
+    disableElement(".quiz-options .btn");
+    $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
+    $(".answer-feedback").addClass("hide-element");
+    if (!!token === false) {
+        getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
+    } else {
+        getQuizData(token);
+    }
+}
+
+/**
+ * When called sound on/off is toggled
+ */
+function muteSound() {
     let soundOff = "<i class='fas fa-volume-mute'></i>";
     let soundOn = "<i class='fas fa-volume-up'></i>";
     let soundsArray = [correctAnswerSound, wrongAnswerSound, buttonPress, highScoreSound, wellDoneSound, sadSound];
@@ -663,73 +694,33 @@ $(".mute-sound").on("click", function() {
             item.sound.volume = 0;
         }
     }
-});
+}
 
-/**
- * @fires - When button is clicked sets the pre quiz options and checks if a token already exists
- * @returns { void } nothing
- */
-$(".load-questions").click(function() {
-    buttonPress.play();
-    disableElement(".quiz-options .btn");
-    $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
-    $(".answer-feedback").addClass("hide-element");
-    if (!!token === false) {
-        getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
-    } else {
-        getQuizData(token);
-    }
-});
+// Click Events ###################################################################################
 
-/**
- * @fires - When the next question button is clicked calls the nextQuestion function
- * @returns { void } nothing
- */
+// Mute Sound Button
+$(".mute-sound").on("click", muteSound);
+
+// Answer Button
 $(".answer").on("click", function() {
     submitAnswer();
     $(this).addClass("active no-shadow disable");
     $(this).siblings().addClass("disable");    
 });
 
-/**
- * @fires - When the next question button is clicked calls the nextQuestion function
- * @returns { void } nothing
- */
+// Start Button
+$(".load-questions").click(loadQuestions);
+
+// Next Question or Finish Quiz Button
 $(".next-question").on("click", nextQuestion);
 
-/**
- * @fires - When the Exit Quiz button is clicked displays a modal for the user to confirm
- * @returns { void } nothing
- */
+// When the Exit Quiz button is clicked displays a modal for the user to confirm
 $(".reset-button").on("click", showResetModal);
 
-/**
- * @fires - Plays a sound when any button is clicked
- * @returns { void } nothing
- */
+// Plays a sound when any button is clicked
 $("button").on("click", function() {
     buttonPress.play();
 });
 
-/**
- * @fires - Separates the multiple options bootstrap list groups on the same page 
- * and assigns text values to categories rather than numerical for high score table
- * @returns { void } nothing
- */
-$("body").on("click", ".quiz-options .btn", function() {
-    /* help from stackoverflow with the following two lines to separate the selections in multiple
-        bootstrap button groups on same page */
-    $(this).addClass("active no-shadow disable");
-    $(this).siblings().removeClass("active disable no-shadow");
-    category = activeButton(categoryButtons);
-    amount = activeButton(quantityButtons);
-    difficulty = activeButton(difficultyButtons);
-    if (category === "18") {
-        categoryString = "computing";
-    } else if (category === "19") {
-        categoryString = "mathematics";
-    } else if (category === "17") {
-        categoryString = "general";
-    }    
-    console.log(categoryString, category, difficulty, amount);
-});
+// function optionButtonsOutput is called when any quiz option button is clicked
+$("body").on("click", ".quiz-options .btn", optionButtonsOutput);
