@@ -71,8 +71,8 @@ let difficultyButtons = $(".difficulty-level").children("button");
 let quantityButtons = $(".question-quantity").children("button");
 /** @type { string } translates the category from numerical identifier to text */
 let categoryString = "";
-/** @type { string } general error message to be alerted to user */
-let alertErrorMessage = "Press below to try again or refresh the page. If the problem persists, please contact the administrator.";
+
+
 
 // Check and retrieve Local and Session Storage Values  ######################################################################
 /**
@@ -388,6 +388,38 @@ function enableElement(buttonIdentifier) {
 }
 
 /**
+ * Handles error alert messages and displays them in the modal
+ * @param { string } errorCode - designates type of error
+ * @param { string } errorName - error.name output
+ */
+function displayErrorModal(errorCode, errorName) {
+    let errorMessageDisplay = "";
+    if (errorCode === "json-parse-error") {
+        errorMessageDisplay = `${errorName}: Quiz Data not in correct format. Try again or refresh the page.`;
+    } else if (errorCode === "status-not-ok") {
+        errorMessageDisplay = `Cannot communicate with the Quiz Database at this time. Try again or refresh the page.`;
+    } else if (errorCode === "token-problem") {
+        errorMessageDisplay = `Cannot get results from the Quiz Database at this time. Change quiz options and try again.`;
+    } else if (errorCode === "token-parse-error") {
+        errorMessageDisplay = `${error.name}: Quiz Token not in correct format. Try again or refresh the page.`;
+    }
+    $("#resetModal").modal("toggle");
+    $(".modal-content").html(
+        `<div class="modal-div">
+            <h5 class="reset-modal" id="resetModalLabel">Error:</h5>
+        </div>
+        <div class="modal-body">
+            ${errorMessageDisplay} If the problem persists, please contact the administrator.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">Ok</button>
+        </div>`);
+    $(".load-questions").html("Error. Press to Retry");                
+    enableElement(".load-questions");
+    enableElement(".quiz-options .btn");
+}
+
+/**
  * @function - Gets quiz data object containing questions and answers from the opentdb API
  * @param { string } myToken - token used to access the quiz API
  * @returns { void } nothing
@@ -407,7 +439,7 @@ function getQuizData(myToken) {
      */
     xhr.onreadystatechange = function () {
         console.log(this.readyState, this.status, score);
-        if (this.readyState === 4 && this.status === 200) {
+        if (this.readyState === 4 && this.status != 200) {
             /** @type { Object } Will represent quiz data returned from opentdb API */
             let questionsLoaded = {};
             try {
@@ -415,16 +447,10 @@ function getQuizData(myToken) {
                 // Check the token and start the Quiz
                 checkToken(questionsLoaded);
             } catch (error) {
-                $(".load-questions").html("Error. Press to Retry");
-                alert(`${error.name}: Quiz Data not in correct format. ${alertErrorMessage}.`);
-                enableElement(".load-questions");
-                enableElement(".quiz-options .btn");
+                displayErrorModal("json-parse-error", error.name);
             }            
-        } else if (this.readyState === 4 && this.status != 200) {
-            $(".load-questions").html("Error. Press to Retry");
-            alert(`Cannot communicate with the Quiz Database. ${alertErrorMessage}.`);
-            enableElement(".load-questions");
-            enableElement(".quiz-options .btn");
+        } else if (this.readyState === 4 && this.status === 200) {
+            displayErrorModal("status-not-ok");
         }
     };
 }
@@ -454,29 +480,22 @@ function checkToken(questionsLoadedObject) {
         getToken(resetTokenUrl).then(handleSuccess, handleFailure);
     } else {
         // any other response means db could not return results
-        alert(`Cannot get results from the Quiz Database at this time. ${alertErrorMessage}.`);
-        $(".load-questions").html("Error. Press to Retry");
-        enableElement(".load-questions");
-        enableElement(".quiz-options .btn");
+        displayErrorModal("token-problem");
     }
 }
 
 /**
- * @function - Handles a successful rsponse from the getToken function
- * @returns { void } nothing
+ * Handles a successful response from the getToken function
  */
 function handleSuccess(resolvedValue) {
     getQuizData(resolvedValue);
 }
 
 /**
- * @function - Handles an unsuccesful response from the getToken function
- * @returns { void } nothing
+ * Handles a rejection of the promise from the getToken function
  */
 function handleFailure(rejectionReason) {
-    alert(rejectionReason);
-    enableElement(".load-questions");
-    enableElement(".quiz-options .btn");
+    displayErrorModal(rejectionReason);
 }
 
 /**
@@ -504,14 +523,10 @@ function getToken(url) {
                     console.log(token);
                     myResolve(token);
                 } catch (error) {
-                    $(".load-questions").html("Error. Press to Retry");
-                    alert(`${error.name}: Quiz Token not in correct format. ${alertErrorMessage}.`);
-                    enableElement(".load-questions");
-                    enableElement(".quiz-options .btn");
+                    displayErrorModal("token-parse-error", error.name);
                 }
             } else if (this.readyState === 4 && this.status != 200) {
-                $(".load-questions").html("Error. Press to Retry");
-                myReject(`Cannot obtain Quiz Token at this time. ${alertErrorMessage}.`);
+                myReject("status-not-ok");
             }
         };
     });
@@ -591,8 +606,7 @@ function displayTimeLeft(remainderSeconds) {
 }
 
 /**
- * @function - When the modal confirm button is clicked, stops the timer and returns to quiz options
- * @returns { void } nothing
+ * When the modal confirm button is clicked, stops the timer and returns to quiz options
  */
 function resetConfirm() {
     buttonPress.play();
@@ -601,6 +615,25 @@ function resetConfirm() {
     $("#resetModal").modal("toggle");
     $(".reset-button").show();
     $(".answer").removeClass("disable");
+}
+
+/**
+ * Shows the modal populated with details to exit the quiz
+ */
+function showResetModal() {
+    buttonPress.play();
+    $("#resetModal").modal("toggle");
+    $(".modal-content").html(
+        `<div class="modal-div">
+            <h5 class="reset-modal" id="resetModalLabel">EXIT QUIZ</h5>
+        </div>
+        <div class="modal-body">
+            Please confirm if you would like to exit the quiz...
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">No</button>
+            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()">Yes</button>
+        </div>`);
 }
 
 // Click Event Functions  ######################################################################
@@ -668,23 +701,7 @@ $(".next-question").on("click", nextQuestion);
  * @fires - When the Exit Quiz button is clicked displays a modal for the user to confirm
  * @returns { void } nothing
  */
-$(".reset-button").on("click", function() {
-    buttonPress.play();
-    $(".modal-cancel").show();
-    $(".reset-confirm").html("Yes");
-    $("#resetModal").modal("toggle");
-    $(".modal-content").html(
-        `<div class="modal-div">
-            <h5 class="reset-modal" id="resetModalLabel">EXIT QUIZ</h5>
-        </div>
-        <div class="modal-body">
-            Please confirm if you would like to exit the quiz...
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">No</button>
-            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()">Yes</button>
-        </div>`);
-});
+$(".reset-button").on("click", showResetModal);
 
 /**
  * @fires - Plays a sound when any button is clicked

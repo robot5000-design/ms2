@@ -503,7 +503,7 @@ _For this website to be run locally it can downloaded as a ZIP file or it can be
 2. Above the list of files, click Code.
 3. Click Download ZIP.
 4. Navigate to the local Downloads folder and un-zip the project_one-master folder.
-5. Open the file index.html in an internat browser.
+5. Open the file index.html in an internet browser.
 
 - To Clone using Command Line:
 
