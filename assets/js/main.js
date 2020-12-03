@@ -418,11 +418,13 @@ function getQuizData(myToken) {
                 $(".load-questions").html("Error. Press to Retry");
                 alert(`${error.name}: Quiz Data not in correct format. ${alertErrorMessage}.`);
                 enableElement(".load-questions");
+                enableElement(".quiz-options .btn");
             }            
         } else if (this.readyState === 4 && this.status != 200) {
             $(".load-questions").html("Error. Press to Retry");
             alert(`Cannot communicate with the Quiz Database. ${alertErrorMessage}.`);
             enableElement(".load-questions");
+            enableElement(".quiz-options .btn");
         }
     };
 }
@@ -455,6 +457,7 @@ function checkToken(questionsLoadedObject) {
         alert(`Cannot get results from the Quiz Database at this time. ${alertErrorMessage}.`);
         $(".load-questions").html("Error. Press to Retry");
         enableElement(".load-questions");
+        enableElement(".quiz-options .btn");
     }
 }
 
@@ -473,6 +476,7 @@ function handleSuccess(resolvedValue) {
 function handleFailure(rejectionReason) {
     alert(rejectionReason);
     enableElement(".load-questions");
+    enableElement(".quiz-options .btn");
 }
 
 /**
@@ -503,6 +507,7 @@ function getToken(url) {
                     $(".load-questions").html("Error. Press to Retry");
                     alert(`${error.name}: Quiz Token not in correct format. ${alertErrorMessage}.`);
                     enableElement(".load-questions");
+                    enableElement(".quiz-options .btn");
                 }
             } else if (this.readyState === 4 && this.status != 200) {
                 $(".load-questions").html("Error. Press to Retry");
