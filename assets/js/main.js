@@ -57,6 +57,8 @@ class Quiz {
 
 // Declare Global variables  ######################################################################
 
+// highest score achieved by user in each category represented as an object
+let highScore = {};
 // number of seconds remaining on the timer
 let secondsLeft = 20;
 // the id of the setInterval timer function
@@ -500,7 +502,7 @@ function displayErrorModal(errorCode, errorName) {
     } else if (errorCode === "token-problem") {
         errorMessageDisplay = `Cannot get results from the Quiz Database at this time. Change quiz options and try again.`;
     } else if (errorCode === "token-parse-error") {
-        errorMessageDisplay = `${error.name}: Quiz Token not in correct format. Try again or refresh the page.`;
+        errorMessageDisplay = `${errorName}: Quiz Token not in correct format. Try again or refresh the page.`;
     }
     $("#resetModal").modal("toggle");
     $(".modal-content").html(
