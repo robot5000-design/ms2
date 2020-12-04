@@ -37,7 +37,7 @@ function handleMailResponse(responseObject, message) {
             ${message}
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">Ok</button>
+            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">Ok</button>
         </div>`);
 }
 
@@ -57,8 +57,8 @@ function populateFeedbackModel() {
                     <textarea rows="5" name="feedback" class="form-control" id="feedback" placeholder="We appreciate your feedback" required></textarea>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">Dismiss</button>
-                    <button type="submit" class="btn btn-primary center-block" onclick="buttonPress.play()">Send Feedback</button>
+                    <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">Dismiss</button>
+                    <button type="submit" class="btn btn-primary center-block">Send Feedback</button>
                 </div>
             </form>
         </div>`

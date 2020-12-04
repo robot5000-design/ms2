@@ -286,7 +286,7 @@ function finishQuiz(arrayIndex) {
         <div class="modal-body">
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()">Exit</button>
+            <button type="button" class="btn btn-primary reset-confirm">Exit</button>
         </div>`);
     if (scienceQuiz.difficulty === "medium") {
         weightedScore = Math.round(scienceQuiz.score * 1.2);
@@ -513,7 +513,7 @@ function displayErrorModal(errorCode, errorName) {
             ${errorMessageDisplay} If the problem persists, please contact the administrator.
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">Ok</button>
+            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">Ok</button>
         </div>`);
     $(".load-questions").html("Press to Retry");                
     enableElement(".load-questions");
@@ -615,8 +615,8 @@ function showResetModal() {
             Please confirm if you would like to exit the quiz...
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">No</button>
-            <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()">Yes</button>
+            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary reset-confirm">Yes</button>
         </div>`);
 }
 
@@ -691,6 +691,9 @@ function muteSound() {
 // Mute Sound Button
 $(".mute-sound").on("click", muteSound);
 
+// Exit Quiz Modal reset confirm button
+$("#resetModal").on("click", ".reset-confirm", resetConfirm);
+
 // Answer Button
 $(".answer").on("click", function() {
     submitAnswer();
@@ -708,7 +711,7 @@ $(".next-question").on("click", nextQuestionDisplay);
 $(".reset-button").on("click", showResetModal);
 
 // Plays a sound when any button is clicked
-$("button").on("click", function() {
+$("body").on("click", ".btn", function() {
     buttonPress.play();
 });
 
