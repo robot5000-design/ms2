@@ -17,7 +17,7 @@ class Sound {
         this.sound.style.display = "none";
         this.sound.volume = 0;
         document.body.appendChild(this.sound);
-        /** @function  - plays a sound file */
+        // plays a sound file
         this.play = function () {
             this.sound.play();
         };
@@ -91,8 +91,7 @@ let scienceQuiz = new Quiz();
 /**
  * Checks local storage for a high score object
  */
-if (localStorage.getItem("highScore")) {
-    console.log("highscore exists");    
+if (localStorage.getItem("highScore")) {  
     highScore = JSON.parse(localStorage.getItem("highScore"));
     $(".computing-score").html(`${highScore["computing"]}`);
     $(".maths-score").html(`${highScore["mathematics"]}`);
@@ -104,14 +103,12 @@ if (localStorage.getItem("highScore")) {
     general: 0 
     };
 }
-console.log(highScore);
 
 /**
  * Checks session storage if a token already exists
  */
 if (sessionStorage.getItem("sessionToken")) {
     scienceQuiz.token = sessionStorage.getItem("sessionToken");
-    console.log("sessionToken", scienceQuiz.token);
 }
 
 // Normal Functions  ######################################################################
@@ -200,8 +197,6 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     displayBooleanQuestion(arrayOfQuestions, arrayIndex, answersArray);    
     $(".questions").html(`${arrayIndex + 1}. ${currentQuestion}`);
     arrayIndex++;
-    console.log(answersArray, (scienceQuiz.correctAnswer));
-    console.log(arrayIndex);
 }
 
 /**
@@ -273,7 +268,7 @@ function nextQuestionDisplay() {
 }
 
 /**
- * Finishes the quiz by presenting a results model to the screen
+ * Finishes the quiz by presenting a results modal to the screen
  * and updating the high score in local storage if required
  * @param { number } arrayIndex - array index number of current question
  */
@@ -393,11 +388,9 @@ function getQuizData(myToken) {
     let xhr = new XMLHttpRequest();
     xhr.open("GET", apiUrl);
     xhr.send();
-    console.log(apiUrl);
-    /* Checks the status of the response from the quiz API and when ready and if ok calls to check the 
-       status of the token used, otherwise alerts the user to an error obtaining quiz data */
+    /* Checks the status of the response from the quiz API and when ready and if ok, calls to check the 
+       status of the token used, otherwise displays a modal to the user of the error obtaining quiz data */
     xhr.onreadystatechange = function () {
-        console.log(this.readyState, this.status, scienceQuiz.score);
         if (this.readyState === 4 && this.status === 200) {
             let questionsLoaded = {};
             try {
@@ -420,8 +413,7 @@ function getQuizData(myToken) {
 function checkToken(questionsLoadedObject) {
     scienceQuiz.score = 0;
     scienceQuiz.questionIndex = 0;
-    console.log("token response", questionsLoadedObject.response_code);
-    // response code 0 - successful return of results from api
+    // A response code 0 means a successful return of results from api
     if (questionsLoadedObject.response_code === 0) {
         scienceQuiz.setOfQuestions = questionsLoadedObject.results;
         toggleOptions();
@@ -460,23 +452,20 @@ function handleFailure(rejectionReason) {
  * Requests a token from the opentdb API
  * @param { string } url - url for obtaining token to access the quiz API
  * @returns { Promise } returns a Promise Object which resolves to contain a token on success
- * or alerts the user to a problem if unsuccessful
+ * or displays a modal to the user of a problem if unsuccessful
  */
 function getToken(url) {
     return new Promise(function(myResolve, myReject) {
-        console.log(url);
         let xhr = new XMLHttpRequest();
         xhr.open("GET", url);
         xhr.send();
         /* Checks the status of the response from the quiz API and when ready and if ok 
-            resolves to a token otherwise alerts the user to a problem */
+            resolves to a token otherwise displays a modal to the user of a problem */
         xhr.onreadystatechange = function() {
-            console.log(this.readyState, this.status);
             if (this.readyState === 4 && this.status === 200) {
                 try {
                     scienceQuiz.token = (JSON.parse(this.responseText)).token;
                     sessionStorage.setItem("sessionToken", `${scienceQuiz.token}`);
-                    console.log(scienceQuiz.token);
                     myResolve(scienceQuiz.token);
                 } catch (error) {
                     displayErrorModal("token-parse-error", error.name);
@@ -489,7 +478,7 @@ function getToken(url) {
 }
 
 /**
- * Handles error alert messages and displays them in the modal
+ * Used to display error messages to the user in a modal
  * @param { string } errorCode - designates type of error
  * @param { string } errorName - error.name output
  */
@@ -555,7 +544,7 @@ function timer(seconds) {
         if (secondsLeft < 0) {
             clearInterval(countdown);
             return;
-        // when timer reaches zero play sound and alert user
+        // when timer reaches zero play a sound and display the correct answer to alert the user
         } else if (secondsLeft === 0) {
             for (let button of answerButtons) {
                 if (($(button).attr("data-answer") === scienceQuiz.correctAnswer)) {
@@ -638,8 +627,7 @@ function optionButtonsOutput() {
         scienceQuiz.categoryString = "mathematics";
     } else if (scienceQuiz.category === "17") {
         scienceQuiz.categoryString = "general";
-    }    
-    console.log(scienceQuiz.categoryString, scienceQuiz.category, scienceQuiz.difficulty, scienceQuiz.amount);
+    }
 }
 
 /**
@@ -666,7 +654,6 @@ function muteSound() {
     let soundOff = "<i class='fas fa-volume-mute'></i>";
     let soundOn = "<i class='fas fa-volume-up'></i>";
     let soundsArray = [correctAnswerSound, wrongAnswerSound, buttonPress, highScoreSound, wellDoneSound, sadSound];
-    buttonPress.play();
     if ($(".mute-sound").attr("data-sound") === "off") {
         $(".mute-sound").html(soundOn);
         $(".mute-sound").attr("data-sound", "on");
@@ -675,8 +662,9 @@ function muteSound() {
                 item.sound.volume = 0.7;
             } else {
                 item.sound.volume = 0.8;
-            }                
-        }       
+            }              
+        }
+        buttonPress.play();   
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");

@@ -42,9 +42,9 @@ function handleMailResponse(responseObject, message) {
 }
 
 /**
- * Populates the feedback form into the bootstrap model
+ * Populates the feedback form into the bootstrap modal
  */
-function populateFeedbackModel() {
+function populateFeedbackModal() {
     $(".modal-content").html(
         `<div class="row modal-div">
             <h5 class="col reset-modal" id="resetModalLabel">Feedback Form</h5>
@@ -66,5 +66,5 @@ function populateFeedbackModel() {
 }
 
 // Click Event Function calls  ######################################################################
-// feedback form link calls model
-$(".feedback-form").on("click", populateFeedbackModel);
+// feedback form link calls modal
+$(".feedback-form").on("click", populateFeedbackModal);

@@ -152,7 +152,21 @@ html encoded characters.
 ---
 
 ## 6. Test Cases:
-- TC01 - Check options buttons work as intended. When selected should be disabled and box shadow removed.
+- TC01
+
+    Description: 
+
+    Verify all links on Index page function as expected.
+
+    Procedure: 
+    1. Navigate to https://robot5000-design.github.io/ms2-the-science-quiz/index.html
+    2. Click on the owl image. Expected Result: Reloads index.html. _Pass_
+    3. 
+
+
+
+
+Check options buttons work as intended. When selected should be disabled and box shadow removed.
 The 3 options groups should not affect each other. The console log shows the variables are changing when
 the button is pressed and are then correctly inserted in the quiz API URL. _Pass_
 ![options-buttons-log](./images-for-readme/options-buttons-log.jpg)
@@ -186,7 +200,7 @@ potential responses are handled with user alert. _Pass_
 - TC09 - Confirm question/answers are displaying and functioning correctly and correct sounds are played
 depending on the score outcome and high score value is displayed in updated table after quiz ends. _Pass_
 
-- TC10 - Confirm the multi-use model which is used for feedback, reset-quiz and end-quiz-message all
+- TC10 - Confirm the multi-use modal which is used for feedback, reset-quiz and end-quiz-message all
 operate independently without leaving text behind, or removing a button that is not replaced or otherwise
 affecting each other. _Pass_
 
