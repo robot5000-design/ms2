@@ -27,32 +27,40 @@ class Sound {
     }
 }
 
-// Declare variables  ######################################################################
+/**
+ * @class - Represents all parameters associated with a Quiz Game
+ */
+class Quiz {
+    constructor() {
+        // category of questions selected
+        this.category = "18";
+        // quantity of questions selected
+        this.amount = "5";
+        // difficulty level of questions selected
+        this.difficulty = "easy";
+        // translates the category from numerical identifier to text
+        this.categoryString = "computing";
+        // token to access API
+        this.token = "";
+        // correct answer to current question
+        this.correctAnswer = "";
+        // number of correct answers current quiz
+        this.score = 0;
+        // array index number of current question
+        this.questionIndex = 0;
+        // current set of questions & answers
+        this.setOfQuestions = {};
+        // question timer length in seconds
+        this.questionTimer = 20;
+    }
+}
 
-// category of questions selected
-let category = "18";
-// quantity of questions selected
-let amount = "5";
-// difficulty level of questions selected
-let difficulty = "easy";
-// token to access API
-let token = "";
-// correct answer to current question
-let correctAnswer = "";
-// number of correct answers current quiz
-let score = 0;
-// array index number of current question
-let questionIndex = 0;
-// current set of questions & answers
-let setOfQuestions = {};
-// highest score achieved by user in each category represented as an object
-let highScore = 0;
+// Declare Global variables  ######################################################################
+
+// number of seconds remaining on the timer
+let secondsLeft = 20;
 // the id of the setInterval timer function
 let countdown = 0;
-// question timer length in seconds
-let questionTimer = 20;
-// number of seconds remaining on the timer
-let secondsLeft = 0;
 // new instance of the sound class representing a correct answer
 let correctAnswerSound = new Sound("assets/sounds/correct-answer.mp3");
 // new instance of the sound class representing a wrong answer
@@ -67,17 +75,14 @@ let wellDoneSound = new Sound("assets/sounds/well-done.mp3");
 let sadSound = new Sound("assets/sounds/sad-sound.mp3");
 // contains all answer buttons
 let answerButtons = $(".question-answers").children("button");
-// opentdb API url address to obtain token
-let tokenUrl = "https://opentdb.com/api_token.php?command=request";
 // contains buttons representing quiz category options
 let categoryButtons = $(".categories").children("button");
 // contains buttons representing quiz difficulty options
 let difficultyButtons = $(".difficulty-level").children("button");
 // contains buttons representing quiz quantity of questions options
 let quantityButtons = $(".question-quantity").children("button");
-// translates the category from numerical identifier to text
-let categoryString = "";
-
+// Create new instance of Quiz called scienceQuiz
+let scienceQuiz = new Quiz();
 
 
 // Check and retrieve Local and Session Storage Values  ######################################################################
@@ -103,8 +108,8 @@ console.log(highScore);
  * Checks session storage if a token already exists
  */
 if (sessionStorage.getItem("sessionToken")) {
-    token = sessionStorage.getItem("sessionToken");
-    console.log("sessionToken", token);
+    scienceQuiz.token = sessionStorage.getItem("sessionToken");
+    console.log("sessionToken", scienceQuiz.token);
 }
 
 // Normal Functions  ######################################################################
@@ -133,7 +138,7 @@ function toggleOptions() {
     } else {
         // show quiz options
         $(".next-question").removeClass("finish-button").html(
-            `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
+            `<p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}</p>
             Next Question 
             <i class="fas fa-caret-right"></i>`);
         enableElement(".quiz-options .btn");
@@ -181,19 +186,19 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     let currentQuestion = arrayOfQuestions[arrayIndex].question;
     // array of incorrect answers to current question
     let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers; 
-    timer(questionTimer);   
+    timer(scienceQuiz.questionTimer);   
     // Prepare the various buttons
     $(".answer").removeClass("correct-answer wrong-answer no-shadow");
     disableElement(".next-question");
     // Assign the correct answer
-    correctAnswer = arrayOfQuestions[arrayIndex].correct_answer;
-    shuffleAnswers(answersArray, correctAnswer);
-    $(".quiz-score").html(`Score is ${currentScore} / ${setOfQuestions.length}`);
+    scienceQuiz.correctAnswer = arrayOfQuestions[arrayIndex].correct_answer;
+    shuffleAnswers(answersArray, scienceQuiz.correctAnswer);
+    $(".quiz-score").html(`Score is ${currentScore} / ${scienceQuiz.setOfQuestions.length}`);
     // check if question is boolean and if yes, hide redundant answer buttons
     displayBooleanQuestion(arrayOfQuestions, arrayIndex, answersArray);    
     $(".questions").html(`${arrayIndex + 1}. ${currentQuestion}`);
     arrayIndex++;
-    console.log(answersArray, (correctAnswer));
+    console.log(answersArray, (scienceQuiz.correctAnswer));
     console.log(arrayIndex);
 }
 
@@ -232,9 +237,9 @@ function nextQuestionDisplay() {
     disableElement(".next-question");
     $(".display__time-left").removeClass("time-critical");
     $(".answer-feedback").addClass("hide-element");
-    questionIndex++;
+    scienceQuiz.questionIndex++;
     // fade out/in to the next question
-    if (questionIndex < setOfQuestions.length) {
+    if (scienceQuiz.questionIndex < scienceQuiz.setOfQuestions.length) {
         $(".question-container, .status-info").fadeOut(500, function() {
             $(".question-container, .status-info").fadeIn(1000);
             if (screen.availHeight < 1000) {
@@ -246,22 +251,22 @@ function nextQuestionDisplay() {
         });
         // timeout to allow for the fade out/in of next question
         setTimeout(function() {
-            askQuestions(setOfQuestions, questionIndex, score);
+            askQuestions(scienceQuiz.setOfQuestions, scienceQuiz.questionIndex, scienceQuiz.score);
         }, 500);
         // timeout to allow the timer to start
         setTimeout(function() {
             $(".answer").removeClass("disable");
         }, 1200);
         // display a finish button for the last question
-        if (questionIndex === (setOfQuestions.length - 1)) {
+        if (scienceQuiz.questionIndex === (scienceQuiz.setOfQuestions.length - 1)) {
             $(".next-question").addClass("finish-button").html(
-                `<p class="quiz-score">Score is ${score} / ${setOfQuestions.length}</p>
+                `<p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}</p>
                 Press To Finish 
                 <i class="fas fa-caret-right"></i>`);
             $(".reset-button").hide();
         }
     } else {
-        finishQuiz(questionIndex);
+        finishQuiz(scienceQuiz.questionIndex);
     }
 }
 
@@ -281,26 +286,28 @@ function finishQuiz(arrayIndex) {
         <div class="modal-footer">
             <button type="button" class="btn btn-primary reset-confirm" onclick="resetConfirm()">Exit</button>
         </div>`);
-    if (difficulty === "medium") {
-        weightedScore = Math.round(score * 1.2);
-    } else if (difficulty === "hard") {
-        weightedScore = Math.round(score * 1.5);
+    if (scienceQuiz.difficulty === "medium") {
+        weightedScore = Math.round(scienceQuiz.score * 1.2);
+    } else if (scienceQuiz.difficulty === "hard") {
+        weightedScore = Math.round(scienceQuiz.score * 1.5);
     } else {
-        weightedScore = score;
+        weightedScore = scienceQuiz.score;
     }
-    if (score === 0) {
+    if (scienceQuiz.score === 0) {
         sadSound.play();
         $(".reset-modal").html("Better Luck Next Time!");
-    } else if (weightedScore > highScore[categoryString]) {
+    } else if (weightedScore > highScore[scienceQuiz.categoryString]) {
         highScoreSound.play();
-        $(".reset-modal").html(`A New High Score for the ${(categoryString[0].toUpperCase() + categoryString.slice(1, categoryString.length))} Category. Well Done!`);        
+        $(".reset-modal").html(
+            `A New High Score for the ${(scienceQuiz.categoryString[0].toUpperCase() + scienceQuiz.categoryString.slice(1, scienceQuiz.categoryString.length))} Category. Well Done!`
+            );        
     } else {
         wellDoneSound.play();
         $(".reset-modal").html("Well Done!");
     }
-    $(".modal-body").html(`You scored ${score} out of ${arrayIndex} questions. The weighted score for ${difficulty} difficulty is ${weightedScore}.`);
-    if (weightedScore > highScore[categoryString]) {
-        highScore[categoryString] = weightedScore;
+    $(".modal-body").html(`You scored ${scienceQuiz.score} out of ${arrayIndex} questions. The weighted score for ${scienceQuiz.difficulty} difficulty is ${weightedScore}.`);
+    if (weightedScore > highScore[scienceQuiz.categoryString]) {
+        highScore[scienceQuiz.categoryString] = weightedScore;
         localStorage.setItem("highScore", JSON.stringify(highScore));
         $(".computing-score").html(`${highScore["computing"]}`);
         $(".maths-score").html(`${highScore["mathematics"]}`);
@@ -326,13 +333,13 @@ function submitAnswer() {
  */
 function checkAnswer() {
     for (let button of answerButtons) {
-        if ($(button).hasClass("active") && ($(button).attr("data-answer") === correctAnswer) && (secondsLeft > 0)) {
+        if ($(button).hasClass("active") && ($(button).attr("data-answer") === scienceQuiz.correctAnswer) && (secondsLeft > 0)) {
             correctAnswerSound.play();
             $(".answer-feedback").removeClass("hide-element").html("Well Done. Correct Answer!");
             $(button).removeClass("active").addClass("correct-answer no-shadow");
             $(button).children("p").children("span").html(`<i class="fas fa-check"></i>`);
-            score++;
-            $(".quiz-score").html(`Score is ${score} / ${setOfQuestions.length}`);
+            scienceQuiz.score++;
+            $(".quiz-score").html(`Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}`);
         } else {
             if ($(button).hasClass("active")) {
                 wrongAnswerSound.play();
@@ -340,13 +347,13 @@ function checkAnswer() {
                 $(button).children("p").children("span").html(`<i class="fas fa-times"></i>`);
                 $(".answer-feedback").removeClass("hide-element").html("Bad Luck. Wrong Answer!");
             }
-            if (($(button).attr("data-answer") === correctAnswer)) {
+            if (($(button).attr("data-answer") === scienceQuiz.correctAnswer)) {
                 $(button).addClass("correct-answer");
             }
         }
     }
     // on smaller height screens scroll down to show the next question button
-    if (setOfQuestions[questionIndex].type != "boolean" && screen.availHeight < 750) {
+    if (scienceQuiz.setOfQuestions[scienceQuiz.questionIndex].type != "boolean" && screen.availHeight < 750) {
         setTimeout(function() {
             let elem = $(".question-answers").children(".answer")[0];
             elem.scrollIntoView({behaviour: "smooth"});
@@ -376,43 +383,11 @@ function enableElement(buttonIdentifier) {
 }
 
 /**
- * Handles error alert messages and displays them in the modal
- * @param { string } errorCode - designates type of error
- * @param { string } errorName - error.name output
- */
-function displayErrorModal(errorCode, errorName) {
-    let errorMessageDisplay = "";
-    if (errorCode === "json-parse-error") {
-        errorMessageDisplay = `${errorName}: Quiz Data not in correct format. Try again or refresh the page.`;
-    } else if (errorCode === "status-not-ok") {
-        errorMessageDisplay = `Cannot communicate with the Quiz Database at this time. Try again or refresh the page.`;
-    } else if (errorCode === "token-problem") {
-        errorMessageDisplay = `Cannot get results from the Quiz Database at this time. Change quiz options and try again.`;
-    } else if (errorCode === "token-parse-error") {
-        errorMessageDisplay = `${error.name}: Quiz Token not in correct format. Try again or refresh the page.`;
-    }
-    $("#resetModal").modal("toggle");
-    $(".modal-content").html(
-        `<div class="modal-div">
-            <h5 class="reset-modal" id="resetModalLabel">Error:</h5>
-        </div>
-        <div class="modal-body">
-            ${errorMessageDisplay} If the problem persists, please contact the administrator.
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">Ok</button>
-        </div>`);
-    $(".load-questions").html("Error. Press to Retry");                
-    enableElement(".load-questions");
-    enableElement(".quiz-options .btn");
-}
-
-/**
  * Gets quiz data object containing questions and answers from the opentdb API
  * @param { string } myToken - token used to access the quiz API
  */
 function getQuizData(myToken) {
-    let apiUrl = `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&token=${myToken}`;
+    let apiUrl = `https://opentdb.com/api.php?amount=${scienceQuiz.amount}&category=${scienceQuiz.category}&difficulty=${scienceQuiz.difficulty}&token=${myToken}`;
     let xhr = new XMLHttpRequest();
     xhr.open("GET", apiUrl);
     xhr.send();
@@ -420,7 +395,7 @@ function getQuizData(myToken) {
     /* Checks the status of the response from the quiz API and when ready and if ok calls to check the 
        status of the token used, otherwise alerts the user to an error obtaining quiz data */
     xhr.onreadystatechange = function () {
-        console.log(this.readyState, this.status, score);
+        console.log(this.readyState, this.status, scienceQuiz.score);
         if (this.readyState === 4 && this.status === 200) {
             let questionsLoaded = {};
             try {
@@ -441,21 +416,23 @@ function getQuizData(myToken) {
  * @param { Object } questionsLoadedObject - quiz data object returned from opentdb API
  */
 function checkToken(questionsLoadedObject) {
-    score = 0;
-    questionIndex = 0;
+    scienceQuiz.score = 0;
+    scienceQuiz.questionIndex = 0;
     console.log("token response", questionsLoadedObject.response_code);
     // response code 0 - successful return of results from api
     if (questionsLoadedObject.response_code === 0) {
-        setOfQuestions = questionsLoadedObject.results;
+        scienceQuiz.setOfQuestions = questionsLoadedObject.results;
         toggleOptions();
         // Start Quiz
-        askQuestions(setOfQuestions, questionIndex, score);
+        askQuestions(scienceQuiz.setOfQuestions, scienceQuiz.questionIndex, scienceQuiz.score);
         // response code 3 - session token not found by api
     } else if (questionsLoadedObject.response_code === 3) {
+        // opentdb API url address to obtain token
+        let tokenUrl = "https://opentdb.com/api_token.php?command=request";
         getToken(tokenUrl).then(handleSuccess, handleFailure);
         // response code 4 - session token is empty and needs to be reset
     } else if (questionsLoadedObject.response_code === 4) {
-        let resetTokenUrl = `https://opentdb.com/api_token.php?command=reset&token=${token}`;
+        let resetTokenUrl = `https://opentdb.com/api_token.php?command=reset&token=${scienceQuiz.token}`;
         getToken(resetTokenUrl).then(handleSuccess, handleFailure);
     } else {
         // any other response means db could not return results
@@ -485,6 +462,7 @@ function handleFailure(rejectionReason) {
  */
 function getToken(url) {
     return new Promise(function(myResolve, myReject) {
+        console.log(url);
         let xhr = new XMLHttpRequest();
         xhr.open("GET", url);
         xhr.send();
@@ -494,10 +472,10 @@ function getToken(url) {
             console.log(this.readyState, this.status);
             if (this.readyState === 4 && this.status === 200) {
                 try {
-                    token = (JSON.parse(this.responseText)).token;
-                    sessionStorage.setItem("sessionToken", `${token}`);
-                    console.log(token);
-                    myResolve(token);
+                    scienceQuiz.token = (JSON.parse(this.responseText)).token;
+                    sessionStorage.setItem("sessionToken", `${scienceQuiz.token}`);
+                    console.log(scienceQuiz.token);
+                    myResolve(scienceQuiz.token);
                 } catch (error) {
                     displayErrorModal("token-parse-error", error.name);
                 }
@@ -506,6 +484,38 @@ function getToken(url) {
             }
         };
     });
+}
+
+/**
+ * Handles error alert messages and displays them in the modal
+ * @param { string } errorCode - designates type of error
+ * @param { string } errorName - error.name output
+ */
+function displayErrorModal(errorCode, errorName) {
+    let errorMessageDisplay = "";
+    if (errorCode === "json-parse-error") {
+        errorMessageDisplay = `${errorName}: Quiz Data not in correct format. Try again or refresh the page.`;
+    } else if (errorCode === "status-not-ok") {
+        errorMessageDisplay = `Cannot communicate with the Quiz Database at this time. Try again or refresh the page.`;
+    } else if (errorCode === "token-problem") {
+        errorMessageDisplay = `Cannot get results from the Quiz Database at this time. Change quiz options and try again.`;
+    } else if (errorCode === "token-parse-error") {
+        errorMessageDisplay = `${error.name}: Quiz Token not in correct format. Try again or refresh the page.`;
+    }
+    $("#resetModal").modal("toggle");
+    $(".modal-content").html(
+        `<div class="modal-div">
+            <h5 class="reset-modal" id="resetModalLabel">Error:</h5>
+        </div>
+        <div class="modal-body">
+            ${errorMessageDisplay} If the problem persists, please contact the administrator.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal" onclick="buttonPress.play()">Ok</button>
+        </div>`);
+    $(".load-questions").html("Press to Retry");                
+    enableElement(".load-questions");
+    enableElement(".quiz-options .btn");
 }
 
 /**
@@ -546,7 +556,7 @@ function timer(seconds) {
         // when timer reaches zero play sound and alert user
         } else if (secondsLeft === 0) {
             for (let button of answerButtons) {
-                if (($(button).attr("data-answer") === correctAnswer)) {
+                if (($(button).attr("data-answer") === scienceQuiz.correctAnswer)) {
                     $(button).addClass("correct-answer");
                     wrongAnswerSound.play();
                     enableElement(".next-question");
@@ -617,31 +627,33 @@ function optionButtonsOutput() {
         bootstrap button groups on same page */
     $(this).addClass("active no-shadow disable");
     $(this).siblings().removeClass("active disable no-shadow");
-    category = activeButton(categoryButtons);
-    amount = activeButton(quantityButtons);
-    difficulty = activeButton(difficultyButtons);
-    if (category === "18") {
-        categoryString = "computing";
-    } else if (category === "19") {
-        categoryString = "mathematics";
-    } else if (category === "17") {
-        categoryString = "general";
+    scienceQuiz.category = activeButton(categoryButtons);
+    scienceQuiz.amount = activeButton(quantityButtons);
+    scienceQuiz.difficulty = activeButton(difficultyButtons);
+    if (scienceQuiz.category === "18") {
+        scienceQuiz.categoryString = "computing";
+    } else if (scienceQuiz.category === "19") {
+        scienceQuiz.categoryString = "mathematics";
+    } else if (scienceQuiz.category === "17") {
+        scienceQuiz.categoryString = "general";
     }    
-    console.log(categoryString, category, difficulty, amount);
+    console.log(scienceQuiz.categoryString, scienceQuiz.category, scienceQuiz.difficulty, scienceQuiz.amount);
 }
 
 /**
- * When button is clicked sets the pre quiz options and checks if a token already exists
+ * When Start button is clicked sets the pre quiz options and checks if a token already exists
  */    
 function loadQuestions() {
     buttonPress.play();
     disableElement(".quiz-options .btn");
     $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
     $(".answer-feedback").addClass("hide-element");
-    if (!!token === false) {
+    if (!!scienceQuiz.token === false) {
+        // opentdb API url address to obtain token
+        let tokenUrl = "https://opentdb.com/api_token.php?command=request";
         getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
     } else {
-        getQuizData(token);
+        getQuizData(scienceQuiz.token);
     }
 }
 
