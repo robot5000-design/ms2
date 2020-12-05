@@ -441,7 +441,7 @@ iPhone 8 mobile. Only manual testing was conducted for this project.
 Any issues have been cataloged in the Issues section on Github and closed when a sufficient solution
 was reached. 
 
-__Further testing of links and responsiveness can be found in the [test document](./documentation/test.md).__
+__Further testing of links, responsiveness and user acceptance test cases can be found in the [test document](./documentation/test.md).__
 
 All HTML and CSS files have been passed through the w3c validation service here https://validator.w3.org/ 
 with no significant issues. It advised not to use aria-disabled on disabled buttons. These were removed.
