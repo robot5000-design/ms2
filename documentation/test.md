@@ -1,34 +1,9 @@
 # Functional Tests
 
-## Testing links and responsiveness of each html page:
-Using Chrome and Chrome Dev Tools. Check all links open in new tab.
+## Testing responsiveness of each html page:
+Using Chrome and Chrome Dev Tools.
 
-## 1. Common to all pages:
-
-- Test all Links:
-
-Links | index.html | start.html
---- | --- | ---
-Owl Icon | y | y
-Go! | y | NA
-Facebook | y | y
-Twitter | y | y
-Privacy | y | y
-
----
-
-## 2. Feedback Form and EmailJs:
-
-- Tested and functioning correctly.
-- Displays success and both emails received. 
-- Form checked for required on all inputs. 
-- Email address input requires valid email form. 
-- Send and dismiss buttons working correctly.
-- Displays Alert of failure message to the user if there's a problem.
-
----
-
-## 3. Page Responsiveness:
+## 1. Page Responsiveness:
 
 Breakpoints | index.html | quiz options | quiz answers
 --- | --- | --- | ---
@@ -56,11 +31,13 @@ The 404 page not included in the above table was checked this way.
 
 ---
 
-## 4. Bugs List from Github Issues section:
+## 2. Bugs List from Github Issues section:
 
 After efforts to "break" the application, testing on mobile produced bug #14, which was a similar issue
 to #12. All bugs below were fixed and explanations can be found in the github issues section of the
-repository.
+repository. Prior to removing console logs for final user acceptance testing, the error handling
+was tested by feeding the XMLHttpRequest functions 'broken' JSON objects to ensure json.parse errors
+are handled. 
 
 - #14 - timer secondsLeft is not displaying the correct value after a question is answered too quickly. A
 value from the previous running is displayed. 
@@ -140,75 +117,162 @@ html encoded characters.
     The mistake was one was nested inside the other._
 ---
 
-## 5. List of devices tested:
+## 3. List of devices tested:
 - Samsung Galaxy S7
 - Samsung A21s
 - Samsung Galaxy S10
 - Huawei P30 Pro
 - iPhone 8 Safari through Browserstack
 - Asus k501u 4k laptop
-- Chrome Dev Tools Device Emulator
+- Chrome Dev Tools Device Emulator:
+
+    - Samsung Galaxy Fold
+    - Samsung S5
+    - Google Pixel 2
+    - iPhone 5
+    - iPhone X
+    - iPad
+    - iPad Pro
 
 ---
 
-## 6. Test Cases:
+## 4. Test Cases:
 - TC01
 
     Description: 
 
-    Verify all links on Index page function as expected.
+    - Verify all links on Index and Start pages function as expected.
 
     Procedure: 
     1. Navigate to https://robot5000-design.github.io/ms2-the-science-quiz/index.html
-    2. Click on the owl image. Expected Result: Reloads index.html. _Pass_
-    3. 
+    2. Click feedback form. 
+    - Expected Result: Feedback form appears in modal. _Pass_
+    3. Click Facebook in footer. 
+    - Expected Result: Opens Facebook in new tab. _Pass_
+    4. Click Twitter in footer. 
+    - Expected Result: Opens Twitter in new tab. _Pass_
+    5. Click Privacy in footer. 
+    - Expected Result: Reloads Page. _Pass_
+    6. Click owl image. 
+    - Expected Result: Reloads index.html. _Pass_
+    7. Click Go button. 
+    - Expected Result: Opens start.html _Pass_
+    8. On start.html repeat steps 2-6. 
+    - Expected Result: As above for each step. _Pass_
 
+- TC02
 
+    Description: 
 
+    - Verify sound is muted by default and verify unmute button works as expected.
 
-Check options buttons work as intended. When selected should be disabled and box shadow removed.
-The 3 options groups should not affect each other. The console log shows the variables are changing when
-the button is pressed and are then correctly inserted in the quiz API URL. _Pass_
-![options-buttons-log](./images-for-readme/options-buttons-log.jpg)
+    Procedure: 
+    1. Navigate to https://robot5000-design.github.io/ms2-the-science-quiz/start.html
+    2. Click question option buttons. 
+    - Expected Result: Should be no sounds. _Pass_
+    3. Click unmute button. 
+    - Expected Result: Makes a keypress sound. _Pass_
+    4. Click question option buttons. 
+    - Expected Result: Makes a keypress sound. _Pass_
+    5. Click feedback form in footer Click Dismiss. 
+    - Expected Result: Makes a keypress sound. _Pass_
 
-- TC02 - Check the feedback modal operation. Both notification to admin and acknowledgement to user are 
-received.  _Pass_
+- TC03
 
-- TC03 - Load questions and check console log for API URL to match options selected. Confirm if
-no contact with API, alert message is displayed to user. Confirm loading spinner is displayed. _Pass_
-![api-url-log](./images-for-readme/options-buttons-log.jpg)
+    Description: 
 
-- TC04 - Confirm if highscore object exists in local storage, it is retrieved and displayed to the user.
-Use the console log to confirm. Confirm if it does not exist all scores display as zero. _Pass_
-![highscore-exists](./images-for-readme/highscore-exists.jpg)
+    - Verify quiz options result in expected quiz outcome questions and answers are populating
+     the buttons as expected.
 
-- TC05 - Use the console log to confirm if a token exists in session storage, it is used to try to 
-retrieve quiz data. If the token (example below 77663a...) is expired response code 3 is logged and a new
-token obtained and used (example below b78318...). Response code 0 means success. _Pass_
-![token-not-found](./images-for-readme/token-not-found.jpg)
+    Procedure: 
+    1. Click Start (accepts default quiz options). 
+    - Expected Result: Five computing questions of 
+    easy difficulty level. _Pass_
+    2. Reload the page & click different quiz options. 
+    - Expected Result: Quiz question category,
+    difficulty level and quantity of questions should match those chosen. Multiple choice 
+    questions should have 4 answer options and boolean questions should have 2 answer options. 
+    _Pass_
+    3. Repeat step 2 a number of times.
 
-- TC06 - Use the console log to confirm if token (example below b78318...) is exhausted, response code 4 is 
-received and the token is reset and reused. Same Token (b78318... below) receives response code 0. _Pass_
-![token-reset](./images-for-readme/token-reset.jpg)
+- TC04
 
-- TC07 - Supply a fabricated json object (with an error built-in) to the token and quiz api's to confirm 
-json parse errors are handled with a user alert. _Pass_
+    Description: 
 
-- TC08 - Supply different fabricated status and response code variables to the api requests to confirm
-potential responses are handled with user alert. _Pass_
+    - Verify quiz procedure operates as expected.
 
-- TC09 - Confirm question/answers are displaying and functioning correctly and correct sounds are played
-depending on the score outcome and high score value is displayed in updated table after quiz ends. _Pass_
+    Procedure: 
+    1. Click on quiz option buttons. 
+    - Expected Result: Verify disable class & shadow is removed from active button _Pass_
+    2. Click Start (using default quiz options). 
+    - Expected Result: Loading spinner should display in Start button while question data is
+    retrieved. Questions should number five computing questions of easy difficulty level. _Pass_
+    3. Check questions layout. 
+    - Expected Result: Multiple choice questions should have 4 answer
+    options and boolean questions should have 2 answer options. _Pass_
+    4. Submit an answer by clicking it. 
+    - Expected Result: Active button should briefly turn yellow
+    and shadow removed. A correct answer should light up green and a wrong answer should light up
+    red (with the correct answer showing in green). After a pause shadow is removed from all answers.
+    Next Question button is enabled and has shadow added. Upon answering correctly the score in the
+    Next Question button should increment by 1. _Pass_
+    5. Click Next Question. 
+    - Expected Result: Moves to next question. _Pass_
+    6. Allow time to run out. 
+    - Expected Result: The timer should light up red at 5 seconds remaining.
+    The wrong answer sound is played when time runs out. Shadow is removed from all answers and the
+    correct answer is lit up green. _Pass_
+    7. Go to last question. 
+    - Expected Result: Exit Quiz button hidden and Next Question button is
+    coloured orange & renamed Finish Quiz. _Pass_
+    8. Click Finish Quiz. 
+    - Expected Result: A modal is displayed with a summary of the result. If 
+    it's a new high score, this should be stated in the modal. _Pass_
+    9. Click Exit button in modal.     
+    - Expected Result: Should return to Quiz Options and the high 
+    score should be displayed in the high score table in the correct position. _Pass_
 
-- TC10 - Confirm the multi-use modal which is used for feedback, reset-quiz and end-quiz-message all
-operate independently without leaving text behind, or removing a button that is not replaced or otherwise
-affecting each other. _Pass_
+- TC05
 
-- TC11 - Confirm pressing buttons repeatedly does not work and that trying to press options buttons 
-or answer buttons before fully loaded or displayed does not "break" anything or otherwise cause an 
-unexpected outcome. _Pass_
+    Description: 
 
-- TC12 - After nature category was renamed to general, highscore table tests were re-run to confirm
-functionality. _Pass_
+    - Verify Exit Quiz functions as expected.
+
+    Procedure: 
+    1. Start a new Quiz.
+    2. Click Exit Quiz. 
+    - Expected Result: A Reset Quiz Modal appears  _Pass_
+    3. Reset Modal has 2 buttons. No and Yes. Test both.
+    - Expected Result: No should dismiss the modal. Yes should return to Quiz Options. _Pass_
+
+- TC06
+
+    Description: 
+
+    - Verify Feedback Form Modal functions as expected.
+
+    Procedure: 
+    1. Click Feedback Form. 
+    - Expected Result: A modal should display with a feedback form containing 3 inputs;
+    name, email & textarea input. Two buttons; Dismiss & Send Feedback. _Pass_
+    2. Click Dismiss. 
+    - Expected Result: Modal should disappear. _Pass_
+    3. Click Send.
+    - Expected Result: Name, Email and text should be required entries. _Pass_
+    3. Verify email input validates format.
+    - Expected Result: Email entry must be in correct basic format. _Pass_
+    4. Enter valid entries and press Send Feedback.
+    - Expected Result: Displays a message modal confirming either success or failure. _Pass_
+
+- TC07
+
+    Description: 
+
+    - Verify Error Message Modal displays as expected.
+
+    Procedure: 
+    1. Switch off internet and click Start.. 
+    - Expected Result: A message modal with one ok button should display, with a message of a 
+    problem to the user. The Start button should display Press to Retry. _Pass_
 
 ---
