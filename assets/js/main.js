@@ -653,7 +653,7 @@ function loadQuestions() {
 function muteSound() {
     let soundOff = "<i class='fas fa-volume-mute'></i>";
     let soundOn = "<i class='fas fa-volume-up'></i>";
-    let soundsArray = [correctAnswerSound, wrongAnswerSound, buttonPress, highScoreSound, wellDoneSound, sadSound];
+    let soundsArray = [buttonPress, correctAnswerSound, wrongAnswerSound, highScoreSound, wellDoneSound, sadSound];
     if ($(".mute-sound").attr("data-sound") === "off") {
         $(".mute-sound").html(soundOn);
         $(".mute-sound").attr("data-sound", "on");
@@ -664,7 +664,9 @@ function muteSound() {
                 item.sound.volume = 0.8;
             }              
         }
-        buttonPress.play();   
+        setTimeout(function() {
+            buttonPress.play();
+        }, 50);
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
@@ -700,6 +702,7 @@ $(".reset-button").on("click", showResetModal);
 
 // Plays a sound when any button is clicked
 $("body").on("click", ".btn", function() {
+    buttonPress.stop();
     buttonPress.play();
 });
 
