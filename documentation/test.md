@@ -17,7 +17,7 @@ H750px | y | y | y
 H1000px | y | y | y
 
 
-- In addition each page is checked for responsiveness using Chrome Dev Tools infinitely	adjustable 
+- In addition, each page is checked for responsiveness using Chrome Dev Tools infinitely	adjustable 
 sliding re-sizer tool. From 280px (Samsung Galaxy Fold) up to full width 1536px on a 4k laptop.
 The 404 page not included in the above table was checked this way.
 - If the height is less than 1000px the header is hidden during questions.
@@ -273,7 +273,7 @@ html encoded characters.
     - Verify Error Message Modal displays as expected.
 
     Procedure: 
-    1. Switch off internet and click Start.. 
+    1. Switch off internet and click Start.
     - Expected Result: A message modal with one ok button should display, with a message of a 
     problem to the user. The Start button should display Press to Retry. _Pass_
 

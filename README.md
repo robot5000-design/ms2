@@ -92,7 +92,7 @@ As a user:
 - Sounds effects feedback would be useful.
 - I want to be able to keep track of my best scores.
 - I want to be able to choose a difficulty level i can manage and vary the quiz length depending on 
-how much time i have.
+how much time I have.
 - I want a site that is not commonly crashing with errors, or if there is an error it is managed 
 properly.
 
@@ -113,9 +113,9 @@ existence.
 - An Options page, where the user chooses topic, difficulty level and quantity of questions.
 - The Questions/answers page should show 4 answers for multiple choice and 2 answers for boolean
 questions. It should have a submit and next-question button and a reset quiz button.
-- Use buttons if possible rather than dropdowns or tickboxes for a better user experience.
+- Use buttons, if possible rather than dropdowns or tickboxes for a better user experience.
 - A Modal containing a Feedback form.
-- Social Links, eg. facebook, twitter.
+- Social Links, e.g. Facebook, Twitter.
 - A countdown timer if possible.
 - Shows Correct Answer Feedback.
 - Display the current high score.
@@ -131,7 +131,7 @@ viable.
 - A simple structure with just 2 pages, the introduction/landing page and the quiz page.
 - On the Quiz page, hide the quiz options and show the questions using javascript or vice versa.
 - Custom 404 page, so in the case of a broken internal link a button is provided for the user to return
-to safety. Unlikely to be requred but included nevertheless.
+to safety. Unlikely to be required but included nevertheless.
 
 #### Skeleton
 
@@ -151,7 +151,7 @@ It was decided to use a green chalkboard themed background to suit the science t
 
 The main background colour is courtesy of the background image and the median colour is green #306821. 
 Text colour is an off-white #E4DFD5 which contrasts well with the green background colour and a charcoal
-colour #353535 was used for the footer. The main CTA buttons are an eye catching pink #D31363.
+colour #353535 was used for the footer. The main CTA buttons are an eye-catching pink #D31363.
 The combination of colours provide contrast ratios that allow the site to score 100% in the Accessibility 
 category on Chrome Development Tools Lighthouse.
 A single font was chosen, Pangolin from Google Fonts. This was chosen for its imperfect appearance so
@@ -232,7 +232,7 @@ are removed indicating that they can no longer be pressed, while the shadow is t
 Next Question button signifying it is now live.
 
 The countdown timer is shown both above and below the answers and it lights up red when there is 5 
-seconds left. This really catches the users peripheral vision. If the timer times out all answer 
+seconds left. This really catches the users' peripheral vision. If the timer times out all answer 
 shadows are removed and visual and text signify to the user that time is up.
 
 For a better user experience, for multiple choice questions and on screens of less available height
@@ -248,7 +248,7 @@ achieved is shown.
 Media Queries are used to reduce the width of the question/answers container as the screen width increases
 so it keeps visually better proportions.
 
-Common to both pages is a constant footer which contains links to social media and privacy(doesn't 
+Common to both pages is a constant footer which contains links to social media and privacy (doesn't 
 exist). These links provide interactive feedback, when hovered over they change colour. They open in
 a new tab. The footer also contains a link for providing feedback to the site admin. This is implemented
 ng a modified bootstrap modal which uses the [Emailjs](https://www.emailjs.com/) service and some 
@@ -280,19 +280,19 @@ _IDE and Languages:_
 - Gitpod - IDE used.
 - HTML - Base structural language.
 - CSS - Language used for styling.
-- Javascript - for application functionality and DOM manipulation.
+- JavaScript - for application functionality and DOM manipulation.
 
 _Libraries:_
 
 - jQuery 3.5.1 - used to speed up selection of elements in javascript.
 - Bootstrap 4.5.2 - Used to help with grid layout and screen size responsiveness.
-- Javascript, Popper.js, and jQuery as part of Bootstrap.
+- JavaScript, Popper.js, and jQuery as part of Bootstrap.
 - Font Awesome for icons.
 - Google Fonts for Pangolin font.
 
 _Hosting and Version Control:_
 
-- Github - Holding repository and hosting site.
+- GitHub - Holding repository and hosting site.
 - Git - Version control.
 
 _Others:_
@@ -303,10 +303,10 @@ _Others:_
 - Microsoft Paint 3D - For colourmatch.
 - Browserstack - To check base compatibility.
 - freeformatter.com - to format html files.
-- tinyjpg - to reduce image file size.
+- tinyjpg.com - to reduce image file size.
 - Autoprefixer - used to automatically add browser compatibility prefixes.
 - w3c - for HTML and CSS validation.
-- jshint - for javascript validation.
+- jshint - for JavaScript validation.
 
 As per industry practice and to reduce the number of small commits on the master branch, seperate 
 branches were created and used for features (where appropriate) and for the readme file as they were
@@ -330,8 +330,8 @@ For a user:
 - I want the site to be fun and appealing to use.
 - I want the site to look visually appealing.
 - I want the site to be easy to use with smooth navigation between sections.
-- I want to be able to choose a difficulty level i can manage and vary the quiz length depending on 
-how much time i have.
+- I want to be able to choose a difficulty level I can manage and vary the quiz length depending on 
+how much time I have.
 
 _This has been achieved by the overall theme and the liberal use of buttons for every function. The 
 strategic use of shadows and colours indicates to the user what they can and can't operate at any given
@@ -491,11 +491,11 @@ The site has been deployed on Github pages
 
 _To Deploy on Github Pages:_
 
-1. On Github, navigate to Settings in the Github repository.
-2. Scroll down to the Github Pages section.
+1. On GitHub, navigate to Settings in the GitHub repository.
+2. Scroll down to the GitHub Pages section.
 3. Under Source, select the Master branch.
 4. Press Save.
-5. After it saves, scroll back down to the Github Pages section and the URL for
+5. After it saves, scroll back down to the GitHub Pages section and the URL for
 where the site is published will now be available.
 
 _For this website to be run locally it can downloaded as a ZIP file or it can be cloned:_
@@ -520,7 +520,7 @@ SSH certificate authority, click Use SSH, then copy the URL.
 6. Type git clone, and then paste the URL you copied earlier: \$ git clone url-copied-earlier
 7. Press Enter to create your local clone.
 
-- To Clone using Github Desktop:
+- To Clone using GitHub Desktop:
 
 1. On GitHub, navigate to the main page of the repository.
 2. Above the list of files, click Code.
