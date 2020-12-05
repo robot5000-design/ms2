@@ -263,6 +263,8 @@ html encoded characters.
     - Expected Result: Email entry must be in correct basic format. _Pass_
     4. Enter valid entries and press Send Feedback.
     - Expected Result: Displays a message modal confirming either success or failure. _Pass_
+    5. Confirm delivery of emailjs emails.
+    - Expected Result: Two emails are sent. One to admin and one to user. _Pass_
 
 - TC07
 

@@ -15,7 +15,8 @@ class Sound {
         this.sound.setAttribute("preload", "auto");
         this.sound.setAttribute("controls", "none");
         this.sound.style.display = "none";
-        this.sound.volume = 0;
+        this.sound.volume = 0.8;
+        this.sound.muted = true;
         document.body.appendChild(this.sound);
         // plays a sound file
         this.play = function () {
@@ -657,21 +658,16 @@ function muteSound() {
     if ($(".mute-sound").attr("data-sound") === "off") {
         $(".mute-sound").html(soundOn);
         $(".mute-sound").attr("data-sound", "on");
-        for (let item of soundsArray) {
-            if (item === buttonPress) {
-                item.sound.volume = 0.7;
-            } else {
-                item.sound.volume = 0.8;
-            }              
+        buttonPress.sound.volume = 0.7;
+        for (let item of soundsArray) {            
+            item.sound.muted = false;                          
         }
-        setTimeout(function() {
-            buttonPress.play();
-        }, 50);
+        buttonPress.play();
     } else {
         $(".mute-sound").html(soundOff);
         $(".mute-sound").attr("data-sound", "off");
         for (let item of soundsArray) {
-            item.sound.volume = 0;
+            item.sound.muted = true;
         }
     }
 }
@@ -702,7 +698,6 @@ $(".reset-button").on("click", showResetModal);
 
 // Plays a sound when any button is clicked
 $("body").on("click", ".btn", function() {
-    buttonPress.stop();
     buttonPress.play();
 });
 
