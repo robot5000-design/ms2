@@ -19,10 +19,10 @@ class Sound {
         this.sound.muted = true;
         document.body.appendChild(this.sound);
         // plays a sound file
-        this.play = function () {
+        this.play = function() {
             this.sound.play();
         };
-        this.stop = function () {
+        this.stop = function() {
             this.sound.pause();
         };
     }
@@ -92,16 +92,16 @@ let scienceQuiz = new Quiz();
 /**
  * Checks local storage for a high score object
  */
-if (localStorage.getItem("highScore")) {  
+if (localStorage.getItem("highScore")) {
     highScore = JSON.parse(localStorage.getItem("highScore"));
     $(".computing-score").html(`${highScore["computing"]}`);
     $(".maths-score").html(`${highScore["mathematics"]}`);
     $(".general-science-score").html(`${highScore["general"]}`);
 } else {
     highScore = {
-    computing: 0,
-    mathematics: 0,
-    general: 0 
+        computing: 0,
+        mathematics: 0,
+        general: 0
     };
 }
 
@@ -185,8 +185,8 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     // current question
     let currentQuestion = arrayOfQuestions[arrayIndex].question;
     // array of incorrect answers to current question
-    let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers; 
-    timer(scienceQuiz.questionTimer);   
+    let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers;
+    timer(scienceQuiz.questionTimer);
     // Prepare the various buttons
     $(".answer").removeClass("correct-answer wrong-answer no-shadow");
     disableElement(".next-question");
@@ -195,7 +195,7 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     shuffleAnswers(answersArray, scienceQuiz.correctAnswer);
     $(".quiz-score").html(`Score is ${currentScore} / ${scienceQuiz.setOfQuestions.length}`);
     // check if question is boolean and if yes, hide redundant answer buttons
-    displayBooleanQuestion(arrayOfQuestions, arrayIndex, answersArray);    
+    displayBooleanQuestion(arrayOfQuestions, arrayIndex, answersArray);
     $(".questions").html(`${arrayIndex + 1}. ${currentQuestion}`);
     arrayIndex++;
 }
@@ -224,7 +224,7 @@ function displayBooleanQuestion(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
             $(`[data-number='${i + 1}']`).html(`<p>${arrayOfAnswers[i]} <span class="tick"></span></p>`);
             $(`[data-number='${i + 1}']`).attr("data-answer", `${arrayOfAnswers[i]}`);
         }
-    }        
+    }
 }
 
 /**
@@ -298,7 +298,7 @@ function finishQuiz(arrayIndex) {
         highScoreSound.play();
         $(".reset-modal").html(
             `A New High Score for the ${(scienceQuiz.categoryString[0].toUpperCase() + scienceQuiz.categoryString.slice(1, scienceQuiz.categoryString.length))} Category. Well Done!`
-            );        
+        );
     } else {
         wellDoneSound.play();
         $(".reset-modal").html("Well Done!");
@@ -354,8 +354,10 @@ function checkAnswer() {
     if (scienceQuiz.setOfQuestions[scienceQuiz.questionIndex].type != "boolean" && screen.availHeight < 750) {
         setTimeout(function() {
             let elem = $(".question-answers").children(".answer")[0];
-            elem.scrollIntoView({behaviour: "smooth"});
-        }, 1500);    
+            elem.scrollIntoView({
+                behaviour: "smooth"
+            });
+        }, 1500);
     }
     // remove box shadow on all answers after a timeout
     setTimeout(function() {
@@ -391,7 +393,7 @@ function getQuizData(myToken) {
     xhr.send();
     /* Checks the status of the response from the quiz API and when ready and if ok, calls to check the 
        status of the token used, otherwise displays a modal to the user of the error obtaining quiz data */
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let questionsLoaded = {};
             try {
@@ -400,7 +402,7 @@ function getQuizData(myToken) {
                 checkToken(questionsLoaded);
             } catch (error) {
                 displayErrorModal("json-parse-error", error.name);
-            }            
+            }
         } else if (this.readyState === 4 && this.status != 200) {
             displayErrorModal("status-not-ok");
         }
@@ -505,7 +507,7 @@ function displayErrorModal(errorCode, errorName) {
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">Ok</button>
         </div>`);
-    $(".load-questions").html("Press to Retry");                
+    $(".load-questions").html("Press to Retry");
     enableElement(".load-questions");
     enableElement(".quiz-options .btn");
 }
@@ -518,8 +520,8 @@ function displayErrorModal(errorCode, errorName) {
 function activeButton(buttonGroup) {
     for (let button of buttonGroup) {
         if ($(button).hasClass("active")) {
-            let buttonValue = button.getAttribute("data-value");            
-            return buttonValue;                 
+            let buttonValue = button.getAttribute("data-value");
+            return buttonValue;
         }
     }
 }
@@ -545,7 +547,7 @@ function timer(seconds) {
         if (secondsLeft < 0) {
             clearInterval(countdown);
             return;
-        // when timer reaches zero play a sound and display the correct answer to alert the user
+            // when timer reaches zero play a sound and display the correct answer to alert the user
         } else if (secondsLeft === 0) {
             for (let button of answerButtons) {
                 if (($(button).attr("data-answer") === scienceQuiz.correctAnswer)) {
@@ -633,7 +635,7 @@ function optionButtonsOutput() {
 
 /**
  * When Start button is clicked sets the pre quiz options and checks if a token already exists
- */    
+ */
 function loadQuestions() {
     buttonPress.play();
     disableElement(".quiz-options .btn");
@@ -659,8 +661,8 @@ function muteSound() {
         $(".mute-sound").html(soundOn);
         $(".mute-sound").attr("data-sound", "on");
         buttonPress.sound.volume = 0.7;
-        for (let item of soundsArray) {            
-            item.sound.muted = false;                          
+        for (let item of soundsArray) {
+            item.sound.muted = false;
         }
         buttonPress.play();
     } else {
@@ -684,7 +686,7 @@ $("#resetModal").on("click", ".reset-confirm", resetConfirm);
 $(".answer").on("click", function() {
     submitAnswer();
     $(this).addClass("active no-shadow disable");
-    $(this).siblings().addClass("disable");    
+    $(this).siblings().addClass("disable");
 });
 
 // Start Button

@@ -18,7 +18,7 @@ function sendMail(contactForm) {
             handleMailResponse(error, `Sorry. There's been a problem and your mail has not been sent. Please try again later.`);
         }
     );
-    return false;  // To block from loading a new page
+    return false; // To block from loading a new page
 }
 
 /**
