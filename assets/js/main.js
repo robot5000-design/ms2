@@ -1,4 +1,4 @@
-// Scrolls to top on page load
+// Scrolls window to top on page load
 $(document).ready(function() {
     window.scroll(0, 0);
 });
@@ -84,14 +84,13 @@ let categoryButtons = $(".categories").children("button");
 let difficultyButtons = $(".difficulty-level").children("button");
 // contains buttons representing quiz quantity of questions options
 let quantityButtons = $(".question-quantity").children("button");
-// Create new instance of Quiz called scienceQuiz
+// Create new instance of the Quiz class called scienceQuiz
 let scienceQuiz = new Quiz();
 
 
 // Check and retrieve Local and Session Storage Values  ######################################################################
-/**
- * Checks local storage for a high score object
- */
+
+// Checks local storage for a high score object
 if (localStorage.getItem("highScore")) {
     highScore = JSON.parse(localStorage.getItem("highScore"));
     $(".computing-score").html(`${highScore["computing"]}`);
@@ -105,14 +104,12 @@ if (localStorage.getItem("highScore")) {
     };
 }
 
-/**
- * Checks session storage if a token already exists
- */
+// Checks session storage if a token already exists
 if (sessionStorage.getItem("sessionToken")) {
     scienceQuiz.token = sessionStorage.getItem("sessionToken");
 }
 
-// Normal Functions  ######################################################################
+// Regular Functions  ######################################################################
 /**
  * Switches between quiz options OR quiz questions/answers
  */
@@ -231,7 +228,6 @@ function displayBooleanQuestion(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
  * Moves the quiz to the next question
  */
 function nextQuestionDisplay() {
-    buttonPress.play();
     disableElement(".next-question");
     $(".display__time-left").removeClass("time-critical");
     $(".answer-feedback").addClass("hide-element");
@@ -585,7 +581,6 @@ function displayTimeLeft(remainderSeconds) {
  * When the modal confirm button is clicked, stops the timer and returns to quiz options
  */
 function resetConfirm() {
-    buttonPress.play();
     clearInterval(countdown);
     toggleOptions();
     $("#resetModal").modal("toggle");
@@ -597,7 +592,6 @@ function resetConfirm() {
  * Shows the modal populated with details to exit the quiz
  */
 function showResetModal() {
-    buttonPress.play();
     $("#resetModal").modal("toggle");
     $(".modal-content").html(
         `<div class="modal-div">
@@ -637,7 +631,6 @@ function optionButtonsOutput() {
  * When Start button is clicked sets the pre quiz options and checks if a token already exists
  */
 function loadQuestions() {
-    buttonPress.play();
     disableElement(".quiz-options .btn");
     $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
     $(".answer-feedback").addClass("hide-element");
@@ -677,13 +670,13 @@ function muteSound() {
 // Click Events ###################################################################################
 
 // Mute Sound Button
-$(".mute-sound").on("click", muteSound);
+$(".mute-sound").click(muteSound);
 
 // Exit Quiz Modal reset confirm button
 $("#resetModal").on("click", ".reset-confirm", resetConfirm);
 
 // Answer Button
-$(".answer").on("click", function() {
+$(".answer").click(function() {
     submitAnswer();
     $(this).addClass("active no-shadow disable");
     $(this).siblings().addClass("disable");
@@ -693,13 +686,13 @@ $(".answer").on("click", function() {
 $(".load-questions").click(loadQuestions);
 
 // Next Question or Finish Quiz Button
-$(".next-question").on("click", nextQuestionDisplay);
+$(".next-question").click(nextQuestionDisplay);
 
 // When the Exit Quiz button is clicked displays a modal for the user to confirm
-$(".reset-button").on("click", showResetModal);
+$(".reset-button").click(showResetModal);    
 
-// Plays a sound when any button is clicked
-$("body").on("click", ".btn", function() {
+// Plays a sound when any button is clicked 
+$("body").click(".btn", function() {
     buttonPress.play();
 });
 

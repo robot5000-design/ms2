@@ -200,16 +200,16 @@ from the Opentdb Quiz API.
 First the program checks if a token exists already. The token ensures that question repetition does not 
 occur during a session. This will have been retrieved from session storage on page load. If it does not 
 exist the getToken function is run, which returns a Promise to get a new token through a new XMLHttpRequest.
-If this resolves successfully the getQuizData function is run. This function is a new XMLHttpRequest 
+If this resolves successfully, the getQuizData function is run. This function is a new XMLHttpRequest,
 using the main quiz API URL with the token appended. If data is returned it is passed to the checkToken
-function for validation. If the token is found to be invalid, expired (expires after 6 hours of inactivity)
+function for validation. If the token is found to be invalid, expired (expires after 6 hours of inactivity),
 or exhausted (all questions for that topic have been presented), the main API returns different response
-codes. The checkToken function handles these. If the token is invalid or expired a new token is requested
+codes. The checkToken function handles these. If the token is invalid or expired, a new token is requested,
 or if it is exhausted the token can be reset using a specific reset token URL.
 
-If there is a problem obtaining a token from the API a modal message is displayed to the user informing them of
+If there is a problem obtaining a token from the API, a modal message is displayed to the user informing them of
 the error and that they can try again. Likewise, if there is a problem with the readyState or status of 
-either of the XMLHttpRequests a modal message is displayed to the user informing them of the error and that 
+either of the XMLHttpRequests, a modal message is displayed to the user informing them of the error and that 
 they can try again. By way of validating the JSON data returned by the XMLHttpRequest, if there is a JSON 
 parsing error the error is caught and alerted to the user by modal, with the option to try again.
 
@@ -218,46 +218,46 @@ _Quiz Questions and Answers:_
 When the token checks ok, the askQuestions function is run which hides the quiz options and presents 
 the question/answers to the screen. The header element with owl icon is removed for screen heights lower
 than 1000 pixels, to provide for a better user experience on smaller screens. In addition, the window 
-scrolls so that the question appears at the top of the page. Questions can be either multiple choice or
-boolean. Multiple choice questions should have 4 possible answers. Boolean questions have two, so when
-a boolean question is presented the extra unused answer buttons are hidden from the user.
-In addition to that the JSON answers quantity is validated to ensure there is no more than 3 incorrect 
-answers to each question. If the array of answers is greater than 3 the shuffleAnswers function pops the
+scrolls so that the question appears at the top of the page. Questions can be either multiple choice, or
+boolean. Multiple choice questions should have four possible answers. Boolean questions have two, so when
+a boolean question is presented, the extra unused answer buttons are hidden from the user.
+In addition to that, the JSON answers quantity is validated to ensure there is no more than 3 incorrect 
+answers to each question. If the array of answers is greater than 3, the shuffleAnswers function pops the
 extra unnecessary answers.
 
 Answers are presented as buttons on screen. When the user selects an answer the button appears to be
-pushed as the box-shadow is removed. After a timeout the correct answer is informed to the user by 
-lighting up green while the incorrect answer lights up red. After another timeout all answers shadows
+pushed as the box-shadow is removed. After a timeout, the correct answer is informed to the user by 
+lighting up green, while the incorrect answer lights up red. After another timeout, all answers shadows
 are removed indicating that they can no longer be pressed, while the shadow is then applied to the 
 Next Question button signifying it is now live.
 
 The countdown timer is shown both above and below the answers and it lights up red when there is 5 
-seconds left. This really catches the users' peripheral vision. If the timer times out all answer 
-shadows are removed and visual and text signify to the user that time is up.
+seconds left. This really catches the users' peripheral vision. If the timer times out, all answer button
+shadows are removed and this visual and text signify to the user that time is up.
 
-For a better user experience, for multiple choice questions and on screens of less available height
+For a better user experience, for multiple choice questions on screens of less available height
 than 750px, after a timeout the window scrolls down to show the Next Question button and the box 
-shadow is removed from all answers to show that they can no longer be pressed. The only available
-buttons with shadows are the Next Question or Exit Quiz buttons. Originally there were separate Submit
-and Next buttons, but it was decided that a better experience would be achieved by removing the
-Submit button. When the quiz gets to the last question the Exit Quiz button is hidden and the Next
-Question text is changed to Finish Quiz and the button colour is changed to the same colour as the 
-Exit Quiz button. When the Finish Quiz button is pressed a modal showing information on the score
-achieved is shown.
+shadow is removed from all answers, to show that they can no longer be pressed. The only available
+buttons with shadows, are the Next Question or Exit Quiz buttons. Originally there were separate Submit
+and Next buttons, but it was decided that a better user experience would be achieved by removing the
+Submit button. Answer selection and submit now happen as one. When the quiz gets to the last question 
+the Exit Quiz button is hidden and the Next Question text is changed to Finish Quiz and the button 
+colour is changed to the same colour as the Exit Quiz button (now hidden). When the Finish Quiz button 
+is pressed a modal showing information on the score achieved is shown.
 
-Media Queries are used to reduce the width of the question/answers container as the screen width increases
+Media Queries are used to reduce the width of the question/answers container as the screen width increases,
 so it keeps visually better proportions.
 
 Common to both pages is a constant footer which contains links to social media and privacy (doesn't 
 exist). These links provide interactive feedback, when hovered over they change colour. They open in
 a new tab. The footer also contains a link for providing feedback to the site admin. This is implemented
-ng a modified bootstrap modal which uses the [Emailjs](https://www.emailjs.com/) service and some 
+using a modified bootstrap modal which uses the [Emailjs](https://www.emailjs.com/) service and some 
 custom javascript in the [email.js](./assets/js/email.js) file. If feedback is provided the service
 returns an acknowledgement email to the sender and forwards the message to the admin. All entries to
 the modal are required. The modal can only be dismissed via the modal buttons so the user cannot be 
 trapped on a screen with potentially disabled buttons.
 
-The same modal is used for feedback, quiz exit and final score.
+The same modal is used for feedback, quiz exit, final score and error messages.
 
 _Custom 404 page:_
 
@@ -300,7 +300,8 @@ _Others:_
 - JSDoc for JavaScript comments.
 - Balsamiq - For wireframes.
 - Emailjs - For feedback email service.
-- Microsoft Paint 3D - For colourmatch.
+- Microsoft Paint 3D - For editing images.
+- HTML-CSS-JS.com - For box-shadow editing.
 - Browserstack - To check base compatibility.
 - freeformatter.com - to format html files.
 - tinyjpg.com - to reduce image file size.
@@ -534,6 +535,8 @@ SSH certificate authority, click Use SSH, then copy the URL.
 - All code in this project is completely the authors unless otherwise indicated in the code.
 
 - All images are from pixabay.com and are free to use without attribution.
+
+- All sound effects are from https://mixkit.co/ and are free to use without attribution.
 
 - Information on deployment was taken from Github Documentation
 [here](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
