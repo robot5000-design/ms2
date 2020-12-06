@@ -692,7 +692,10 @@ $(".next-question").click(nextQuestionDisplay);
 $(".reset-button").click(showResetModal);    
 
 // Plays a sound when any button is clicked 
-$("body").click(".btn", function() {
+$("body").on("click", ".btn", function() {
+    buttonPress.play();
+});
+$(":button").click(function() {
     buttonPress.play();
 });
 

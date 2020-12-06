@@ -308,6 +308,7 @@ _Others:_
 - Autoprefixer - used to automatically add browser compatibility prefixes.
 - w3c - for HTML and CSS validation.
 - jshint - for JavaScript validation.
+- bearaudiotool - for sound effects editing.
 
 As per industry practice and to reduce the number of small commits on the master branch, seperate 
 branches were created and used for features (where appropriate) and for the readme file as they were
