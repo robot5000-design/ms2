@@ -1,9 +1,9 @@
-# Functional Tests
+# Final Acceptance Tests
+
+## 1. Page Responsiveness:
 
 ## Testing responsiveness of each html page:
 Using Chrome and Chrome Dev Tools.
-
-## 1. Page Responsiveness:
 
 Breakpoints | index.html | quiz options | quiz answers
 --- | --- | --- | ---
@@ -17,11 +17,12 @@ H750px | y | y | y
 H1000px | y | y | y
 
 
-- In addition, each page is checked for responsiveness using Chrome Dev Tools infinitely	adjustable 
-sliding re-sizer tool. From 280px (Samsung Galaxy Fold) up to full width 1536px on a 4k laptop.
-The 404 page not included in the above table was checked this way.
+- In addition, each page is checked for responsiveness using Chrome Dev Tools infinitely 
+adjustable sliding re-sizer tool. From 280px (Samsung Galaxy Fold) up to full width 1536px
+on a 4k laptop. The 404 page not included in the above table was checked this way.
 - If the height is less than 1000px the header is hidden during questions.
 - If the height is less than 750px the screen scrolls to show the next question button.
+Except if question type is boolean.
 - No problems are found.
 
 
@@ -31,93 +32,7 @@ The 404 page not included in the above table was checked this way.
 
 ---
 
-## 2. Bugs List from Github Issues section:
-
-After efforts to "break" the application, testing on mobile produced bug #14, which was a similar issue
-to #12. All bugs below were fixed and explanations can be found in the github issues section of the
-repository. Prior to removing console logs for final user acceptance testing, the error handling
-was tested by feeding the XMLHttpRequest functions 'broken' JSON objects to ensure json.parse errors
-are handled. 
-
-- #14 - timer secondsLeft is not displaying the correct value after a question is answered too quickly. A
-value from the previous running is displayed. 
-
-    _solution was to reset secondsLeft to the same 
-    value as questionTimer every time the timer is run. And to increase the time delay to more than 
-    1000ms before answer buttons are enabled. This allows sufficient time for the timer timeInterval
-    to do its first iteration._
-
-- #13 - jshint suggested highscore should be accessed via dot notation bug.
-
-    _dot notation did not work properly with edge. Reverted to square bracket notation._
-
-- #12 - If answers are answered too quickly it appears the timer has not started bug.
-Then the timer is not cleared and continues to run.
-
-    _This bug was solved by not enabling the buttons until the timer has started.
-    There was also a bug observed that if the next question button was pressed too quickly the box
-    shadow was removed for the answer buttons for the next question. This problem was solved by
-    only enabling the next button at the same time as the box shadow had been removed (or when the
-    answer checking process had fully ended)._
-
-- #11 - Answer button could still be pressed after answer is clicked thereby adding the box-shadow again
-bug.
-
-    _solved by adding class of no-shadow to answer after answer is clicked._
-
-- #10 - After a new high score the high score table is not displaying bug. 
-
-    _There was an old line of code still there from before the high score table was implemented._
-
-- #9 - Bug when timer counts down and disables answer buttons and exit modal is brought up but 
-bug. When next question button is clicked answer buttons stay disabled on following question.
-
-    _Solved by using disable class rather than disabling element when the timer === 0._
-
-- #8 - When exiting from a quiz answer buttons remain disabled bug.
-
-    _Solved by removing disable class when quiz ends._
-
-- #7 - Bug which allows an answer to be clicked more than once.
-
-    _Problem solved by creating a disable class to apply to buttons._
-
-- #6 - Wrong answer sound plays at same time as correct answer sound at almost zero seconds remaining 
-bug. 
-
-    _This is due to experimentation with removing the submit button and having select and 
-    submit in the same keypress with a built-in time delay. Solve by adjusting the timing of
-    sounds and where they are implemented._
-
-- #5 - Bug Exit Quiz button is still showing at the final question of the quiz bug.
-
-    _Code to show this button was in the wrong position. Moved inside the .reset-confirm click function._
-
-- #4 - Bug where question can still be submitted after timer runs out and answer  as been revealed bug.
-    
-    _Adjusted logic and fixed bug by disabling submit-answer button in displayTimeLeft function when time = 0._
-
-- #3 - Need to obtain token from API before obtaining questions bug.
-
-    _When obtaining questions from the api the token must first be requested and then attached to 
-    the questions url. This presents an asynchronous problem. The solution is to have the getToken 
-    function return a resolved promise to be used afterwards to download the questions._
-
-- #2 - html encoding of api answers bug. Some answers not being registered correct due to api returning 
-html encoded characters.
-
-    _Solution was to put the answers in a custom data attribute of the answer element. So rather than 
-    matching the answer presented in the browser (which doesn't show the special characters) to the 
-    correct answer, we match to the data attribute._
-
-- #1 - Issue with Next Question Button bug. Causing many more loops than intended.
-
-    _Solution was to add the .off("click") to the click event function to detach the click event.
-    The ultimate solution was to remove the nextQuestion function from the askQuestions function.
-    The mistake was one was nested inside the other._
----
-
-## 3. List of devices tested:
+## 2. List of devices tested:
 - Samsung Galaxy S7
 - Samsung A21s
 - Samsung Galaxy S10
@@ -134,9 +49,30 @@ html encoded characters.
     - iPad
     - iPad Pro
 
+The site has been tested on the following browsers on Windows 10:
+
+- Internet Explorer 11
+- Firefox 83.0
+- Google Chrome 87.0.4280.66
+- Opera 72.0.3815.320
+- Microsoft Edge 87.0.664.52
+- Safari 13.1 on Mac using www.browserstack.com
+
+and tested on a Samsung Galaxy S7:
+- Samsung on Android 12.1.2.5
+- Firefox 80.1.3
+- Chrome 85.0.4183.101
+
+All HTML and CSS files have been passed through the w3c validation service here https://validator.w3.org/ 
+with no significant issues. It advised not to use aria-disabled on disabled buttons. These were removed.
+
+Javascript files were passed through jshint.com without any significant issues. Jshint had suggested using
+dot notation accessing the highscore object, however the high score table did not display values on 
+edge browser, so reverted back to square bracket notation.
+
 ---
 
-## 4. Test Cases:
+## 3. Final Testing Test Cases on Live Website:
 - TC01
 
     Description: 

@@ -422,28 +422,16 @@ data validation on the JSON data is carried out. There's more detail on this in 
 
 ### **4b. Testing Part 2**
 
-The site has been tested on the following browsers on Windows 10:
-
-- Internet Explorer 11
-- Firefox 83.0
-- Google Chrome 87.0.4280.66
-- Opera 72.0.3815.320
-- Microsoft Edge 87.0.664.52
-- Safari 13.1 on Mac using www.browserstack.com
-
-and tested on a Samsung Galaxy S7:
-- Samsung on Android 12.1.2.5
-- Firefox 80.1.3
-- Chrome 85.0.4183.101
-
 The site has been tested on both mobile and desktop for responsiveness.
 In addition to Chrome Development Tools, BrowserStack allowed for limited additional testing on Apple
 iPhone 8 mobile. Only manual testing was conducted for this project.
 
 Any issues have been cataloged in the Issues section on Github and closed when a sufficient solution
-was reached. 
+was reached. Prior to final testing of the live site, functional testing was carried out using judiciously 
+placed console logs before they were removed. These are saved in a separate file [here](./documentation/manual-test-ref.md)
+and are included only for reference.
 
-__Further testing of links, responsiveness and user acceptance test cases can be found in the [test document](./documentation/test.md).__
+__Final testing of links, responsiveness and Live Website test cases can be found in the [final testing document](./documentation/final-testing.md).__
 
 All HTML and CSS files have been passed through the w3c validation service here https://validator.w3.org/ 
 with no significant issues. It advised not to use aria-disabled on disabled buttons. These were removed.
