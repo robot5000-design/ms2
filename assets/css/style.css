@@ -95,13 +95,12 @@ h2 {
 .btn:disabled {
   opacity: 0.85;
   cursor: not-allowed;
- /* -webkit-box-shadow: none;
-  box-shadow: none;*/
 }
 
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
 
 .list-group-item:disabled {
@@ -220,13 +219,6 @@ button:focus {
   border-color: #000;
   color: #353535;
   margin-bottom: 5px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-.quiz-options .list-group button:focus {
-  -webkit-box-shadow: none;
-  box-shadow: none;
 }
 
 .quiz-options .list-group button:hover {
@@ -497,20 +489,21 @@ button:focus {
 .question-container .list-group .correct-answer,
 .question-container .list-group .correct-answer:disabled {
   background-color: #06b906;
-  color: #e4dfd5;
+  color: #fff6f6;
 }
 
 .question-container .list-group .wrong-answer,
 .question-container .list-group .wrong-answer:disabled {
   background-color: red;
-  color: #e4dfd5;
+  color: #fff6f6;
 }
 
 .reduce-size {
   font-size: 1.2em;
 }
 
-.disable {
+.disable,
+.disable:disabled {
   opacity: 0.85;
   cursor: not-allowed;
   pointer-events: none;

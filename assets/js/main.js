@@ -52,16 +52,18 @@ class Quiz {
         // current set of questions & answers
         this.setOfQuestions = {};
         // question timer length in seconds
-        this.questionTimer = 20;
+        this.questionTimer = 22;
     }
 }
 
 // Declare Global variables  ######################################################################
 
+// Create new instance of the Quiz class called scienceQuiz
+let scienceQuiz = new Quiz();
 // highest score achieved by user in each category represented as an object
 let highScore = {};
 // number of seconds remaining on the timer
-let secondsLeft = 20;
+let secondsLeft = scienceQuiz.questionTimer;
 // the id of the setInterval timer function
 let countdown = 0;
 // new instance of the sound class representing a correct answer
@@ -84,9 +86,6 @@ let categoryButtons = $(".categories").children("button");
 let difficultyButtons = $(".difficulty-level").children("button");
 // contains buttons representing quiz quantity of questions options
 let quantityButtons = $(".question-quantity").children("button");
-// Create new instance of the Quiz class called scienceQuiz
-let scienceQuiz = new Quiz();
-
 
 // Check and retrieve Local and Session Storage Values  ######################################################################
 
@@ -119,7 +118,7 @@ function toggleOptions() {
         // timeout to allow countdown timer to start
         setTimeout(function() {
             enableElement(".answer");
-            $(".answer").removeClass("disable");
+            $(".answer").removeClass("disable no-shadow");
         }, 1200);
         $(".quiz-options, .controls-container header").fadeOut(300, function() {
             $(".question-container").fadeIn(500);
@@ -135,6 +134,7 @@ function toggleOptions() {
         });
     } else {
         // show quiz options
+        $(".answer").addClass("no-shadow");
         $(".next-question").removeClass("finish-button").html(
             `<p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}</p>
             Next Question 
@@ -186,7 +186,7 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers;
     timer(scienceQuiz.questionTimer);
     // Prepare the various buttons
-    $(".answer").removeClass("correct-answer wrong-answer no-shadow");
+    $(".answer").removeClass("correct-answer wrong-answer");
     disableElement(".next-question");
     // Assign the correct answer
     scienceQuiz.correctAnswer = arrayOfQuestions[arrayIndex].correct_answer;
@@ -251,7 +251,7 @@ function nextQuestionDisplay() {
         }, 500);
         // timeout to allow the timer to start
         setTimeout(function() {
-            $(".answer").removeClass("disable");
+            $(".answer").removeClass("disable no-shadow");
             enableElement(".answer");
         }, 1100);
         // display a finish button for the last question
