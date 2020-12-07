@@ -422,18 +422,17 @@ data validation on the JSON data is carried out. There's more detail on this in 
 
 ### **4b. Testing Part 2**
 
-The site has been tested on both mobile and desktop for responsiveness.
-In addition to Chrome Development Tools, BrowserStack allowed for limited additional testing on Apple
-iPhone 8 mobile. Only manual testing was conducted for this project.
+The site has been tested on both mobile and desktop for responsiveness. Only manual testing was
+conducted for this project.
 
 Any issues have been cataloged in the Issues section on Github and closed when a sufficient solution
 was reached. Prior to final testing of the live site, functional testing was carried out using judiciously 
 placed console logs before they were removed. These are saved in a separate file [here](./documentation/manual-test-ref.md)
 and are included only for reference.
 
-__Final testing of links, responsiveness and Live Website test cases can be found in the [final testing document](./documentation/final-testing.md).__
+__Final testing of links, responsiveness and Live Website test cases can be found in the [final testing document here](./documentation/final-testing.md).__
 
-All HTML and CSS files have been passed through the w3c validation service here https://validator.w3.org/ 
+All HTML and CSS files have been passed through the w3c validation service https://validator.w3.org/ 
 with no significant issues. It advised not to use aria-disabled on disabled buttons. These were removed.
 
 Javascript files were passed through jshint.com without any significant issues. Jshint had suggested using

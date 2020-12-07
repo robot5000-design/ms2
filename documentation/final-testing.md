@@ -88,7 +88,7 @@ edge browser, so reverted back to square bracket notation.
     4. Click Twitter in footer. 
     - Expected Result: Opens Twitter in new tab. _Pass_
     5. Click Privacy in footer. 
-    - Expected Result: Reloads Page. _Pass_
+    - Expected Result: Scrolls to top. _Pass_
     6. Click owl image. 
     - Expected Result: Reloads index.html. _Pass_
     7. Click Go button. 

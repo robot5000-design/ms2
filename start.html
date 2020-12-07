@@ -160,18 +160,18 @@
                                 <div class="col">
                                     <div class="list-group question-answers">
                                         <div class="list-group-item questions"></div>
-                                        <p class="display__time-left"></p>
-                                        <button type="button" class="list-group-item btn answer disable" data-number="1" data-answer=""></button>
-                                        <button type="button" class="list-group-item btn answer disable" data-number="2" data-answer=""></button>
-                                        <button type="button" class="list-group-item btn answer disable" data-number="3" data-answer=""></button>
-                                        <button type="button" class="list-group-item btn answer disable" data-number="4" data-answer=""></button>
+                                        <p class="time-left"></p>
+                                        <button type="button" class="list-group-item btn answer disable" data-number="1" data-answer="" disabled></button>
+                                        <button type="button" class="list-group-item btn answer disable" data-number="2" data-answer="" disabled></button>
+                                        <button type="button" class="list-group-item btn answer disable" data-number="3" data-answer="" disabled></button>
+                                        <button type="button" class="list-group-item btn answer disable" data-number="4" data-answer="" disabled></button>
                                     </div>
                                 </div>
                             </div>
                             <!-- Answer Feedback and Timer Countdown -->
                             <div class="row">
                                 <div class="col status-info">
-                                    <p class="display__time-left"></p>
+                                    <p class="time-left"></p>
                                     <div class="display">
                                         <p class="answer-feedback">Answer Feedback</p>
                                     </div>                                    
@@ -180,7 +180,7 @@
                             <!-- Next Question or Finish Quiz Button -->
                             <div class="row">
                                 <div class="col action-button">
-                                    <button type="button" class="btn btn-success next-question" disabled>
+                                    <button type="button" class="btn btn-success next-question no-shadow" disabled>
                                         <span class="quiz-score">0</span><br>
                                         Next Question 
                                         <i class="fas fa-caret-right"></i>

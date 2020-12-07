@@ -118,6 +118,7 @@ function toggleOptions() {
     if ($(".quiz-options").css("display") != "none") {
         // timeout to allow countdown timer to start
         setTimeout(function() {
+            enableElement(".answer");
             $(".answer").removeClass("disable");
         }, 1200);
         $(".quiz-options, .controls-container header").fadeOut(300, function() {
@@ -229,7 +230,8 @@ function displayBooleanQuestion(arrayOfQuestions, arrayIndex, arrayOfAnswers) {
  */
 function nextQuestionDisplay() {
     disableElement(".next-question");
-    $(".display__time-left").removeClass("time-critical");
+    $(".next-question").addClass("no-shadow");
+    $(".time-left").removeClass("time-critical");
     $(".answer-feedback").addClass("hide-element");
     scienceQuiz.questionIndex++;
     // fade out/in to the next question
@@ -250,7 +252,8 @@ function nextQuestionDisplay() {
         // timeout to allow the timer to start
         setTimeout(function() {
             $(".answer").removeClass("disable");
-        }, 1200);
+            enableElement(".answer");
+        }, 1100);
         // display a finish button for the last question
         if (scienceQuiz.questionIndex === (scienceQuiz.setOfQuestions.length - 1)) {
             $(".next-question").addClass("finish-button").html(
@@ -315,7 +318,7 @@ function finishQuiz(arrayIndex) {
  */
 function submitAnswer() {
     clearInterval(countdown);
-    $(".display__time-left").html(`Answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
+    $(".time-left").html(`Answered with ${secondsLeft} seconds to spare.`).removeClass("time-critical");
     // Check if answer is correct
     setTimeout(function() {
         checkAnswer();
@@ -330,14 +333,14 @@ function checkAnswer() {
         if ($(button).hasClass("active") && ($(button).attr("data-answer") === scienceQuiz.correctAnswer) && (secondsLeft > 0)) {
             correctAnswerSound.play();
             $(".answer-feedback").removeClass("hide-element").html("Well Done. Correct Answer!");
-            $(button).removeClass("active").addClass("correct-answer no-shadow");
+            $(button).removeClass("active").addClass("correct-answer");
             $(button).children("p").children("span").html(`<i class="fas fa-check"></i>`);
             scienceQuiz.score++;
             $(".quiz-score").html(`Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}`);
         } else {
             if ($(button).hasClass("active")) {
                 wrongAnswerSound.play();
-                $(button).removeClass("active").addClass("wrong-answer no-shadow");
+                $(button).removeClass("active").addClass("wrong-answer");
                 $(button).children("p").children("span").html(`<i class="fas fa-times"></i>`);
                 $(".answer-feedback").removeClass("hide-element").html("Bad Luck. Wrong Answer!");
             }
@@ -358,7 +361,9 @@ function checkAnswer() {
     // remove box shadow on all answers after a timeout
     setTimeout(function() {
         $(".answer").addClass("no-shadow");
+        $(".answer").removeClass("disable");
         enableElement(".next-question");
+        $(".next-question").removeClass("no-shadow");
     }, 1500);
 }
 
@@ -396,9 +401,10 @@ function getQuizData(myToken) {
                 questionsLoaded = JSON.parse(this.responseText);
                 // Check the token and start the Quiz
                 checkToken(questionsLoaded);
-            } catch (error) {
+            } 
+            catch (error) {
                 displayErrorModal("json-parse-error", error.name);
-            }
+            }            
         } else if (this.readyState === 4 && this.status != 200) {
             displayErrorModal("status-not-ok");
         }
@@ -549,9 +555,11 @@ function timer(seconds) {
                 if (($(button).attr("data-answer") === scienceQuiz.correctAnswer)) {
                     $(button).addClass("correct-answer");
                     wrongAnswerSound.play();
-                    enableElement(".next-question");
                 }
                 $(".answer").addClass("disable");
+                enableElement(".next-question");
+                $(".next-question").removeClass("no-shadow");
+                disableElement(".answer");
             }
         }
         // display it
@@ -565,15 +573,15 @@ function timer(seconds) {
  */
 function displayTimeLeft(remainderSeconds) {
     if (remainderSeconds === 0) {
-        $(".display__time-left").html("Oops you ran out of time!");
+        $(".time-left").html("Oops you ran out of time!");
         $(".answer").addClass("no-shadow");
     } else {
-        $(".display__time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds remaining.`);
+        $(".time-left").html(`You have <span class="font-weight-bold">${remainderSeconds}</span> seconds remaining.`);
     }
     if (remainderSeconds <= 5) {
-        $(".display__time-left").addClass("time-critical");
+        $(".time-left").addClass("time-critical");
     } else {
-        $(".display__time-left").removeClass("time-critical");
+        $(".time-left").removeClass("time-critical");
     }
 }
 
@@ -678,8 +686,9 @@ $("#resetModal").on("click", ".reset-confirm", resetConfirm);
 // Answer Button
 $(".answer").click(function() {
     submitAnswer();
-    $(this).addClass("active no-shadow disable");
-    $(this).siblings().addClass("disable");
+    $(this).addClass("active no-shadow");
+    $(this).siblings("button").addClass("disable");
+    disableElement(".answer");
 });
 
 // Start Button
