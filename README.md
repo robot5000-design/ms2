@@ -273,6 +273,9 @@ existing code would be repeated.
 
 These would allow the website to have updates which could keep some users coming back.
 
+- it may be useful to add a helpful warning if a user tries to leave the page using the browser
+navigation buttons, which could be unfortunate in the middle of a game of a high score game.
+
 ---
 
 ### **3. Technologies Used**
@@ -292,6 +295,11 @@ _Libraries:_
 - Font Awesome for icons.
 - Google Fonts for Pangolin font.
 
+_API's:_
+
+- Opentdb - Quiz API
+- Emailjs - For feedback email service.
+
 _Hosting and Version Control:_
 
 - GitHub - Holding repository and hosting site.
@@ -299,9 +307,8 @@ _Hosting and Version Control:_
 
 _Others:_
 
-- JSDoc for JavaScript comments.
+- JSDoc for JavaScript documentation.
 - Balsamiq - For wireframes.
-- Emailjs - For feedback email service.
 - Microsoft Paint 3D - For editing images.
 - HTML-CSS-JS.com - For box-shadow editing.
 - Browserstack - To check base compatibility.
@@ -315,6 +322,18 @@ _Others:_
 As per industry practice and to reduce the number of small commits on the master branch, seperate 
 branches were created and used for features (where appropriate) and for the readme file as they were
 developed. These were squashed, merged and deleted after use.
+
+JSDoc was used to generate documentation on the JavaScript file functions. The procedure is as follows:
+
+To install JSDoc globally run the following command in the terminal:
+
+- npm install -g jsdoc
+
+To generate documentation run the following command in the terminal:
+
+- jsdoc ./assets/js/main.js ./assets/js/email.js
+
+The documentation is saved in a folder named _out_ by default.
 
 ---
 
