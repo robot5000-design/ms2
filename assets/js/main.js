@@ -253,7 +253,7 @@ function nextQuestionDisplay() {
         setTimeout(function() {
             $(".answer").removeClass("disable no-shadow");
             enableElement(".answer");
-        }, 1100);
+        }, 1200);
         // display a finish button for the last question
         if (scienceQuiz.questionIndex === (scienceQuiz.setOfQuestions.length - 1)) {
             $(".next-question").addClass("finish-button").html(

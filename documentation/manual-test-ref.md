@@ -6,13 +6,18 @@ of the repository. Prior to removing console logs for final user acceptance test
 was tested by feeding the XMLHttpRequest functions 'broken' JSON objects to ensure json.parse errors
 are handled. 
 
+- #16 - Discovered that keyboard can still activate other answer buttons after a question has been answered.
+
+    _This is due to using pointer-events: none, rather than disabling the button which only works for the mouse.
+    Fixed by actually disabling the elements and only using the disable class to ensure pointer events are not 
+    possible on disabled buttons as otherwise it affects the box-shadow._
+
 - #14 - timer secondsLeft is not displaying the correct value after a question is answered too quickly. A
 value from the previous running is displayed. 
 
-    _solution was to reset secondsLeft to the same 
-    value as questionTimer every time the timer is run. And to increase the time delay to more than 
-    1000ms before answer buttons are enabled. This allows sufficient time for the timer timeInterval
-    to do its first iteration._
+    _solution was to reset secondsLeft to the same value as questionTimer every time the timer is run.
+    And to increase the time delay to more than 1000ms before answer buttons are enabled. This allows sufficient
+    time for the timer timeInterval to do its first iteration._
 
 - #13 - jshint suggested highscore should be accessed via dot notation bug.
 
