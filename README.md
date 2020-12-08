@@ -333,7 +333,9 @@ To generate documentation run the following command in the terminal:
 
 - jsdoc ./assets/js/main.js ./assets/js/email.js
 
-The documentation is saved in a folder named _out_ by default.
+The documentation is saved in a folder named _out_ by default and a webpage is generated which contains
+information on all classes and functions. 
+[Link to JSDoc documentation webpage.](https://robot5000-design.github.io/ms2-the-science-quiz/out/index.html)
 
 ---
 
