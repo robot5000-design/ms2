@@ -70,6 +70,9 @@ Javascript files were passed through jshint.com without any significant issues. 
 dot notation accessing the highscore object, however the high score table did not display values on 
 edge browser, so reverted back to square bracket notation.
 
+The site does not function on Internet Explorer 11, but considering its overall low usage and the fact that
+it is being discontinued in 2021, it was deemed not worth spending time on.
+
 ---
 
 ## 3. Final Testing Test Cases on Live Website:

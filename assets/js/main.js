@@ -115,6 +115,7 @@ if (sessionStorage.getItem("sessionToken")) {
 function toggleOptions() {
     // show quiz questions and answers
     if ($(".quiz-options").css("display") != "none") {
+        $(".next-question").addClass("no-shadow");
         // timeout to allow countdown timer to start
         setTimeout(function() {
             enableElement(".answer");

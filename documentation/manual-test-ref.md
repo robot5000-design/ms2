@@ -108,7 +108,7 @@ Use the console log to confirm. Confirm if it does not exist all scores display 
 ![highscore-exists](./images-for-readme/highscore-exists.jpg)
 
 - Test 05 - Use the console log to confirm if a token exists in session storage, it is used to try to 
-retrieve quiz data. If the token (example below 77663a...) is expired response code 3 is logged and a new
+retrieve quiz data. If the token (example below 77663a...) is expired, response code 3 is logged and a new
 token obtained and used (example below b78318...). Response code 0 means success. _Pass_
 ![token-not-found](./images-for-readme/token-not-found.jpg)
 
