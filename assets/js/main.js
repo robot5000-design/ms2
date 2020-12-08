@@ -120,15 +120,15 @@ function toggleOptions() {
             enableElement(".answer");
             $(".answer").removeClass("disable no-shadow");
         }, 1200);
-        $(".quiz-options, .controls-container header").fadeOut(300, function() {
-            $(".question-container").fadeIn(500);
+        $(".quiz-options, .controls-container header").fadeOut(500, function() {
+            $(".question-container").fadeIn(600);
             if (screen.availHeight < 1000) {
                 $(".controls-container header").hide();
                 let elem = $(".questions")[0];
                 elem.scrollIntoView();
             } else {
                 $(".heading-text h2").hide();
-                $(".controls-container header").fadeIn(500);
+                $(".controls-container header").fadeIn(600);
                 window.scroll(0, 0);
             }
         });
@@ -141,9 +141,9 @@ function toggleOptions() {
             <i class="fas fa-caret-right"></i>`);
         enableElement(".quiz-options .btn");
         $(".load-questions").removeClass("reduce-size").html("Start!");
-        $(".question-container").fadeOut(300, function() {
+        $(".question-container").fadeOut(500, function() {
             $(".heading-text h2").show();
-            $(".quiz-options, .controls-container header").fadeIn(700);
+            $(".quiz-options, .controls-container header").fadeIn(600);
             if (screen.availHeight < 1000) {
                 let elem = $(".mute-sound")[0];
                 elem.scrollIntoView();
@@ -237,7 +237,7 @@ function nextQuestionDisplay() {
     // fade out/in to the next question
     if (scienceQuiz.questionIndex < scienceQuiz.setOfQuestions.length) {
         $(".question-container, .status-info").fadeOut(500, function() {
-            $(".question-container, .status-info").fadeIn(1000);
+            $(".question-container, .status-info").fadeIn(600);
             if (screen.availHeight < 1000) {
                 let elem = $(".questions")[0];
                 elem.scrollIntoView();

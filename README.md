@@ -238,12 +238,14 @@ shadows are removed and this visual and text signify to the user that time is up
 For a better user experience, for multiple choice questions on screens of less available height
 than 750px, after a timeout the window scrolls down to show the Next Question button and the box 
 shadow is removed from all answers, to show that they can no longer be pressed. The only available
-buttons with shadows, are the Next Question or Exit Quiz buttons. Originally there were separate Submit
-and Next buttons, but it was decided that a better user experience would be achieved by removing the
-Submit button. Answer selection and submit now happen as one. When the quiz gets to the last question 
-the Exit Quiz button is hidden and the Next Question text is changed to Finish Quiz and the button 
-colour is changed to the same colour as the Exit Quiz button (now hidden). When the Finish Quiz button 
-is pressed a modal showing information on the score achieved is shown.
+buttons with shadows, are the Next Question or Exit Quiz buttons. In addition, the style setting cursor
+is set to not-allowed to give even further visual representation of inactive buttons.
+
+Originally there were separate Submit and Next buttons, but it was decided that a better user experience
+would be achieved by removing the Submit button. Answer selection and submit now happen as one. When the quiz
+gets to the last question the Exit Quiz button is hidden and the Next Question text is changed to Finish Quiz 
+and the button colour is changed to the same colour as the Exit Quiz button (now hidden). When the Finish Quiz
+button is pressed a modal showing information on the score achieved is shown.
 
 Media Queries are used to reduce the width of the question/answers container as the screen width increases,
 so it keeps visually better proportions.
