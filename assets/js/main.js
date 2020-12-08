@@ -303,7 +303,9 @@ function finishQuiz(arrayIndex) {
         wellDoneSound.play();
         $(".reset-modal").html("Well Done!");
     }
-    $(".modal-body").html(`You scored ${scienceQuiz.score} out of ${arrayIndex} questions. The weighted score for ${scienceQuiz.difficulty} difficulty is ${weightedScore}.`);
+    $(".modal-body").html(
+        `You scored ${scienceQuiz.score} out of ${arrayIndex} questions.<br>The weighted score for ${scienceQuiz.difficulty} difficulty is ${weightedScore}.`
+        );
     if (weightedScore > highScore[scienceQuiz.categoryString]) {
         highScore[scienceQuiz.categoryString] = weightedScore;
         localStorage.setItem("highScore", JSON.stringify(highScore));
