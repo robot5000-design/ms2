@@ -614,7 +614,8 @@ function showResetModal() {
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">No</button>
             <button type="button" class="btn btn-primary reset-confirm">Yes</button>
-        </div>`);
+        </div>`
+    );
 }
 
 /**

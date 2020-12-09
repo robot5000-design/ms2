@@ -1,11 +1,11 @@
-// Normal Functions  ######################################################################
+// Regular Functions  ######################################################################
 /**
  * Sends the feedback form values to the emailjs service template
  * @param { object } contactForm - feedback form values
  */
 function sendMail(contactForm) {
     $("#resetModal").modal("toggle");
-        emailjs.send("service_ceipqpk", "template_heeya0m", {
+    emailjs.send("service_ceipqpk", "template_heeya0m", {
         "from_name": contactForm.name.value,
         "from_email": contactForm.emailaddress.value,
         "feed_back": contactForm.feedback.value
@@ -27,7 +27,7 @@ function sendMail(contactForm) {
  * @param { string } message - message to display to user on success or failure
  * 
  */
-function handleMailResponse(responseObject, message) { 
+function handleMailResponse(responseObject, message) {
     $("#resetModal").modal("toggle");
     $(".modal-content").html(
         `<div class="modal-div">
