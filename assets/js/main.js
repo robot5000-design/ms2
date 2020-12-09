@@ -511,7 +511,8 @@ function displayErrorModal(errorCode, errorName) {
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">Ok</button>
-        </div>`);
+        </div>`
+    );
     $(".load-questions").html("Press to Retry");
     enableElement(".load-questions");
     enableElement(".quiz-options .btn");
