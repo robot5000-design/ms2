@@ -355,10 +355,8 @@ function checkAnswer() {
     // on smaller height screens scroll down to show the next question button
     if (scienceQuiz.setOfQuestions[scienceQuiz.questionIndex].type != "boolean" && screen.availHeight < 750) {
         setTimeout(function() {
-            let elem = $(".question-answers").children(".answer")[0];
-            elem.scrollIntoView({
-                behaviour: "smooth"
-            });
+            let elem = $(".action-button")[0];
+            elem.scrollIntoView(false);
         }, 1500);
     }
     // remove box shadow on all answers after a timeout
