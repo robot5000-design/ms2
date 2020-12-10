@@ -353,7 +353,7 @@ function checkAnswer() {
         }
     }
     // on smaller height screens scroll down to show the next question button
-    if (scienceQuiz.setOfQuestions[scienceQuiz.questionIndex].type != "boolean" && screen.availHeight < 750) {
+    if ((scienceQuiz.setOfQuestions[scienceQuiz.questionIndex].type != "boolean" && screen.availHeight < 750) || (screen.availHeight < 580)) {
         setTimeout(function() {
             let elem = $(".action-button")[0];
             elem.scrollIntoView(false);
