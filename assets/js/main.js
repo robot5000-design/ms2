@@ -92,9 +92,9 @@ let quantityButtons = $(".question-quantity").children("button");
 // Checks local storage for a high score object
 if (localStorage.getItem("highScore")) {
     highScore = JSON.parse(localStorage.getItem("highScore"));
-    $(".computing-score").html(`${highScore["computing"]}`);
-    $(".maths-score").html(`${highScore["mathematics"]}`);
-    $(".general-science-score").html(`${highScore["general"]}`);
+    $(".computing-score").html(`${highScore.computing}`);
+    $(".maths-score").html(`${highScore.mathematics}`);
+    $(".general-science-score").html(`${highScore.general}`);
 } else {
     highScore = {
         computing: 0,
@@ -309,9 +309,9 @@ function finishQuiz(arrayIndex) {
     if (weightedScore > highScore[scienceQuiz.categoryString]) {
         highScore[scienceQuiz.categoryString] = weightedScore;
         localStorage.setItem("highScore", JSON.stringify(highScore));
-        $(".computing-score").html(`${highScore["computing"]}`);
-        $(".maths-score").html(`${highScore["mathematics"]}`);
-        $(".general-science-score").html(`${highScore["general"]}`);
+        $(".computing-score").html(`${highScore.computing}`);
+        $(".maths-score").html(`${highScore.mathematics}`);
+        $(".general-science-score").html(`${highScore.general}`);
     }
     $("#resetModal").modal("toggle");
 }

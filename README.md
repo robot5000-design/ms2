@@ -10,7 +10,7 @@
 
 The brief for this project was to build an interactive website application using HTML, CSS and
 JavaScript. The author chose to develop a quiz game as the subject, obtaining quiz data from the
-Opentdb.com quiz API. The design is based on user experience priciples. Clean coding and a responsive
+Opentdb.com quiz API. The design is based on user experience principles. Clean coding and a responsive
 mobile first method was employed. The purpose of this website is to provide users with:
 
 - a useful, fun and appealing test for students, academics or anybody else who has an interest in
@@ -211,7 +211,7 @@ If there is a problem obtaining a token from the API, a modal message is display
 the error and that they can try again. Likewise, if there is a problem with the readyState or status of 
 either of the XMLHttpRequests, a modal message is displayed to the user informing them of the error and that 
 they can try again. By way of validating the JSON data returned by the XMLHttpRequest, if there is a JSON 
-parsing error the error is caught and alerted to the user by modal, with the option to try again.
+parsing error, the error is caught and alerted to the user by modal, with the option to try again.
 
 _Quiz Questions and Answers:_
 
@@ -227,25 +227,25 @@ extra unnecessary answers.
 
 Answers are presented as buttons on screen. When the user selects an answer the button appears to be
 pushed as the box-shadow is removed. After a timeout, the correct answer is informed to the user by 
-lighting up green, while the incorrect answer lights up red. After another timeout, all answers shadows
+lighting up green, while the incorrect answer lights up red. After another timeout, all answer buttons shadows
 are removed indicating that they can no longer be pressed, while the shadow is then applied to the 
-Next Question button signifying it is now live.
+Next Question button signifying it is now live. To help reinforce to the user what can and can't be pressed,
+cursor: not-allowed is used, which gives additional visual representation (except for the options buttons, as
+it works better for keyboard-only users).
 
 The countdown timer is shown both above and below the answers and it lights up red when there is 5 
 seconds left. This really catches the users' peripheral vision. If the timer times out, all answer button
 shadows are removed and this visual and text signify to the user that time is up.
 
 For a better user experience, for multiple choice questions on screens of less available height
-than 750px, after a timeout the window scrolls down to show the Next Question button and the box 
-shadow is removed from all answers, to show that they can no longer be pressed. The only available
-buttons with shadows, are the Next Question or Exit Quiz buttons. In addition, the style setting cursor
-is set to not-allowed to give even further visual representation of inactive buttons.
+than 750px, after a timeout the window scrolls down to show the Next Question button. The only available
+buttons with shadows, are the Next Question or Exit Quiz buttons.
 
 Originally there were separate Submit and Next buttons, but it was decided that a better user experience
 would be achieved by removing the Submit button. Answer selection and submit now happen as one. When the quiz
 gets to the last question the Exit Quiz button is hidden and the Next Question text is changed to Finish Quiz 
-and the button colour is changed to the same colour as the Exit Quiz button (now hidden). When the Finish Quiz
-button is pressed a modal showing information on the score achieved is shown.
+and the button colour is changed to the same colour as the Exit Quiz button (which is now hidden). When the 
+Finish Quiz button is pressed a modal showing information on the score achieved is shown.
 
 Media Queries are used to reduce the width of the question/answers container as the screen width increases,
 so it keeps visually better proportions.
@@ -274,7 +274,7 @@ existing code would be repeated.
 These would allow the website to have updates which could keep some users coming back.
 
 - it may be useful to add a helpful warning if a user tries to leave the page using the browser
-navigation buttons, which could be unfortunate in the middle of a game of a high score game.
+navigation buttons, which could be unfortunate in the middle of a high score game.
 
 ---
 
