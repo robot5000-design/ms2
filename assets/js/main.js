@@ -252,7 +252,7 @@ function nextQuestionDisplay() {
         }, 500);
         // timeout to allow the timer to start
         setTimeout(function() {
-            $(".answer").removeClass("disable no-shadow");
+            $(".answer").removeClass("no-shadow");
             enableElement(".answer");
         }, 1200);
         // display a finish button for the last question
@@ -558,7 +558,6 @@ function timer(seconds) {
                     $(button).addClass("correct-answer");
                     wrongAnswerSound.play();
                 }
-                $(".answer").addClass("disable");
                 enableElement(".next-question");
                 $(".next-question").removeClass("no-shadow");
                 disableElement(".answer");
