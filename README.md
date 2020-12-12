@@ -276,6 +276,8 @@ These would allow the website to have updates which could keep some users coming
 - it may be useful to add a helpful warning if a user tries to leave the page using the browser
 navigation buttons, which could be unfortunate in the middle of a high score game.
 
+- a share option, to allow users to share interesting questions via common social channels.
+
 ---
 
 ### **3. Technologies Used**
@@ -458,9 +460,8 @@ __Final testing of links, responsiveness and Live Website test cases can be foun
 All HTML and CSS files have been passed through the w3c validation service https://validator.w3.org/ 
 with no significant issues. It advised not to use aria-disabled on disabled buttons. These were removed.
 
-Javascript files were passed through jshint.com without any significant issues. Jshint had suggested using
-dot notation accessing the highscore object, however the high score table did not display values on 
-edge browser, so reverted back to square bracket notation.
+Javascript files were passed through jshint.com without any significant issues. Jshint suggested using
+dot notation rather than square brackets, accessing the highscore object, so this has been changed.
 
 
 __Chrome Dev Tools Lighthouse made some suggestions:__

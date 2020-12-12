@@ -66,9 +66,8 @@ and tested on a Samsung Galaxy S7:
 All HTML and CSS files have been passed through the w3c validation service here https://validator.w3.org/ 
 with no significant issues. It advised not to use aria-disabled on disabled buttons. These were removed.
 
-Javascript files were passed through jshint.com without any significant issues. Jshint had suggested using
-dot notation accessing the highscore object, however the high score table did not display values on 
-edge browser, so reverted back to square bracket notation.
+Javascript files were passed through jshint.com without any significant issues. Jshint suggested using
+dot notation rather than square brackets, accessing the highscore object, so this has been changed.
 
 The site does not function on Internet Explorer 11, but considering its overall low usage and the fact that
 it is being discontinued in 2021, it was deemed not worth spending time on.

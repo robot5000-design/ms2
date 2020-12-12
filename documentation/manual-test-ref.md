@@ -21,7 +21,10 @@ value from the previous running is displayed.
 
 - #13 - jshint suggested highscore should be accessed via dot notation bug.
 
-    _dot notation did not work properly with edge. Reverted to square bracket notation._
+    _Although initially dot notation did not appear to work with edge browser, tried this again and discovered 
+    that must have had something else wrong the first time it was tried. It appears to work fine on edge. Had 
+    an idea the problem on the first attempt was that the highscore object still existed in local storage.
+    It should have been deleted to reset._
 
 - #12 - If answers are answered too quickly it appears the timer has not started bug.
 Then the timer is not cleared and continues to run.

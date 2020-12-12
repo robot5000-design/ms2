@@ -50,7 +50,8 @@ h2 {
   padding-bottom: 15px;
 }
 
-.controls-container {
+.controls-container,
+.intro-page-container {
   padding-bottom: 40px;
 }
 
@@ -188,8 +189,8 @@ button:focus {
   font-size: 30px;
   background-color: #26970a00;
   color: #353535;
-  padding-right: 20px;
-  padding-top: 0px;
+  margin-right: 13px;
+  padding: 0 7px 0;
 }
 
 /*--------------------------------------------------------Quiz Options */
@@ -562,19 +563,23 @@ button:focus {
   .bottom-image {
     height: 10vw;
   }
+  .mute-sound {
+    font-size: 5vw;
+  }
 }
 
 @media screen and (min-width: 768px) {
   .mute-sound {
-    font-size: 40px;
-    margin-right: 20px;
-    padding-top: 0px;
+    font-size: 4.5vw;
+    margin-right: 33px;
   }
   .action-button {
     max-width: 50%;
   }
   .intro {
     max-width: 60%;
+    font-size: 1.3em;
+    border-radius: 20px;
   }
   .question-container {
     max-width: 70%;
@@ -582,6 +587,9 @@ button:focus {
 }
 
 @media screen and (min-width: 992px) {
+  .intro {
+    line-height: 2em;
+  }
   .quiz-options {
     max-width: 90%;
   }
@@ -603,13 +611,27 @@ button:focus {
   .bottom-image {
     height: 8vw;
   }
+  .mute-sound {
+    font-size: 3.5vw;
+  }
 }
 
 @media screen and (min-width: 1200px) {
   .mute-sound {
-    margin-right: 40px;
+    margin-right: 53px;
+    font-size: 3vw;
   }
   .question-container {
     max-width: 50%;
+  }
+}
+
+@media screen and (min-height: 1100px) {
+  .intro-page-container {
+    margin-top: 70px;
+  }
+  .intro {
+    margin-top: 50px;
+    margin-bottom: 80px;
   }
 }
