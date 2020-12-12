@@ -264,7 +264,7 @@ button:focus {
 
 .load-questions {
   font-size: 2em;
-  width: 55%;
+  width: 75%;
   min-height: 70px;
   padding-left: 0;
   padding-right: 0;
@@ -278,7 +278,7 @@ button:focus {
 }
 
 .load-questions-wrapper {
-  padding: 0 0 40px;
+  padding: 30px 0 60px;
 }
 
 /*--------------------------------------------------------Question and Answers Container */
@@ -415,9 +415,27 @@ button:focus {
 
 /*--------------------------------------------------------High Scores Table */
 
+.table .thead tr th {
+  color: #e4dfd5;
+  border-bottom: 2px solid;
+  border-top: none;
+  border-color: #e4dfd5;
+}
+
+.table .score {
+  border-left: 2px solid #e4dfd5;
+}
+
+.table tbody tr td {
+  color: #e4dfd5;
+  border-top: 1px solid #e4dfd5;
+}
+
 .table {
-  max-width: 400px;
+  max-width: 340px;
   margin: 0 auto;
+  background-color: #353535;
+  border-radius: 10px;
 }
 
 /*--------------------------------------------------------Modal */
