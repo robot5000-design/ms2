@@ -9,6 +9,7 @@
 
 /* Import Font */
 @import url("https://fonts.googleapis.com/css2?family=Pangolin&display=swap");
+
 * {
   padding: 0;
   margin: 0;
@@ -165,7 +166,7 @@ button:focus {
   background-color: #353535;
   max-width: 90%;
   margin: 30px auto 50px;
-  padding: 2% 6% 3%;
+  padding: 2% 6% 4%;
   border-radius: 10px;
   font-size: 1em;
   line-height: 1.7em;
@@ -551,9 +552,11 @@ button:focus {
   .intro {
     font-size: 1.1em;
   }
+
   .question-container {
     max-width: 90%;
   }
+
   .action-button {
     max-width: 70%;
   }
@@ -563,21 +566,26 @@ button:focus {
   .question-container {
     max-width: 80%;
   }
+
   h1 {
     font-size: 2em;
     padding-top: 20px;
     padding-bottom: 20px;
   }
+
   h2 {
     font-size: 1.5em;
     line-height: 1.7em;
   }
+
   .top-image {
     height: 9vw;
   }
+
   .bottom-image {
     height: 10vw;
   }
+
   .mute-sound {
     font-size: 5vw;
   }
@@ -588,14 +596,17 @@ button:focus {
     font-size: 4.5vw;
     margin-right: 33px;
   }
+
   .action-button {
     max-width: 50%;
   }
+
   .intro {
     max-width: 60%;
     font-size: 1.3em;
     border-radius: 20px;
   }
+
   .question-container {
     max-width: 70%;
   }
@@ -604,29 +615,36 @@ button:focus {
 @media screen and (min-width: 992px) {
   .intro {
     line-height: 2.2em;
-    padding: 1% 5% 2%;
+    padding: 1% 5% 3%;
   }
+
   .quiz-options {
     max-width: 90%;
   }
+
   .load-questions {
     max-width: 340px;
   }
+
   .categories,
   .difficulty-level,
   .question-quantity {
     padding-left: 20px;
     padding-right: 20px;
   }
+
   .question-container {
     max-width: 60%;
   }
+
   .top-image {
     height: 7vw;
   }
+
   .bottom-image {
     height: 8vw;
   }
+
   .mute-sound {
     font-size: 3.5vw;
   }
@@ -637,6 +655,7 @@ button:focus {
     margin-right: 53px;
     font-size: 3vw;
   }
+
   .question-container {
     max-width: 50%;
   }
@@ -646,6 +665,7 @@ button:focus {
   .intro-page-container {
     margin-top: 70px;
   }
+
   .intro {
     margin-top: 50px;
     margin-bottom: 80px;
