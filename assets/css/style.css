@@ -19,6 +19,7 @@
 
 body {
   font-family: "Pangolin", cursive;
+  font-size: 100%;
   background-color: #306821;
   color: #e4dfd5;
   text-align: center;
@@ -155,14 +156,20 @@ button:focus {
 
 /*--------------------------------------------------------Intro Page */
 
+.heading-text {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .intro {
   background-color: #353535;
   max-width: 90%;
-  margin: 0 auto 50px;
+  margin: 30px auto 50px;
   padding: 6%;
   border-radius: 10px;
-  font-size: 1.1em;
+  font-size: 1em;
   line-height: 1.7em;
+  word-spacing: 2px;
 }
 
 /* Begin button Styling */
@@ -536,6 +543,9 @@ button:focus {
 /*--------------------------------------------------------Media Queries */
 
 @media screen and (min-width: 400px) {
+  .intro {
+    font-size: 1.1em;
+  }
   .question-container {
     max-width: 90%;
   }
@@ -588,7 +598,8 @@ button:focus {
 
 @media screen and (min-width: 992px) {
   .intro {
-    line-height: 2em;
+    line-height: 2.2em;
+    padding: 5%;
   }
   .quiz-options {
     max-width: 90%;
