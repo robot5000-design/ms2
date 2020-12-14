@@ -126,14 +126,12 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
 
     Procedure: 
     1. Click Start (accepts default quiz options). 
-    - Expected Result: Five computing questions of 
-    easy difficulty level. 
+    - Expected Result: Five computing questions of easy difficulty level. _PASS_
     2. Reload the page & click different quiz options. 
-    - Expected Result: Quiz question category,
-    difficulty level and quantity of questions should match those chosen. Multiple choice 
-    questions should have 4 answer options and boolean questions should have 2 answer options. 
- 
-    3. Repeat step 2 a number of times.
+    - Expected Result: Quiz question category, difficulty level and quantity of questions should match
+     those chosen. Multiple choice questions should have 4 answer options and boolean questions should 
+     have 2 answer options. _PASS_ 
+    3. Repeat step 2 a number of times. _PASS_
 
 - TC04
 
