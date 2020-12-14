@@ -149,28 +149,28 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     difficulty level. _PASS_
     3. Check questions layout. 
     - Expected Result: Multiple choice questions should have 4 answer
-    options and boolean questions should have 2 answer options. 
+    options and boolean questions should have 2 answer options. _PASS_
     4. Submit an answer by clicking it. 
     - Expected Result: Active button should briefly turn yellow
     and shadow removed. A correct answer should light up green and a wrong answer should light up
     red (with the correct answer showing in green). After a pause shadow is removed from all answers.
     Next Question button is enabled and has shadow added. Upon answering correctly the score in the
-    Next Question button should increment by 1. 
+    Next Question button should increment by 1. _PASS_
     5. Click Next Question. 
-    - Expected Result: Moves to next question. 
+    - Expected Result: Moves to next question. _PASS_
     6. Allow time to run out. 
     - Expected Result: The timer should light up red at 5 seconds remaining.
     The wrong answer sound is played when time runs out. Shadow is removed from all answers and the
-    correct answer lights up green. 
+    correct answer lights up green. _PASS_
     7. Go to last question. 
     - Expected Result: Exit Quiz button hidden and Next Question button is
-    coloured orange & renamed Finish Quiz. 
+    coloured orange & renamed Finish Quiz. _PASS_
     8. Click Finish Quiz. 
     - Expected Result: A modal is displayed with a summary of the result. If 
-    it's a new high score, this should be stated in the modal. 
+    it's a new high score, this should be stated in the modal. _PASS_
     9. Click Exit button in modal.     
     - Expected Result: Should return to Quiz Options and the high 
-    score should be displayed in the high score table in the correct position. 
+    score should be displayed in the high score table in the correct position. _PASS_
 
 - TC05
 
