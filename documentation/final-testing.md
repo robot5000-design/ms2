@@ -86,19 +86,19 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     Procedure: 
     1. Navigate to https://robot5000-design.github.io/ms2-the-science-quiz/index.html
     2. Click feedback form. 
-    - Expected Result: Feedback form appears in modal. 
+    - Expected Result: Feedback form appears in modal. _PASS_
     3. Click Facebook in footer. 
-    - Expected Result: Opens Facebook in new tab. 
+    - Expected Result: Opens Facebook in new tab. _PASS_
     4. Click Twitter in footer. 
-    - Expected Result: Opens Twitter in new tab. 
+    - Expected Result: Opens Twitter in new tab. _PASS_
     5. Click Privacy in footer. 
-    - Expected Result: Goes to top of page. 
+    - Expected Result: Goes to top of page. _PASS_
     6. Click owl image. 
-    - Expected Result: Reloads index.html. 
+    - Expected Result: Reloads index.html. _PASS_
     7. Click Go button. 
-    - Expected Result: Opens start.html 
+    - Expected Result: Opens start.html. _PASS_
     8. On start.html repeat steps 2-6. 
-    - Expected Result: As above for each step. 
+    - Expected Result: As above for each step. _PASS_
 
 - TC02
 
