@@ -23,7 +23,7 @@ on a 4k laptop. The 404 page not included in the above table was checked this wa
 - If the height is less than 1000px the header is hidden during questions.
 - If the height is less than 750px the screen scrolls to show the next question button.
 Except if question type is boolean.
-- No problems are found.
+- All tests passed. No problems are found.
 
 
 ### __Summary:__
@@ -68,6 +68,8 @@ with no significant issues. It advised not to use aria-disabled on disabled butt
 
 Javascript files were passed through jshint.com without any significant issues. Jshint suggested using
 dot notation rather than square brackets, accessing the highscore object, so this has been changed.
+Also it suggested that line 650 in main.js !!scienceQuiz.token === false was confusing use of !, so it 
+was changed to Boolean(scienceQuiz.token) === false.
 
 The site does not function on Internet Explorer 11, but considering its overall low usage and the fact that
 it is being discontinued in 2021, it was deemed not worth spending time on.

@@ -647,7 +647,7 @@ function loadQuestions() {
     disableElement(".quiz-options .btn");
     $(".load-questions").addClass("reduce-size").html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span> Loading...");
     $(".answer-feedback").addClass("hide-element");
-    if (!!scienceQuiz.token === false) {
+    if (Boolean(scienceQuiz.token) === false) {
         // opentdb API url address to obtain token
         let tokenUrl = "https://opentdb.com/api_token.php?command=request";
         getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
