@@ -136,10 +136,13 @@ function toggleOptions() {
     } else {
         // show quiz options
         $(".answer").addClass("no-shadow");
-        $(".next-question").removeClass("finish-button").html(
-            `<p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}</p>
-            Next Question 
-            <i class="fas fa-caret-right"></i>`);
+        // Change Finish button back to Next Question Button with timeout to allow for fadeout
+        setTimeout(function() {
+            $(".next-question").removeClass("finish-button").html(
+                `<p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}</p>
+                Next Question 
+                <i class="fas fa-caret-right"></i>`);
+        }, 600);        
         enableElement(".quiz-options .btn");
         $(".load-questions").removeClass("reduce-size").html("Start!");
         $(".question-container").fadeOut(500, function() {
@@ -249,20 +252,20 @@ function nextQuestionDisplay() {
         // timeout to allow for the fade out/in of next question
         setTimeout(function() {
             askQuestions(scienceQuiz.setOfQuestions, scienceQuiz.questionIndex, scienceQuiz.score);
+            // display a finish button for the last question
+            if (scienceQuiz.questionIndex === (scienceQuiz.setOfQuestions.length - 1)) {
+                $(".next-question").addClass("finish-button").html(
+                    `<p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}</p>
+                    Press To Finish 
+                    <i class="fas fa-caret-right"></i>`);
+                $(".reset-button").hide();
+            }
         }, 500);
         // timeout to allow the timer to start
         setTimeout(function() {
             $(".answer").removeClass("no-shadow");
             enableElement(".answer");
         }, 1200);
-        // display a finish button for the last question
-        if (scienceQuiz.questionIndex === (scienceQuiz.setOfQuestions.length - 1)) {
-            $(".next-question").addClass("finish-button").html(
-                `<p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}</p>
-                Press To Finish 
-                <i class="fas fa-caret-right"></i>`);
-            $(".reset-button").hide();
-        }
     } else {
         finishQuiz(scienceQuiz.questionIndex);
     }

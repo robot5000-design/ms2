@@ -90,7 +90,7 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     4. Click Twitter in footer. 
     - Expected Result: Opens Twitter in new tab. _Pass_
     5. Click Privacy in footer. 
-    - Expected Result: Scrolls to top. _Pass_
+    - Expected Result: Goes to top of page. _Pass_
     6. Click owl image. 
     - Expected Result: Reloads index.html. _Pass_
     7. Click Go button. 
@@ -109,7 +109,7 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     2. Click question option buttons. 
     - Expected Result: Should be no sounds. _Pass_
     3. Click unmute button. 
-    - Expected Result: Makes a keypress sound. _Pass_
+    - Expected Result: Makes a keypress sound and icon changes. _Pass_
     4. Click question option buttons. 
     - Expected Result: Makes a keypress sound. _Pass_
     5. Click feedback form in footer Click Dismiss. 
@@ -119,7 +119,7 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
 
     Description: 
 
-    - Verify quiz options result in expected quiz outcome questions and answers are populating
+    - Verify quiz options result in expected quiz outcome and verify questions & answers are populating
      the buttons as expected.
 
     Procedure: 
@@ -141,10 +141,12 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
 
     Procedure: 
     1. Click on quiz option buttons. 
-    - Expected Result: Verify disable class & shadow is removed from active button _Pass_
+    - Expected Result: Verify active, no-shadow & disable classes are added to active button and removed 
+    from other option buttons in same list. _Pass_
     2. Click Start (using default quiz options). 
     - Expected Result: Loading spinner should display in Start button while question data is
-    retrieved. Questions should number five computing questions of easy difficulty level. _Pass_
+    retrieved. If default options selected, questions should number five computing questions of easy 
+    difficulty level. _Pass_
     3. Check questions layout. 
     - Expected Result: Multiple choice questions should have 4 answer
     options and boolean questions should have 2 answer options. _Pass_
@@ -159,7 +161,7 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     6. Allow time to run out. 
     - Expected Result: The timer should light up red at 5 seconds remaining.
     The wrong answer sound is played when time runs out. Shadow is removed from all answers and the
-    correct answer is lit up green. _Pass_
+    correct answer lights up green. _Pass_
     7. Go to last question. 
     - Expected Result: Exit Quiz button hidden and Next Question button is
     coloured orange & renamed Finish Quiz. _Pass_
@@ -196,9 +198,9 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     2. Click Dismiss. 
     - Expected Result: Modal should disappear. _Pass_
     3. Click Send.
-    - Expected Result: Name, Email and text should be required entries. _Pass_
-    3. Verify email input validates format.
-    - Expected Result: Email entry must be in correct basic format. _Pass_
+    - Expected Result: Name, Email and text should be required entries. Check all three. _Pass_
+    3. Verify email input validates format. Try entering an address without the @ symbol.
+    - Expected Result: Pop-down message that email entry must be in correct basic format. _Pass_
     4. Enter valid entries and press Send Feedback.
     - Expected Result: Displays a message modal confirming either success or failure. _Pass_
     5. Confirm delivery of emailjs emails.
