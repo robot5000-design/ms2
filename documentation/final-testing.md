@@ -226,8 +226,8 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     Procedure: 
     1. From the site index or start page, the address in the address bar ends in ".html". Add
     an additional letter to the end of the address in the address bar. 
-    - Expected Result: The 404.html page should appear with a back button.
-    2. Click Back button.
-    - Expected Result: Returns to the the Quiz index page. 
+    - Expected Result: The 404.html page should appear with a back button. _PASS_
+    2. Click Back button on page (not browser button).
+    - Expected Result: Returns to the the Quiz index page. _PASS_
 
 ---
