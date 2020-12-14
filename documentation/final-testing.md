@@ -194,17 +194,17 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     Procedure: 
     1. Click Feedback Form. 
     - Expected Result: A modal should display with a feedback form containing 3 inputs;
-    name, email & textarea input. Two buttons; Dismiss & Send Feedback. 
+    name, email & textarea input. Two buttons; Dismiss & Send Feedback. _PASS_
     2. Click Dismiss. 
-    - Expected Result: Modal should disappear. 
+    - Expected Result: Modal should disappear. _PASS_
     3. Click Send.
-    - Expected Result: Name, Email and text should be required entries. Check all three. 
+    - Expected Result: Name, Email and text should be required entries. Check all three. _PASS_
     3. Verify email input validates format. Try entering an address without the @ symbol.
-    - Expected Result: Pop-down message that email entry must be in correct basic format. 
+    - Expected Result: Pop-down message that email entry must be in correct basic format. _PASS_
     4. Enter valid entries and press Send Feedback.
-    - Expected Result: Displays a message modal confirming either success or failure. 
+    - Expected Result: Displays a message modal confirming either success or failure. _PASS_
     5. Confirm delivery of emailjs emails.
-    - Expected Result: Two emails are sent. One to admin and one to user. 
+    - Expected Result: Two emails are sent. One to admin and one to user. _PASS_
 
 - TC07
 
