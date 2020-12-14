@@ -142,11 +142,11 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     Procedure: 
     1. Click on quiz option buttons. 
     - Expected Result: Verify active, no-shadow & disable classes are added to active button and removed 
-    from other option buttons in same list. 
+    from other option buttons in same list. _PASS_
     2. Click Start (using default quiz options). 
     - Expected Result: Loading spinner should display in Start button while question data is
     retrieved. If default options selected, questions should number five computing questions of easy 
-    difficulty level. 
+    difficulty level. _PASS_
     3. Check questions layout. 
     - Expected Result: Multiple choice questions should have 4 answer
     options and boolean questions should have 2 answer options. 
