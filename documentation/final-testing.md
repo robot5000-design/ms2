@@ -109,13 +109,13 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     Procedure: 
     1. Navigate to https://robot5000-design.github.io/ms2-the-science-quiz/start.html
     2. Click question option buttons. 
-    - Expected Result: Should be no sounds. 
+    - Expected Result: Should be no sounds. _PASS_
     3. Click unmute button. 
-    - Expected Result: Makes a keypress sound and icon changes. 
+    - Expected Result: Makes a keypress sound and icon changes. _PASS_
     4. Click question option buttons. 
-    - Expected Result: Makes a keypress sound. 
+    - Expected Result: Makes a keypress sound. _PASS_
     5. Click feedback form in footer Click Dismiss. 
-    - Expected Result: Makes a keypress sound. 
+    - Expected Result: Makes a keypress sound. _PASS_
 
 - TC03
 
