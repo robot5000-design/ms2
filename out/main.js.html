@@ -120,9 +120,9 @@ let quantityButtons = $(".question-quantity").children("button");
 // Checks local storage for a high score object
 if (localStorage.getItem("highScore")) {
     highScore = JSON.parse(localStorage.getItem("highScore"));
-    $(".computing-score").html(`${highScore["computing"]}`);
-    $(".maths-score").html(`${highScore["mathematics"]}`);
-    $(".general-science-score").html(`${highScore["general"]}`);
+    $(".computing-score").html(`${highScore.computing}`);
+    $(".maths-score").html(`${highScore.mathematics}`);
+    $(".general-science-score").html(`${highScore.general}`);
 } else {
     highScore = {
         computing: 0,
@@ -164,10 +164,13 @@ function toggleOptions() {
     } else {
         // show quiz options
         $(".answer").addClass("no-shadow");
-        $(".next-question").removeClass("finish-button").html(
-            `&lt;p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}&lt;/p>
-            Next Question 
-            &lt;i class="fas fa-caret-right">&lt;/i>`);
+        // Change Finish button back to Next Question Button with timeout to allow for fadeout
+        setTimeout(function() {
+            $(".next-question").removeClass("finish-button").html(
+                `&lt;p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}&lt;/p>
+                Next Question 
+                &lt;i class="fas fa-caret-right">&lt;/i>`);
+        }, 600);        
         enableElement(".quiz-options .btn");
         $(".load-questions").removeClass("reduce-size").html("Start!");
         $(".question-container").fadeOut(500, function() {
@@ -277,20 +280,20 @@ function nextQuestionDisplay() {
         // timeout to allow for the fade out/in of next question
         setTimeout(function() {
             askQuestions(scienceQuiz.setOfQuestions, scienceQuiz.questionIndex, scienceQuiz.score);
+            // display a finish button for the last question
+            if (scienceQuiz.questionIndex === (scienceQuiz.setOfQuestions.length - 1)) {
+                $(".next-question").addClass("finish-button").html(
+                    `&lt;p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}&lt;/p>
+                    Press To Finish 
+                    &lt;i class="fas fa-caret-right">&lt;/i>`);
+                $(".reset-button").hide();
+            }
         }, 500);
         // timeout to allow the timer to start
         setTimeout(function() {
-            $(".answer").removeClass("disable no-shadow");
+            $(".answer").removeClass("no-shadow");
             enableElement(".answer");
         }, 1200);
-        // display a finish button for the last question
-        if (scienceQuiz.questionIndex === (scienceQuiz.setOfQuestions.length - 1)) {
-            $(".next-question").addClass("finish-button").html(
-                `&lt;p class="quiz-score">Score is ${scienceQuiz.score} / ${scienceQuiz.setOfQuestions.length}&lt;/p>
-                Press To Finish 
-                &lt;i class="fas fa-caret-right">&lt;/i>`);
-            $(".reset-button").hide();
-        }
     } else {
         finishQuiz(scienceQuiz.questionIndex);
     }
@@ -337,9 +340,9 @@ function finishQuiz(arrayIndex) {
     if (weightedScore > highScore[scienceQuiz.categoryString]) {
         highScore[scienceQuiz.categoryString] = weightedScore;
         localStorage.setItem("highScore", JSON.stringify(highScore));
-        $(".computing-score").html(`${highScore["computing"]}`);
-        $(".maths-score").html(`${highScore["mathematics"]}`);
-        $(".general-science-score").html(`${highScore["general"]}`);
+        $(".computing-score").html(`${highScore.computing}`);
+        $(".maths-score").html(`${highScore.mathematics}`);
+        $(".general-science-score").html(`${highScore.general}`);
     }
     $("#resetModal").modal("toggle");
 }
@@ -381,12 +384,10 @@ function checkAnswer() {
         }
     }
     // on smaller height screens scroll down to show the next question button
-    if (scienceQuiz.setOfQuestions[scienceQuiz.questionIndex].type != "boolean" &amp;&amp; screen.availHeight &lt; 750) {
+    if ((scienceQuiz.setOfQuestions[scienceQuiz.questionIndex].type != "boolean" &amp;&amp; screen.availHeight &lt; 750) || (screen.availHeight &lt; 580)) {
         setTimeout(function() {
-            let elem = $(".question-answers").children(".answer")[0];
-            elem.scrollIntoView({
-                behaviour: "smooth"
-            });
+            let elem = $(".action-button")[0];
+            elem.scrollIntoView(false);
         }, 1500);
     }
     // remove box shadow on all answers after a timeout
@@ -539,7 +540,8 @@ function displayErrorModal(errorCode, errorName) {
         &lt;/div>
         &lt;div class="modal-footer">
             &lt;button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">Ok&lt;/button>
-        &lt;/div>`);
+        &lt;/div>`
+    );
     $(".load-questions").html("Press to Retry");
     enableElement(".load-questions");
     enableElement(".quiz-options .btn");
@@ -587,7 +589,6 @@ function timer(seconds) {
                     $(button).addClass("correct-answer");
                     wrongAnswerSound.play();
                 }
-                $(".answer").addClass("disable");
                 enableElement(".next-question");
                 $(".next-question").removeClass("no-shadow");
                 disableElement(".answer");
@@ -642,7 +643,8 @@ function showResetModal() {
         &lt;div class="modal-footer">
             &lt;button type="button" class="btn btn-secondary modal-cancel" data-dismiss="modal">No&lt;/button>
             &lt;button type="button" class="btn btn-primary reset-confirm">Yes&lt;/button>
-        &lt;/div>`);
+        &lt;/div>`
+    );
 }
 
 /**
@@ -673,7 +675,7 @@ function loadQuestions() {
     disableElement(".quiz-options .btn");
     $(".load-questions").addClass("reduce-size").html("&lt;span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'>&lt;/span> Loading...");
     $(".answer-feedback").addClass("hide-element");
-    if (!!scienceQuiz.token === false) {
+    if (Boolean(scienceQuiz.token) === false) {
         // opentdb API url address to obtain token
         let tokenUrl = "https://opentdb.com/api_token.php?command=request";
         getToken(tokenUrl).then(handleSuccess).catch(handleFailure);
@@ -756,7 +758,7 @@ $("body").on("click", ".quiz-options .btn", optionButtonsOutput);</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Dec 08 2020 22:43:39 GMT+0000 (Coordinated Universal Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Dec 14 2020 18:32:10 GMT+0000 (Coordinated Universal Time)
 </footer>
 
 <script> prettyPrint(); </script>
