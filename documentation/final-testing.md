@@ -181,9 +181,9 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     Procedure: 
     1. Start a new Quiz.
     2. Click Exit Quiz. 
-    - Expected Result: A Reset Quiz Modal appears.  
+    - Expected Result: A Reset Quiz Modal appears.  _PASS_
     3. Reset Modal has 2 buttons. No and Yes. Test both.
-    - Expected Result: No should dismiss the modal. Yes should return to Quiz Options. 
+    - Expected Result: No should dismiss the modal. Yes should return to Quiz Options. _PASS_
 
 - TC06
 
