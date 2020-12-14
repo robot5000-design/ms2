@@ -215,7 +215,7 @@ it is being discontinued in 2021, it was deemed not worth spending time on.
     Procedure: 
     1. Switch off internet and click Start.
     - Expected Result: A message modal with one ok button should display, with a message of a 
-    problem to the user. The Start button should display Press to Retry. 
+    problem to the user. The Start button should display Press to Retry. _PASS_
 
 - TC08
 
