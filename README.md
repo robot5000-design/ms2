@@ -219,7 +219,8 @@ _Quiz Questions and Answers:_
 
 When the token checks ok, the askQuestions function is run which hides the quiz options and presents 
 the question/answers to the screen. The header element with owl icon is removed for screen heights lower
-than 1000 pixels, to provide for a better user experience on smaller screens. In addition, the window 
+than 1000 pixels, to provide for a better user experience on smaller screens. Also, pointer events are set
+to none for the owl icon during a game, to avoid unintentional clicks. In addition, the window 
 scrolls so that the question appears at the top of the page. Questions can be either multiple choice, or
 boolean. Multiple choice questions should have four possible answers. Boolean questions have two, so when
 a boolean question is presented, the extra unused answer buttons are hidden from the user.
@@ -339,7 +340,8 @@ To generate documentation run the following command in the terminal:
 
 The documentation is saved in a folder named _out_ by default and a webpage is generated which contains
 information on all classes and functions. The JavaScript code was broken into smaller functions where 
-possible or where deemed to be useful, to make for easier reading and future refactoring.
+possible or where deemed to be useful, to make for easier reading and future refactoring. Even so, given
+more time there is room for further optimisation in this area.
 [Link to JSDoc documentation webpage.](https://robot5000-design.github.io/ms2-the-science-quiz/out/index.html)
 
 ---
@@ -456,7 +458,7 @@ conducted for this project.
 Any issues have been cataloged in the Issues section on Github and closed when a sufficient solution
 was reached. Prior to final testing of the live site, functional testing was carried out using judiciously 
 placed console logs before they were removed. These are saved in a separate file [here](./documentation/manual-test-ref.md)
-and are included only for reference.
+and are included only for reference. There are no known exisiting issues with the final deployed version.
 
 __Final testing of links, responsiveness and Live Website test cases can be found in the [final testing document here](./documentation/final-testing.md).__
 
