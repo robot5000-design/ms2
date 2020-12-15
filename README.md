@@ -289,7 +289,7 @@ _IDE and Languages:_
 - CSS - Language used for styling.
 - JavaScript - for application functionality and DOM manipulation.
 
-_Libraries:_
+_Libraries & frameworks:_
 
 - jQuery 3.5.1 - used to speed up selection of elements in javascript.
 - Bootstrap 4.5.2 - Used to help with grid layout and screen size responsiveness.
@@ -336,7 +336,8 @@ To generate documentation run the following command in the terminal:
 - jsdoc ./assets/js/main.js ./assets/js/email.js
 
 The documentation is saved in a folder named _out_ by default and a webpage is generated which contains
-information on all classes and functions. 
+information on all classes and functions. The JavaScript code was broken into smaller functions where 
+possible or where deemed to be useful, to make for easier reading and future refactoring.
 [Link to JSDoc documentation webpage.](https://robot5000-design.github.io/ms2-the-science-quiz/out/index.html)
 
 ---
@@ -416,8 +417,7 @@ For the site owner:
 For a user:
 - I want to be able to keep track of my best scores.
 
-_This has been achieved by providing sound effects which are muted by default. A button is provided in 
-the top right corner to un-mute._
+_This has been achieved by providing a high score table which is saved to local storage._
 ![hi-score-table](./documentation/images-for-readme/hi-score-table.jpg)
 
 For the site owner:
@@ -440,7 +440,8 @@ For a user:
 
 _This has been achieved by handling errors when they occur requesting data from the API URL or the token
 URL and handling JSON parsing errors by displaying a message modal to the user so they can try again. Some basic 
-data validation on the JSON data is carried out. There's more detail on this in the features section above._
+data validation on the JSON data is carried out. There's more detail on this in the 
+[2. Features and Functionality](#2-features-and-functionality) section above._
 ![error-modal](./documentation/images-for-readme/error-modal.jpg)
 
 ---

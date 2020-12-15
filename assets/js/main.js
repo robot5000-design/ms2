@@ -188,6 +188,7 @@ function askQuestions(arrayOfQuestions, arrayIndex, currentScore) {
     let currentQuestion = arrayOfQuestions[arrayIndex].question;
     // array of incorrect answers to current question
     let answersArray = arrayOfQuestions[arrayIndex].incorrect_answers;
+    // start the question timer
     timer(scienceQuiz.questionTimer);
     // Prepare the various buttons
     $(".answer").removeClass("correct-answer wrong-answer");
