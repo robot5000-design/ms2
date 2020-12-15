@@ -116,6 +116,7 @@ function toggleOptions() {
     // show quiz questions and answers
     if ($(".quiz-options").css("display") != "none") {
         $(".next-question").addClass("no-shadow");
+        $(".icon-image a").addClass("disable");
         // timeout to allow countdown timer to start
         setTimeout(function() {
             enableElement(".answer");
@@ -136,6 +137,7 @@ function toggleOptions() {
     } else {
         // show quiz options
         $(".answer").addClass("no-shadow");
+        $(".icon-image a").removeClass("disable");
         // Change Finish button back to Next Question Button with timeout to allow for fadeout
         setTimeout(function() {
             $(".next-question").removeClass("finish-button").html(
@@ -424,7 +426,7 @@ function checkToken(questionsLoadedObject) {
     scienceQuiz.score = 0;
     scienceQuiz.questionIndex = 0;
     // A response code 0 means a successful return of results from api
-    if (questionsLoadedObject.response_code === 0) {
+    if (questionsLoadedObject.response_code === 0 && questionsLoadedObject.results.length !== 0) {
         scienceQuiz.setOfQuestions = questionsLoadedObject.results;
         toggleOptions();
         // Start Quiz

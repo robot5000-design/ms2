@@ -212,6 +212,8 @@ the error and that they can try again. Likewise, if there is a problem with the 
 either of the XMLHttpRequests, a modal message is displayed to the user informing them of the error and that 
 they can try again. By way of validating the JSON data returned by the XMLHttpRequest, if there is a JSON 
 parsing error, the error is caught and alerted to the user by modal, with the option to try again.
+Finally, even if the token response is ok (response code 0), the data is validated again to ensure the response 
+actually includes a set of questions, by checking if the array is empty.
 
 _Quiz Questions and Answers:_
 
@@ -546,6 +548,8 @@ SSH certificate authority, click Use SSH, then copy the URL.
 ### **6. Credits and Notes**
 
 - All code in this project is completely the authors unless otherwise indicated in the code.
+
+- Quiz data API is supplied by https://opentdb.com/.
 
 - All images are from pixabay.com and are free to use without attribution.
 
